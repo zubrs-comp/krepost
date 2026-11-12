@@ -7,7 +7,7 @@
 <style>
 :root{--bg:#1b1622;--panel:#2a2233;--panel2:#352b40;--ink:#f3e9d7;--dim:#b7a98f;--gold:#f2c14e;--green:#7bc67b;--red:#e06666;--blue:#6fa8dc}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:radial-gradient(circle at 50% -20%,#4a3560,#1b1622 60%);color:var(--ink);font:15px/1.35 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;padding-bottom:80px}
+body{margin:0;background:#1b1622;color:var(--ink);font:15px/1.35 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;padding-bottom:80px}
 header{position:sticky;top:0;z-index:5;background:rgba(27,22,34,.95);backdrop-filter:blur(6px);padding:10px 12px;border-bottom:1px solid #3d3247}
 h1{margin:0 0 6px;font-size:18px;letter-spacing:.5px}
 h1 small{color:var(--dim);font-weight:400;font-size:12px}
@@ -19,16 +19,6 @@ main{padding:12px;max-width:560px;margin:0 auto}
 .tabs button{flex:1;background:none;border:0;color:var(--dim);padding:10px 0;font-size:12px}
 .tabs button b{display:block;font-size:22px}
 .tabs button.on{color:var(--gold)}
-.castle{background:linear-gradient(#3b2f48,#2a2233);border:2px solid #4d3e5c;border-radius:14px;padding:8px;position:relative}
-.roof{text-align:center;font-size:28px;margin:-4px 0 4px}
-.room{display:flex;align-items:center;gap:10px;background:var(--panel2);border-radius:10px;padding:10px;margin:6px 0;border-left:4px solid var(--c,#888)}
-.room .ic{font-size:30px;width:38px;text-align:center}
-.room .mid{flex:1;min-width:0}
-.room .nm{font-weight:700}
-.room .sub{color:var(--dim);font-size:12px}
-.bar{height:6px;background:#1b1622;border-radius:3px;margin-top:5px;overflow:hidden}
-.bar>div{height:100%;background:var(--c,#888);transition:width .3s}
-.workers{font-size:18px;margin-top:3px;letter-spacing:2px}
 button.act{background:var(--gold);color:#2a1e00;border:0;border-radius:10px;padding:9px 12px;font-weight:700;font-size:14px}
 button.act.sec{background:#4d3e5c;color:var(--ink)}
 button.act:disabled{opacity:.4}
@@ -37,21 +27,81 @@ button.act:disabled{opacity:.4}
 .row{display:flex;align-items:center;gap:8px}
 .row .grow{flex:1}
 .pill{font-size:11px;background:#1b1622;border-radius:6px;padding:2px 6px;color:var(--dim)}
-select{background:#1b1622;color:var(--ink);border:1px solid #4d3e5c;border-radius:8px;padding:6px}
-.log{font-size:13px;color:var(--dim);max-height:220px;overflow:auto;background:#140f19;border-radius:10px;padding:8px}
+.sub{color:var(--dim);font-size:12px}
+select{background:#1b1622;color:var(--ink);border:1px solid #4d3e5c;border-radius:8px;padding:6px;max-width:100%}
+.log{font-size:13px;color:var(--dim);max-height:200px;overflow:auto;background:#140f19;border-radius:10px;padding:8px}
 .log div{margin:2px 0}
-.toast{position:fixed;left:50%;top:90px;transform:translateX(-50%);background:var(--gold);color:#2a1e00;padding:10px 16px;border-radius:12px;font-weight:700;z-index:20;opacity:0;transition:opacity .3s;pointer-events:none;max-width:90%;text-align:center}
+.toast{position:fixed;left:50%;top:90px;transform:translateX(-50%);background:var(--gold);color:#2a1e00;padding:10px 16px;border-radius:12px;font-weight:700;z-index:40;opacity:0;transition:opacity .3s;pointer-events:none;max-width:90%;text-align:center}
 .toast.show{opacity:1}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:30}
 .modal.show{display:flex}
-.modal .box{background:var(--panel);border-radius:14px;padding:16px;max-width:420px;width:100%}
+.modal .box{background:var(--panel);border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-width:560px;width:100%;max-height:85vh;overflow:auto}
 textarea{width:100%;height:110px;background:#140f19;color:var(--ink);border:1px solid #4d3e5c;border-radius:8px;padding:8px;font-size:12px}
 .hp{height:8px;background:#140f19;border-radius:4px;overflow:hidden}
 .hp>div{height:100%;transition:width .25s}
+.bar{height:6px;background:#1b1622;border-radius:3px;margin-top:5px;overflow:hidden}
+.bar>div{height:100%;background:var(--blue)}
 h2{font-size:16px;margin:14px 0 6px}
+
+/* ===== Сцена замка ===== */
+.scene{position:relative;border-radius:16px;overflow:hidden;padding:10px 10px 0;
+  background:radial-gradient(circle at 80% 18%,#ffd38a 0 18px,rgba(255,190,110,.35) 19px 46px,transparent 47px),
+  linear-gradient(#2d2350 0%,#6a3d6e 45%,#c9705a 80%,#e39a62 100%)}
+.hills{position:absolute;left:0;right:0;bottom:0;height:120px;pointer-events:none}
+.roof{display:block;width:100%;height:auto;position:relative;margin-bottom:-2px}
+.castle{position:relative;background:#4b3f38;border:4px solid #3a2f2a;border-top:0;padding:4px;display:flex;flex-direction:column;gap:4px;box-shadow:0 6px 0 #2f2622}
+.floor{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-bottom:3px solid #6b4a2f}
+.floor:last-child{border-bottom:0}
+.cell{position:relative;height:100px;border-radius:3px;overflow:hidden;cursor:pointer}
+.cell svg.art{position:absolute;inset:0;width:100%;height:100%}
+.cell.empty{background:#2a221f;box-shadow:inset 0 0 0 2px #3a302b}
+.cell.empty .plus{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#7d6c60;font-size:12px}
+.cell.empty .plus b{font-size:26px;line-height:1}
+.cell.target{box-shadow:inset 0 0 0 3px var(--gold);animation:pulse 1s infinite}
+.cell.target .plus{color:var(--gold)}
+.cell.moving{opacity:.45}
+@keyframes pulse{50%{background:#3d3220}}
+.lbl{position:absolute;left:4px;top:4px;background:rgba(20,15,25,.75);border-radius:6px;padding:1px 6px;font-size:11px;font-weight:600;white-space:nowrap;max-width:calc(100% - 50px);overflow:hidden;text-overflow:ellipsis}
+.lbl .bn{color:var(--green)}
+.stock{position:absolute;right:4px;top:4px;background:#fff6dc;color:#3a2a10;border-radius:12px;padding:2px 7px;font-size:12px;font-weight:800;box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.stock.ready{animation:bounce 1.2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.crew{position:absolute;left:6px;right:6px;bottom:15px;display:flex;gap:2px;align-items:flex-end;pointer-events:none}
+.crew svg{animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-2px)}}
+.slots{position:absolute;right:5px;bottom:3px;font-size:10px;color:#fff;opacity:.8;text-shadow:0 1px 2px #000}
+.flame{animation:flick .35s infinite alternate;transform-origin:center bottom}
+@keyframes flick{to{transform:scaleY(.85) scaleX(1.05)}}
+.flag{animation:wave 1.4s ease-in-out infinite;transform-origin:left center}
+@keyframes wave{50%{transform:skewY(6deg) scaleX(.92)}}
+.ground{height:26px;background:linear-gradient(#4f7a3a,#355a2a);margin:0 -10px;position:relative}
+.movebar{position:sticky;top:82px;z-index:4;background:var(--gold);color:#2a1e00;border-radius:10px;padding:8px 12px;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-weight:700}
+.opt{display:flex;align-items:center;gap:10px;background:var(--panel2);border-radius:10px;padding:8px;margin:6px 0}
+.opt .pv{width:70px;height:46px;border-radius:6px;overflow:hidden;flex:none;position:relative}
+.opt .pv svg{width:100%;height:100%}
 </style>
 </head>
 <body>
+<!-- Общие узоры -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <pattern id="bricks" width="28" height="14" patternUnits="userSpaceOnUse">
+      <rect width="28" height="14" fill="#8c7a6b"/>
+      <path d="M0 .5H28M0 7.5H28M7 0v7M21 7v7" stroke="#6e5e51" stroke-width="1.2"/>
+    </pattern>
+    <pattern id="planks" width="40" height="14" patternUnits="userSpaceOnUse">
+      <rect width="40" height="14" fill="#7a5233"/>
+      <path d="M0 .5H40M20 0v14" stroke="#5a3a22" stroke-width="1.5"/>
+    </pattern>
+    <radialGradient id="fire" cx=".5" cy=".9" r=".8">
+      <stop offset="0" stop-color="#fff2a8"/><stop offset=".4" stop-color="#ffb53b"/><stop offset="1" stop-color="#d6401c"/>
+    </radialGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffcf7a" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf7a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
 <header>
   <h1>🏯 Вечерняя крепость <small id="lvl"></small></h1>
   <div class="res" id="res"></div>
@@ -64,110 +114,187 @@ h2{font-size:16px;margin:14px 0 6px}
   <button data-t="menu"><b>⚙️</b>Меню</button>
 </nav>
 <div class="toast" id="toast"></div>
-<div class="modal" id="modal"><div class="box" id="mbox"></div></div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()"><div class="box" id="mbox"></div></div>
 
 <script>
-// ===== Данные =====
-const RES = {food:{n:'Еда',i:'🥕'},gold:{n:'Монеты',i:'🪙'},ore:{n:'Руда',i:'⛏️'}};
-const ROOMS = {
-  garden:{n:'Огород',i:'🥕',c:'#7bc67b',res:'food',skill:'farm',base:40,cap:400,cost:{gold:60}},
-  treasury:{n:'Казна',i:'🪙',c:'#f2c14e',res:'gold',skill:'trade',base:30,cap:300,cost:{food:80}},
-  forge:{n:'Кузня',i:'⚒️',c:'#e69138',res:'ore',skill:'craft',base:20,cap:200,cost:{food:60,gold:60}},
-  guard:{n:'Караульня',i:'🛡️',c:'#6fa8dc',skill:'fight',cost:{gold:120,ore:60}},
-  tower:{n:'Башня старосты',i:'🏰',c:'#b48ee0',cost:{food:200,gold:200,ore:120}},
+// ================= Данные =================
+const RES={food:{n:'Еда',i:'🥕'},gold:{n:'Монеты',i:'🪙'},ore:{n:'Руда',i:'⛏️'}};
+const T={
+  garden:  {n:'Огород',   i:'🥕',w:2,res:'food',skill:'farm', base:40,cap:300,build:{gold:60},          tint:'#2f5a22',d:'Растит еду'},
+  treasury:{n:'Казна',    i:'🪙',w:1,res:'gold',skill:'trade',base:30,cap:250,build:{food:80},          tint:'#6b4e10',d:'Копит монеты'},
+  forge:   {n:'Кузня',    i:'⚒️',w:2,res:'ore', skill:'craft',base:22,cap:180,build:{food:60,gold:60},  tint:'#5a2418',d:'Даёт руду'},
+  guard:   {n:'Караульня',i:'🛡️',w:2,skill:'fight',build:{gold:120,ore:40},tint:'#22385a',d:'Тут живут воины'},
+  bunk:    {n:'Спальня',  i:'🛏️',w:1,build:{food:100,gold:50},tint:'#46295a',d:'+места для жителей'},
 };
-const SKILLS = {farm:'🌾 Земледелие',trade:'💼 Торговля',craft:'🔨 Ремесло',fight:'🗡️ Бой'};
-const FACES = ['🧑','👩','🧔','👱','👨‍🦰','👩‍🦱','🧓','👵'];
-const NAMES = ['Ярема','Злата','Мирон','Велта','Остап','Ладимира','Гордей','Белава','Тихон','Рада','Добрыня','Веселина','Лука','Снежана','Ратибор','Олеся'];
-const ENEMIES = [
+const SKILLS={farm:'🌾 Земледелие',trade:'💼 Торговля',craft:'🔨 Ремесло',fight:'🗡️ Бой'};
+const SKCOL={farm:'#5aa64a',trade:'#d9a62a',craft:'#d9702a',fight:'#3f78c4'};
+const SKIN=['#f5d1b0','#e8b48c','#c98c62','#8d5a3b'];
+const HAIR=['#3a2516','#7a4a22','#d9b45a','#b8442a','#222','#ddd'];
+const NAMES=['Ярема','Злата','Мирон','Велта','Остап','Ладимира','Гордей','Белава','Тихон','Рада','Добрыня','Веселина','Лука','Снежана','Ратибор','Олеся'];
+const ENEMIES=[
   {n:'Болотные гоблины',i:'👺',hp:60,atk:6},{n:'Лесные разбойники',i:'🥷',hp:110,atk:10},
   {n:'Каменный тролль',i:'🗿',hp:220,atk:16},{n:'Стая варгов',i:'🐺',hp:320,atk:22},
   {n:'Тёмный колдун',i:'🧙',hp:480,atk:30},{n:'Пепельный дракон',i:'🐉',hp:800,atk:42}
 ];
-const SPEED = 1; // множитель скорости производства (можно увеличить)
+const SPEED=1; // множитель скорости производства
 
-// ===== Состояние =====
-let S;
-function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+// ================= Состояние =================
+let S, moving=null, tab='castle';
+const rand=n=>Math.floor(Math.random()*n), rnd=a=>a[rand(a.length)];
 function newDweller(){
-  const sk={farm:1+rand(4),trade:1+rand(4),craft:1+rand(4),fight:1+rand(4)};
-  return {id:Date.now()+Math.random(),name:rnd(NAMES),face:rnd(FACES),lvl:1,xp:0,sk,room:null};
+  return {id:Date.now()+Math.random(),name:rnd(NAMES),skin:rand(SKIN.length),hair:rand(HAIR.length),lvl:1,xp:0,
+    sk:{farm:1+rand(4),trade:1+rand(4),craft:1+rand(4),fight:1+rand(4)},room:null};
 }
-function rand(n){return Math.floor(Math.random()*n)}
-function fresh(){
-  const s={v:1,res:{food:150,gold:150,ore:40},stock:{garden:0,treasury:0,forge:0},
-    lvl:{garden:1,treasury:1,forge:1,guard:1,tower:1},people:[],last:Date.now(),
+function mainSkill(p){return Object.keys(p.sk).reduce((a,k)=>p.sk[k]>p.sk[a]?k:a,'farm')}
+function addRoom(s,t,f,c,lvl=1){const r={id:++s.nid,t,lvl,f,c,stock:0};s.rooms.push(r);return r}
+function fresh(old){
+  const s={v:2,nid:0,res:{food:150,gold:150,ore:40},tower:1,rooms:[],people:[],last:Date.now(),
     nextRecruit:Date.now()+30*60e3,stage:0,log:[]};
-  for(let i=0;i<4;i++)s.people.push(newDweller());
-  s.people[0].room='garden';s.people[1].room='treasury';s.people[2].room='forge';s.people[3].room='guard';
+  const g=addRoom(s,'garden',0,0),tr=addRoom(s,'treasury',0,2),fo=addRoom(s,'forge',1,0),bu=addRoom(s,'bunk',1,2),gu=addRoom(s,'guard',2,0);
+  if(old&&old.res){ // перенос старого сохранения
+    s.res=old.res;s.stage=old.stage||0;s.log=old.log||[];s.tower=(old.lvl&&old.lvl.tower)||1;
+    const map={garden:g,treasury:tr,forge:fo,guard:gu};
+    s.people=(old.people||[]).map(p=>({...newDweller(),...p,skin:rand(4),hair:rand(6),room:map[p.room]?map[p.room].id:null}));
+    if(old.lvl)for(const k in map)map[k].lvl=old.lvl[k]||1;
+  }else{
+    for(let i=0;i<4;i++)s.people.push(newDweller());
+    [g,tr,fo,gu].forEach((r,i)=>s.people[i].room=r.id);
+  }
   return s;
 }
 function save(){S.last=Date.now();try{localStorage.setItem('vk_save',JSON.stringify(S))}catch(e){}}
-function load(){try{const t=localStorage.getItem('vk_save');if(t)return JSON.parse(t)}catch(e){}return null}
+function load(){try{const t=localStorage.getItem('vk_save');if(t){const s=JSON.parse(t);return s.v===2?s:fresh(s)}}catch(e){}return null}
 
-// ===== Экономика =====
-const capOf=r=>Math.round(ROOMS[r].cap*Math.pow(1.6,S.lvl[r]-1));
-const slots=r=>Math.min(1+S.lvl[r],6);
-const inRoom=r=>S.people.filter(p=>p.room===r);
-function ratePerHour(r){
-  const R=ROOMS[r];let w=inRoom(r).reduce((a,p)=>a+p.sk[R.skill]*(1+.15*(p.lvl-1)),0);
-  return R.base*(1+.5*(S.lvl[r]-1))*(w/5)*SPEED;
+// ================= Экономика =================
+const room=id=>S.rooms.find(r=>r.id==id);
+const floors=()=>Math.min(2+S.tower,8);
+const storeCap=()=>Math.round(500*Math.pow(1.8,S.tower-1));
+const maxPeople=()=>2+S.tower+S.rooms.filter(r=>r.t==='bunk').reduce((a,r)=>a+2+r.lvl,0);
+const crew=r=>S.people.filter(p=>p.room===r.id);
+const slots=r=>(T[r.t].skill)?Math.min(T[r.t].w+r.lvl-1,5):0;
+const capOf=r=>Math.round(T[r.t].cap*Math.pow(1.6,r.lvl-1));
+function neighbors(r){
+  return S.rooms.filter(o=>o!==r&&o.t===r.t&&(
+    (o.f===r.f&&(o.c+T[o.t].w===r.c||r.c+T[r.t].w===o.c))||
+    (Math.abs(o.f-r.f)===1&&o.c<r.c+T[r.t].w&&r.c<o.c+T[o.t].w))).length;
 }
-const storeCap=()=>500*Math.pow(1.8,S.lvl.tower-1);
-const maxPeople=()=>4+S.lvl.tower*2;
+const bonus=r=>1+.15*neighbors(r);
+function rate(r){
+  const t=T[r.t];if(!t.res)return 0;
+  const w=crew(r).reduce((a,p)=>a+p.sk[t.skill]*(1+.15*(p.lvl-1)),0);
+  return t.base*(1+.5*(r.lvl-1))*(w/5)*bonus(r)*SPEED;
+}
 function tick(now){
-  const dt=(now-S.last)/3600e3; if(dt<=0)return;
-  for(const r of ['garden','treasury','forge'])S.stock[r]=Math.min(capOf(r),S.stock[r]+ratePerHour(r)*dt);
+  const dt=(now-S.last)/3600e3;if(dt<=0)return;
+  S.rooms.forEach(r=>{if(T[r.t].res)r.stock=Math.min(capOf(r),r.stock+rate(r)*dt)});
   S.last=now;
 }
-function upCost(r){const m=Math.pow(1.9,S.lvl[r]-1);const c={};for(const k in ROOMS[r].cost)c[k]=Math.round(ROOMS[r].cost[k]*m);return c}
-function canPay(c){return Object.keys(c).every(k=>S.res[k]>=c[k])}
+function scale(c,m){const o={};for(const k in c)o[k]=Math.round(c[k]*m);return o}
+const buildCost=t=>scale(T[t].build,Math.pow(1.7,S.rooms.filter(r=>r.t===t).length));
+const upCost=r=>scale(T[r.t].build,1.2*Math.pow(1.9,r.lvl));
+const towerCost=()=>scale({food:200,gold:200,ore:120},Math.pow(1.9,S.tower-1));
+const canPay=c=>Object.keys(c).every(k=>S.res[k]>=c[k]);
 function pay(c){for(const k in c)S.res[k]-=c[k]}
-const fmtCost=c=>Object.keys(c).map(k=>RES[k].i+c[k]).join(' ');
+const fmtCost=c=>Object.keys(c).map(k=>RES[k].i+fmt(c[k])).join(' ');
 const fmt=n=>n>=1e4?(n/1e3).toFixed(1)+'к':Math.floor(n);
+function grid(){const g=[];for(let f=0;f<floors();f++)g.push([null,null,null]);
+  S.rooms.forEach(r=>{for(let i=0;i<T[r.t].w;i++)if(g[r.f])g[r.f][r.c+i]=r.id});return g}
+function fits(f,c,w,ignore){const g=grid();if(c+w>3||!g[f])return false;for(let i=0;i<w;i++){const x=g[f][c+i];if(x!==null&&x!==ignore)return false}return true}
 
-// ===== Действия =====
+// ================= Графика =================
+const wall=(W,t)=>`<rect width="${W}" height="100" fill="url(#bricks)"/><rect width="${W}" height="100" fill="${t}" opacity=".5"/><rect y="86" width="${W}" height="14" fill="url(#planks)"/>`;
+const win=x=>`<g transform="translate(${x},12)"><rect x="-2" y="9" width="26" height="30" rx="2" fill="#3a2a22"/><circle cx="11" cy="10" r="13" fill="#3a2a22"/><rect x="1" y="10" width="20" height="26" fill="#f6c27a"/><circle cx="11" cy="10" r="10" fill="#f6c27a"/><path d="M11 0v36M1 22h20" stroke="#3a2a22" stroke-width="2.5"/></g>`;
+const plant=(x,y,c)=>`<path d="M${x} ${y}v-12M${x} ${y-4}q-6-3-9-9M${x} ${y-6}q6-3 9-8" stroke="#6fcf5a" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="${x}" cy="${y-13}" r="3.5" fill="${c}"/>`;
+const ART={
+  garden:W=>wall(W,T.garden.tint)+win(160)+[10,62,114].map((x,i)=>`<rect x="${x}" y="70" width="46" height="16" rx="4" fill="#5b3a1e"/><rect x="${x}" y="70" width="46" height="4" fill="#7a5230"/>`+[x+10,x+23,x+36].map(px=>plant(px,72,['#ff8c2a','#e2453c','#ffd84a'][i])).join('')).join('')+`<path d="M170 86l6-22h14l6 22z" fill="#b8925a"/><path d="M174 70h18" stroke="#8a6a3a" stroke-width="2"/>`,
+  treasury:W=>wall(W,T.treasury.tint)+`<rect x="8" y="58" width="40" height="28" rx="3" fill="#7a4a22"/><path d="M8 62q20-16 40 0z" fill="#8f5a2a"/><rect x="8" y="64" width="40" height="4" fill="#e3b343"/><rect x="24" y="66" width="8" height="9" rx="1" fill="#e3b343"/>`+
+    [[62,84,4],[78,84,3],[70,72,2]].map(([x,y,n])=>Array.from({length:n},(_,i)=>`<ellipse cx="${x}" cy="${y-i*5}" rx="9" ry="3.5" fill="#f2c14e" stroke="#b8861f"/>`).join('')).join('')+
+    `<rect x="60" y="22" width="32" height="4" fill="#5a3a22"/><path d="M68 22v-9h8v9" fill="#e3b343"/><circle cx="84" cy="17" r="5" fill="#9fd4ff" stroke="#e3b343" stroke-width="2"/>`,
+  forge:W=>wall(W,T.forge.tint)+`<circle cx="45" cy="60" r="44" fill="url(#glow)"/><rect x="10" y="30" width="70" height="56" rx="4" fill="#4a454e"/><path d="M10 40h70M10 52h70M10 64h70M32 30v10M58 30v10" stroke="#38343c" stroke-width="2"/><rect x="34" y="0" width="22" height="30" fill="#4a454e"/>`+
+    `<path d="M25 86v-22a20 20 0 0 1 40 0v22z" fill="#1d1416"/><path class="flame" d="M30 86c0-14 8-12 7-24 7 6 6 10 8 4 6 8 10 12 10 20z" fill="url(#fire)"/>`+
+    `<path d="M110 70h44l-6 6h-8v10h-16v-10h-8z" fill="#2c2b33"/><rect x="104" y="64" width="54" height="8" rx="3" fill="#3a3942"/><rect x="118" y="58" width="16" height="6" rx="1" fill="#ff9a3b"/>`+
+    `<path d="M150 30l14 14" stroke="#7a5233" stroke-width="4"/><rect x="144" y="22" width="14" height="10" rx="2" fill="#555" transform="rotate(45 151 27)"/>`+win(170),
+  guard:W=>wall(W,T.guard.tint)+[16,28,40].map(x=>`<path d="M${x} 86V22" stroke="#7a5233" stroke-width="3"/><path d="M${x-4} 24l4-12 4 12z" fill="#c9ccd4"/>`).join('')+`<rect x="8" y="50" width="42" height="5" fill="#5a3a22"/>`+
+    [[78,40,'#c4463f'],[106,40,'#3f78c4']].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="12" fill="${c}" stroke="#d9b45a" stroke-width="3"/><path d="M${x} ${y-7}v14M${x-7} ${y}h14" stroke="#f3e9d7" stroke-width="2.5"/>`).join('')+
+    `<path d="M160 86V40" stroke="#7a5233" stroke-width="4"/><ellipse cx="160" cy="58" rx="13" ry="16" fill="#d9b86a"/><circle cx="160" cy="34" r="9" fill="#d9b86a"/><path d="M144 50h32" stroke="#7a5233" stroke-width="4"/><path d="M152 52l16 12M168 52l-16 12" stroke="#a88a40" stroke-width="2"/>`,
+  bunk:W=>wall(W,T.bunk.tint)+`<rect x="6" y="48" width="8" height="38" fill="#6b4a2f"/><rect x="8" y="64" width="76" height="14" rx="3" fill="#6b4a2f"/><rect x="14" y="58" width="68" height="10" rx="4" fill="#8a5bb5"/><rect x="14" y="56" width="18" height="8" rx="4" fill="#f3e9d7"/>`+
+    `<rect x="66" y="26" width="24" height="4" fill="#5a3a22"/><rect x="74" y="16" width="6" height="10" fill="#f3e9d7"/><path class="flame" d="M77 16c-3-4 0-7 0-9 2 3 3 6 0 9z" fill="#ffb53b"/><circle cx="77" cy="12" r="10" fill="url(#glow)"/>`,
+  hall:W=>wall(W,'#4a2a3a')+win(60)+win(218)+`<rect x="110" y="70" width="80" height="16" fill="#9a2f3a"/><rect x="110" y="70" width="80" height="3" fill="#e3b343"/>`+
+    [30,270].map(x=>`<path d="M${x-12} 10h24v46l-12-8-12 8z" fill="#5b3a8a"/><path d="M${x-12} 10h24" stroke="#e3b343" stroke-width="3"/><path d="M${x} 22l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z" fill="#e3b343"/>`).join('')+
+    `<rect x="136" y="24" width="28" height="46" rx="6" fill="#5b3a8a" stroke="#e3b343" stroke-width="3"/><rect x="132" y="56" width="36" height="16" rx="3" fill="#7a4aa8" stroke="#e3b343" stroke-width="2"/><circle cx="150" cy="34" r="4" fill="#e3b343"/>`+
+    `<path d="M150 0v10" stroke="#3a2a22" stroke-width="2"/><path d="M134 12h32" stroke="#3a2a22" stroke-width="3"/>`+[136,150,164].map(x=>`<path class="flame" d="M${x} 10c-3-3 0-6 0-8 2 3 3 5 0 8z" fill="#ffb53b"/>`).join('')
+};
+function art(t,W){return `<svg class="art" viewBox="0 0 ${W} 100" preserveAspectRatio="xMidYMid slice">${ART[t](W)}</svg>`}
+function person(p,size=22){
+  const body=SKCOL[mainSkill(p)],sk=SKIN[p.skin||0],hr=HAIR[p.hair||0];
+  return `<svg width="${size}" height="${size*1.45}" viewBox="0 0 20 29" style="animation-delay:${(p.id%1).toFixed(2)*-1.6}s">
+    <rect x="6" y="22" width="3" height="7" rx="1" fill="#3a2a20"/><rect x="11" y="22" width="3" height="7" rx="1" fill="#3a2a20"/>
+    <rect x="4" y="12" width="12" height="12" rx="4" fill="${body}"/><rect x="2" y="13" width="3" height="8" rx="1.5" fill="${body}"/><rect x="15" y="13" width="3" height="8" rx="1.5" fill="${body}"/>
+    <circle cx="10" cy="7" r="6" fill="${sk}"/><path d="M4 7a6 6 0 0 1 12 0q-3-3-6-2-3-1-6 2z" fill="${hr}"/>
+    <circle cx="8" cy="8" r=".9" fill="#222"/><circle cx="12" cy="8" r=".9" fill="#222"/></svg>`;
+}
+const ROOF=`<svg class="roof" viewBox="0 0 300 74" preserveAspectRatio="none">
+  <g><rect x="4" y="26" width="40" height="48" fill="#5a4c43"/><path d="M0 28L24 -2 48 28z" fill="#5b3a8a"/><path d="M24 -2v-2" stroke="#3a2a22"/>
+     <rect x="16" y="40" width="10" height="14" rx="5" fill="#f6c27a"/></g>
+  <g><rect x="256" y="26" width="40" height="48" fill="#5a4c43"/><path d="M252 28L276 -2 300 28z" fill="#5b3a8a"/><rect x="274" y="40" width="10" height="14" rx="5" fill="#f6c27a"/></g>
+  <path d="M44 54h212v20H44z" fill="#5a4c43"/>
+  ${Array.from({length:11},(_,i)=>`<rect x="${48+i*19.5}" y="44" width="12" height="12" fill="#5a4c43"/>`).join('')}
+  <path d="M150 54V10" stroke="#3a2a22" stroke-width="2"/><path class="flag" d="M151 10h26l-6 7 6 7h-26z" fill="#e3b343"/>
+</svg>`;
+const HILLS=`<svg class="hills" viewBox="0 0 300 120" preserveAspectRatio="none"><path d="M0 70q60-40 120-10t120-20 60 10v70H0z" fill="#3d2f55" opacity=".7"/><path d="M0 90q80-30 160 0t140-10v40H0z" fill="#2f4a3a"/></svg>`;
+
+// ================= Действия =================
 function collect(r){
-  const got=Math.floor(S.stock[r]);if(!got)return 0;
-  const k=ROOMS[r].res;const room=storeCap()-S.res[k];const take=Math.max(0,Math.min(got,room));
-  S.res[k]+=take;S.stock[r]-=take;return take;
+  const got=Math.floor(r.stock);if(!got)return 0;const k=T[r.t].res;
+  const take=Math.max(0,Math.min(got,storeCap()-S.res[k]));S.res[k]+=take;r.stock-=take;return take;
 }
 function collectAll(){
-  let txt=[];for(const r of ['garden','treasury','forge']){const g=collect(r);if(g)txt.push(RES[ROOMS[r].res].i+'+'+g)}
-  toast(txt.length?'Собрано: '+txt.join(' '):'Пока нечего собирать');save();render();
+  const sum={};S.rooms.forEach(r=>{if(T[r.t].res){const g=collect(r);if(g)sum[T[r.t].res]=(sum[T[r.t].res]||0)+g}});
+  toast(Object.keys(sum).length?'Собрано: '+Object.keys(sum).map(k=>RES[k].i+'+'+sum[k]).join(' '):'Пока нечего собирать');save();render();
 }
-function upgrade(r){
-  if(r!=='tower'&&S.lvl[r]>=S.lvl.tower+1){toast('Сначала улучши Башню старосты');return}
+function collectRoom(id,e){if(e)e.stopPropagation();const r=room(id);const g=collect(r);toast(g?`${RES[T[r.t].res].i} +${g}`:'Склад полон — улучши Башню');save();render()}
+function upgrade(id){
+  const r=room(id);if(r.lvl>=S.tower+1){toast('Сначала улучши Башню старосты');return}
   const c=upCost(r);if(!canPay(c)){toast('Не хватает ресурсов');return}
-  pay(c);S.lvl[r]++;addLog(`⬆️ ${ROOMS[r].n} теперь ур. ${S.lvl[r]}`);toast(`${ROOMS[r].n}: уровень ${S.lvl[r]}!`);save();render();
+  pay(c);r.lvl++;addLog(`⬆️ ${T[r.t].n} теперь ур. ${r.lvl}`);toast(`${T[r.t].n}: уровень ${r.lvl}!`);save();openRoom(id);render();
 }
-function assign(id,r){
-  const p=S.people.find(x=>x.id==id);if(!p)return;
-  if(r&&r!=='none'&&inRoom(r).length>=slots(r)&&p.room!==r){toast('В комнате нет мест');render();return}
-  p.room=r==='none'?null:r;save();render();
+function upTower(){
+  const c=towerCost();if(!canPay(c)){toast('Не хватает ресурсов');return}
+  pay(c);S.tower++;addLog(`🏰 Башня старосты ур. ${S.tower}: новый этаж!`);toast('Открыт новый этаж!');save();openHall();render();
+}
+function build(t,f,c){
+  const cost=buildCost(t);if(!canPay(cost)){toast('Не хватает ресурсов');return}
+  if(!fits(f,c,T[t].w)){toast('Не помещается');return}
+  pay(cost);addRoom(S,t,f,c);addLog(`🔨 Построено: ${T[t].n}`);toast(`Построено: ${T[t].n}`);closeM();save();render();
+}
+function startMove(id){moving=id;closeM();tab='castle';render();toast('Выбери подсвеченное место')}
+function placeMove(f,c){const r=room(moving);if(!fits(f,c,T[r.t].w,r.id)){toast('Сюда не помещается');return}
+  r.f=f;r.c=c;moving=null;toast('Комната переставлена');save();render()}
+function assign(pid,rid){
+  const p=S.people.find(x=>x.id==pid);if(!p)return;rid=rid==='none'?null:+rid;
+  if(rid){const r=room(rid);if(crew(r).length>=slots(r)&&p.room!==rid){toast('В комнате нет мест');render();return}}
+  p.room=rid;save();render();
 }
 function recruit(paid){
-  if(S.people.length>=maxPeople()){toast('Нет места — улучши Башню');return}
+  if(S.people.length>=maxPeople()){toast('Нет места — построй или улучши Спальню');return}
   if(paid){const c={gold:100*S.people.length};if(!canPay(c)){toast('Нужно '+fmtCost(c));return}pay(c)}
   else{if(Date.now()<S.nextRecruit)return;S.nextRecruit=Date.now()+60*60e3}
-  const d=newDweller();S.people.push(d);addLog(`🚪 В крепость пришёл ${d.face} ${d.name}`);toast(`Новый житель: ${d.name}!`);save();render();
+  const d=newDweller();S.people.push(d);addLog(`🚪 В крепость пришла новая душа: ${d.name}`);toast(`Новый житель: ${d.name}!`);save();render();
 }
 function addLog(t){S.log.unshift(new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})+' '+t);S.log=S.log.slice(0,40)}
 
-// ===== Бой =====
+// ================= Бой =================
 function armyPower(){
-  const g=inRoom('guard');const b=1+.25*(S.lvl.guard-1);
-  return {hp:Math.round(g.reduce((a,p)=>a+30+p.sk.fight*8+p.lvl*6,0)*b),atk:Math.round(g.reduce((a,p)=>a+p.sk.fight*2+p.lvl,0)*b),n:g.length};
+  let hp=0,atk=0,n=0;
+  S.rooms.filter(r=>r.t==='guard').forEach(r=>{const b=1+.25*(r.lvl-1);crew(r).forEach(p=>{n++;hp+=(30+p.sk.fight*8+p.lvl*6)*b;atk+=(p.sk.fight*2+p.lvl)*b})});
+  return {hp:Math.round(hp),atk:Math.round(atk),n};
 }
-function enemy(){const base=ENEMIES[S.stage%ENEMIES.length];const loop=Math.floor(S.stage/ENEMIES.length);const m=Math.pow(2.2,loop);
-  return {...base,hp:Math.round(base.hp*m),atk:Math.round(base.atk*m),loop}}
+function enemy(){const b=ENEMIES[S.stage%ENEMIES.length],loop=Math.floor(S.stage/ENEMIES.length),m=Math.pow(2.2,loop);return {...b,hp:Math.round(b.hp*m),atk:Math.round(b.atk*m),loop}}
 function fight(){
   const a=armyPower();if(!a.n){toast('В Караульне нет воинов');return}
-  const e=enemy();let ah=a.hp,eh=e.hp,rounds=[];
+  const e=enemy();let ah=a.hp,eh=e.hp;const rounds=[];
   while(ah>0&&eh>0&&rounds.length<40){eh-=Math.round(a.atk*(.8+Math.random()*.4));if(eh<=0)break;ah-=Math.round(e.atk*(.8+Math.random()*.4));rounds.push([ah,eh])}
-  rounds.push([Math.max(0,ah),Math.max(0,eh)]);
-  const win=eh<=0;
-  showFight(a,e,rounds,win);
+  rounds.push([Math.max(0,ah),Math.max(0,eh)]);showFight(a,e,rounds,eh<=0);
 }
 function showFight(a,e,rounds,win){
   const box=document.getElementById('mbox');
@@ -179,97 +306,130 @@ function showFight(a,e,rounds,win){
   let i=0;const iv=setInterval(()=>{
     const [ah,eh]=rounds[i];document.getElementById('ah').style.width=Math.max(0,ah/a.hp*100)+'%';document.getElementById('eh').style.width=Math.max(0,eh/e.hp*100)+'%';
     if(++i>=rounds.length){clearInterval(iv);
-      const fr=document.getElementById('fres');const btn=document.getElementById('fclose');btn.disabled=false;btn.textContent='Готово';
+      const fr=document.getElementById('fres'),btn=document.getElementById('fclose');btn.disabled=false;btn.textContent='Готово';
       if(win){const loot={gold:Math.round(e.hp*.8),food:Math.round(e.hp*.5),ore:Math.round(e.hp*.3)};
         for(const k in loot)S.res[k]=Math.min(storeCap(),S.res[k]+loot[k]);
-        inRoom('guard').forEach(p=>gainXp(p,20+S.stage*5));S.stage++;
+        S.rooms.filter(r=>r.t==='guard').forEach(r=>crew(r).forEach(p=>gainXp(p,20+S.stage*5)));S.stage++;
         fr.textContent='Победа! Добыча: '+fmtCost(loot);addLog(`🏆 Разбиты: ${e.n}`)}
       else{fr.textContent='Отряд отступил. Прокачай воинов или Караульню.';addLog(`💀 Поражение: ${e.n}`)}
-      save();btn.onclick=()=>{document.getElementById('modal').classList.remove('show');render()}}
+      save();btn.onclick=()=>{closeM();render()}}
   },180);
 }
 function gainXp(p,x){p.xp+=x;while(p.xp>=p.lvl*50){p.xp-=p.lvl*50;p.lvl++;const k=rnd(Object.keys(p.sk));p.sk[k]++;addLog(`⭐ ${p.name} достиг ур. ${p.lvl}`)}}
-function train(id){
-  const p=S.people.find(x=>x.id==id);const c={food:40*p.lvl};
-  if(!canPay(c)){toast('Нужно '+fmtCost(c));return}pay(c);gainXp(p,50);toast(`${p.name} потренировался`);save();render();
+function train(id){const p=S.people.find(x=>x.id==id);const c={food:40*p.lvl};
+  if(!canPay(c)){toast('Нужно '+fmtCost(c));return}pay(c);gainXp(p,50);toast(`${p.name} потренировался`);save();render()}
+
+// ================= Окна =================
+function openM(html){document.getElementById('mbox').innerHTML=html;document.getElementById('modal').classList.add('show')}
+function closeM(){document.getElementById('modal').classList.remove('show')}
+function tapRoom(id){if(moving){if(moving===id){moving=null;render()}else toast('Выбери пустое подсвеченное место');return}openRoom(id)}
+function tapEmpty(f,c){if(moving){placeMove(f,c);return}openBuild(f,c)}
+function openRoom(id){
+  const r=room(id),t=T[r.t],c=upCost(r),cr=crew(r),nb=neighbors(r);
+  let info='';
+  if(t.res)info=`<p>${RES[t.res].i} ${fmt(rate(r))}/ч · накоплено ${fmt(r.stock)}/${fmt(capOf(r))}${nb?` · <span style="color:var(--green)">соседи +${nb*15}%</span>`:''}</p>`;
+  if(r.t==='bunk')info=`<p>Даёт ${2+r.lvl} мест для жителей.</p>`;
+  if(r.t==='guard')info=`<p>Бонус к силе воинов: +${(r.lvl-1)*25}%</p>`;
+  const free=S.people.filter(p=>p.room!==r.id);
+  const workers=t.skill?`<h2>Работники ${cr.length}/${slots(r)}</h2>`+cr.map(p=>`<div class="opt">${person(p,24)}<div class="grow" style="flex:1"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span><div class="sub">${SKILLS[t.skill]} ${p.sk[t.skill]}</div></div><button class="act sec" onclick="assign(${p.id},'none');openRoom(${id})">✕</button></div>`).join('')+
+    (cr.length<slots(r)&&free.length?`<select onchange="assign(this.value,${id});openRoom(${id})"><option>＋ Поставить жителя…</option>${free.sort((a,b)=>b.sk[t.skill]-a.sk[t.skill]).map(p=>`<option value="${p.id}">${p.name} — ${SKILLS[t.skill]} ${p.sk[t.skill]}${p.room?' (занят)':''}</option>`).join('')}</select>`:''):'';
+  openM(`<div class="row"><div style="font-size:30px">${t.i}</div><div class="grow"><b style="font-size:17px">${t.n}</b> <span class="pill">ур. ${r.lvl}</span><div class="sub">${t.d} · этаж ${r.f+1}</div></div><button class="act sec" onclick="closeM()">✕</button></div>
+  ${info}<div class="row" style="flex-wrap:wrap">${t.res?`<button class="act" onclick="collectRoom(${id});openRoom(${id})">Собрать</button>`:''}
+  <button class="act sec" onclick="upgrade(${id})" ${canPay(c)&&r.lvl<=S.tower?'':'disabled'}>⬆️ Ур. ${r.lvl+1}: ${fmtCost(c)}</button>
+  <button class="act sec" onclick="startMove(${id})">↔️ Переставить</button></div>${workers}`);
+}
+function openHall(){
+  const c=towerCost();
+  openM(`<div class="row"><div style="font-size:30px">🏰</div><div class="grow"><b style="font-size:17px">Башня старосты</b> <span class="pill">ур. ${S.tower}</span><div class="sub">Сердце крепости</div></div><button class="act sec" onclick="closeM()">✕</button></div>
+  <p>Этажей: ${floors()} · склад ${fmt(storeCap())} · комнаты до ур. ${S.tower+1}</p>
+  <button class="act big" onclick="upTower()" ${canPay(c)?'':'disabled'}>⬆️ Ур. ${S.tower+1} (+этаж): ${fmtCost(c)}</button>`);
+}
+function openBuild(f,c){
+  openM(`<div class="row"><b class="grow" style="font-size:17px">🔨 Строительство · этаж ${f+1}</b><button class="act sec" onclick="closeM()">✕</button></div>`+
+  Object.keys(T).map(k=>{const t=T[k],cost=buildCost(k),ok=fits(f,c,t.w);
+    return `<div class="opt"><div class="pv">${art(k,t.w*100)}</div><div style="flex:1"><b>${t.n}</b> <span class="pill">${t.w===2?'2 клетки':'1 клетка'}</span><div class="sub">${t.d}${ok?'':' · не помещается'}</div></div>
+    <button class="act" onclick="build('${k}',${f},${c})" ${ok&&canPay(cost)?'':'disabled'}>${fmtCost(cost)}</button></div>`}).join(''));
 }
 
-// ===== Отрисовка =====
-let tab='castle';
+// ================= Экраны =================
 function render(){
   tick(Date.now());
-  document.getElementById('lvl').textContent='· башня ур. '+S.lvl.tower;
+  document.getElementById('lvl').textContent='· башня ур. '+S.tower;
   const cap=fmt(storeCap());
-  document.getElementById('res').innerHTML=Object.keys(RES).map(k=>`<span class="chip">${RES[k].i} ${fmt(S.res[k])}<i>/${cap}</i></span>`).join('')+
-    `<span class="chip">👥 ${S.people.length}<i>/${maxPeople()}</i></span>`;
+  document.getElementById('res').innerHTML=Object.keys(RES).map(k=>`<span class="chip">${RES[k].i} ${fmt(S.res[k])}<i>/${cap}</i></span>`).join('')+`<span class="chip">👥 ${S.people.length}<i>/${maxPeople()}</i></span>`;
   const v=document.getElementById('view');
-  if(tab==='castle')v.innerHTML=castleView();
-  if(tab==='people')v.innerHTML=peopleView();
-  if(tab==='raid')v.innerHTML=raidView();
-  if(tab==='menu')v.innerHTML=menuView();
+  v.innerHTML=tab==='castle'?castleView():tab==='people'?peopleView():tab==='raid'?raidView():menuView();
 }
-function roomCard(r){
-  const R=ROOMS[r];const c=upCost(r);const ppl=inRoom(r);
-  let info='';
-  if(R.res){const st=S.stock[r],cp=capOf(r);
-    info=`<div class="sub">${RES[R.res].i} ${fmt(ratePerHour(r))}/ч · накоплено ${fmt(st)}/${fmt(cp)}</div><div class="bar"><div style="width:${st/cp*100}%"></div></div>`}
-  else if(r==='guard'){const a=armyPower();info=`<div class="sub">❤️ ${a.hp} · 🗡️ ${a.atk}</div>`}
-  else info=`<div class="sub">Склад ${fmt(storeCap())} · жителей до ${maxPeople()}</div>`;
-  const w=r==='tower'?'':`<div class="workers">${ppl.map(p=>p.face).join('')}${'·'.repeat(Math.max(0,slots(r)-ppl.length))}</div>`;
-  const btn=R.res&&S.stock[r]>=1?`<button class="act" onclick="collectOne('${r}')">Собрать</button>`:
-    `<button class="act sec" onclick="upgrade('${r}')" ${canPay(c)?'':'disabled'}>⬆️<br><span style="font-size:11px">${fmtCost(c)}</span></button>`;
-  return `<div class="room" style="--c:${R.c}"><div class="ic">${R.i}</div><div class="mid"><div class="nm">${R.n} <span class="pill">ур. ${S.lvl[r]}</span></div>${info}${w}</div>${btn}</div>`;
+function roomCell(r){
+  const t=T[r.t],cr=crew(r),cap=capOf(r);
+  const st=t.res&&r.stock>=1?`<div class="stock ${r.stock>=cap*.3?'ready':''}" onclick="collectRoom(${r.id},event)">${RES[t.res].i}${fmt(r.stock)}</div>`:'';
+  const nb=neighbors(r);
+  return `<div class="cell ${moving===r.id?'moving':''}" style="grid-column:${r.c+1}/span ${t.w}" onclick="tapRoom(${r.id})">${art(r.t,t.w*100)}
+    <div class="lbl">${t.n} ${r.lvl}${nb?` <span class="bn">+${nb*15}%</span>`:''}</div>${st}
+    <div class="crew">${cr.map(p=>person(p)).join('')}</div>${slots(r)?`<div class="slots">${cr.length}/${slots(r)}</div>`:''}</div>`;
 }
-function collectOne(r){const g=collect(r);toast(g?`${RES[ROOMS[r].res].i} +${g}`:'Склад полон — улучши Башню');save();render()}
 function castleView(){
-  return `<button class="act big" onclick="collectAll()">🧺 Собрать всё</button>
-  <div class="castle"><div class="roof">🚩 🏰 🚩</div>${['tower','guard','forge','treasury','garden'].map(roomCard).join('')}</div>
-  <h2>Улучшения</h2><div class="card">${Object.keys(ROOMS).map(r=>{const c=upCost(r);return `<div class="row" style="margin:6px 0"><span class="grow">${ROOMS[r].i} ${ROOMS[r].n} → ур. ${S.lvl[r]+1}</span><button class="act sec" onclick="upgrade('${r}')" ${canPay(c)?'':'disabled'}>${fmtCost(c)}</button></div>`}).join('')}</div>
+  const g=grid();let rows='';const mv=moving?room(moving):null;
+  for(let f=floors()-1;f>=0;f--){
+    let cells='';
+    for(let c=0;c<3;c++){const id=g[f][c];
+      if(id!==null){const r=room(id);if(r.c===c)cells+=roomCell(r);continue}
+      const tg=mv&&fits(f,c,T[mv.t].w,mv.id)?'target':'';
+      cells+=`<div class="cell empty ${tg}" style="grid-column:${c+1}/span 1" onclick="tapEmpty(${f},${c})"><div class="plus"><b>＋</b>${tg?'сюда':'строить'}</div></div>`;
+    }
+    rows+=`<div class="floor">${cells}</div>`;
+  }
+  return (mv?`<div class="movebar"><span class="grow" style="flex:1">↔️ Куда поставить: ${T[mv.t].n}?</span><button class="act sec" onclick="moving=null;render()">Отмена</button></div>`:
+    `<button class="act big" onclick="collectAll()">🧺 Собрать всё</button>`)+
+  `<div class="scene">${HILLS}${ROOF}<div class="castle">
+    <div class="floor"><div class="cell" style="grid-column:1/span 3" onclick="moving?0:openHall()">${art('hall',300)}<div class="lbl">Башня старосты ${S.tower}</div></div></div>
+    ${rows}</div><div class="ground"></div></div>
+  <p class="sub">Нажми на комнату, чтобы улучшить, переставить или поставить жителей. Нажми на пустую клетку, чтобы строить. Одинаковые комнаты рядом (сбоку или над/под) дают +15%.</p>
   <h2>Летопись</h2><div class="log">${S.log.map(l=>`<div>${l}</div>`).join('')||'<div>Пока тихо…</div>'}</div>`;
 }
+function roomName(r){return `${T[r.t].i} ${T[r.t].n} (эт. ${r.f+1})`}
 function peopleView(){
   const left=S.nextRecruit-Date.now();
   const free=left<=0?`<button class="act" onclick="recruit(false)">Позвать бесплатно</button>`:`<span class="pill">бесплатно через ${Math.ceil(left/60e3)} мин</span>`;
-  const opts=r=>['none','garden','treasury','forge','guard'].map(k=>`<option value="${k}" ${(r||'none')===k?'selected':''}>${k==='none'?'— отдыхает —':ROOMS[k].i+' '+ROOMS[k].n}</option>`).join('');
+  const work=S.rooms.filter(r=>T[r.t].skill);
+  const opts=p=>`<option value="none">— отдыхает —</option>`+work.map(r=>`<option value="${r.id}" ${p.room===r.id?'selected':''}>${roomName(r)} ${crew(r).length}/${slots(r)}</option>`).join('');
   return `<div class="card row"><span class="grow">Новые жители</span>${free}<button class="act sec" onclick="recruit(true)">🪙${100*S.people.length}</button></div>`+
-  S.people.map(p=>`<div class="card"><div class="row"><span style="font-size:30px">${p.face}</span><div class="grow"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span>
-  <div class="bar"><div style="width:${p.xp/(p.lvl*50)*100}%;background:var(--blue)"></div></div></div>
+  S.people.map(p=>`<div class="card"><div class="row">${person(p,30)}<div class="grow"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span>
+  <div class="bar"><div style="width:${p.xp/(p.lvl*50)*100}%"></div></div></div>
   <button class="act sec" onclick="train(${p.id})">🏋️ 🥕${40*p.lvl}</button></div>
-  <div class="sub" style="margin:6px 0;color:var(--dim);font-size:12px">${Object.keys(p.sk).map(k=>SKILLS[k]+' '+p.sk[k]).join(' · ')}</div>
-  <select onchange="assign(${p.id},this.value)">${opts(p.room)}</select></div>`).join('');
+  <div class="sub" style="margin:6px 0">${Object.keys(p.sk).map(k=>SKILLS[k]+' '+p.sk[k]).join(' · ')}</div>
+  <select onchange="assign(${p.id},this.value)">${opts(p)}</select></div>`).join('');
 }
 function raidView(){
-  const e=enemy();const a=armyPower();
+  const e=enemy(),a=armyPower();
   return `<div class="card" style="text-align:center"><div style="font-size:56px">${e.i}</div><b>${e.n}${e.loop?' +'+e.loop:''}</b>
-  <div class="sub" style="color:var(--dim)">❤️ ${e.hp} · 🗡️ ${e.atk}</div><p>Твой отряд: ${a.n} воин. · ❤️ ${a.hp} · 🗡️ ${a.atk}</p>
+  <div class="sub">❤️ ${e.hp} · 🗡️ ${e.atk}</div><p>Твой отряд: ${a.n} воин. · ❤️ ${a.hp} · 🗡️ ${a.atk}</p>
   <button class="act big" onclick="fight()">⚔️ В бой</button></div>
-  <div class="card sub" style="color:var(--dim)">Воины — жители в Караульне. Сила зависит от навыка «Бой», уровня жителя и уровня Караульни. Пройдено волн: ${S.stage}.</div>`;
+  <div class="card sub">Воины — жители в Караульнях. Сила зависит от навыка «Бой», уровня жителя и уровня Караульни. Пройдено волн: ${S.stage}.</div>`;
 }
 function menuView(){
-  return `<div class="card"><b>Как играть</b><p class="sub" style="color:var(--dim)">Комнаты работают, даже когда игра закрыта. Заходи вечером, собирай урожай, улучшай комнаты и отбивай набеги. Склад общий и ограничен уровнем Башни старосты.</p></div>
-  <div class="card"><b>Сохранение</b><p class="sub" style="color:var(--dim)">Прогресс хранится в этом браузере. Скопируй код, чтобы не потерять его или перенести.</p>
+  return `<div class="card"><b>Как играть</b><p class="sub">Комнаты работают, даже когда игра закрыта. Заходи вечером, собирай урожай, строй и переставляй комнаты, отбивай набеги. Склад общий и ограничен уровнем Башни старосты.</p></div>
+  <div class="card"><b>Сохранение</b><p class="sub">Прогресс хранится в этом браузере. Скопируй код, чтобы не потерять его или перенести.</p>
   <textarea id="code" readonly>${btoa(unescape(encodeURIComponent(JSON.stringify(S))))}</textarea>
   <div class="row" style="margin-top:6px"><button class="act sec" onclick="copyCode()">Скопировать</button><button class="act sec" onclick="importCode()">Загрузить код…</button></div></div>
   <div class="card"><button class="act sec" style="background:var(--red)" onclick="askReset()">Начать заново</button></div>`;
 }
 function copyCode(){const t=document.getElementById('code');navigator.clipboard.writeText(t.value).then(()=>toast('Скопировано'),()=>{t.select();toast('Выдели и скопируй вручную')})}
 function importCode(){
-  const box=document.getElementById('mbox');box.innerHTML=`<b>Вставь код сохранения</b><textarea id="imp"></textarea><div class="row" style="margin-top:8px"><button class="act" id="iok">Загрузить</button><button class="act sec" onclick="closeM()">Отмена</button></div>`;
-  document.getElementById('modal').classList.add('show');
-  document.getElementById('iok').onclick=()=>{try{const s=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('imp').value.trim()))));if(!s.res)throw 0;S=s;save();closeM();toast('Загружено');render()}catch(e){toast('Код не подходит')}};
+  openM(`<b>Вставь код сохранения</b><textarea id="imp"></textarea><div class="row" style="margin-top:8px"><button class="act" id="iok">Загрузить</button><button class="act sec" onclick="closeM()">Отмена</button></div>`);
+  document.getElementById('iok').onclick=()=>{try{let s=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('imp').value.trim()))));if(!s.res)throw 0;if(s.v!==2)s=fresh(s);S=s;save();closeM();toast('Загружено');render()}catch(e){toast('Код не подходит')}};
 }
-function askReset(){const box=document.getElementById('mbox');box.innerHTML=`<b>Точно начать заново?</b><p>Весь прогресс пропадёт.</p><div class="row"><button class="act" style="background:var(--red)" id="rok">Да</button><button class="act sec" onclick="closeM()">Нет</button></div>`;
-  document.getElementById('modal').classList.add('show');document.getElementById('rok').onclick=()=>{S=fresh();save();closeM();render()}}
-function closeM(){document.getElementById('modal').classList.remove('show')}
+function askReset(){openM(`<b>Точно начать заново?</b><p>Весь прогресс пропадёт.</p><div class="row"><button class="act" style="background:var(--red)" id="rok">Да</button><button class="act sec" onclick="closeM()">Нет</button></div>`);
+  document.getElementById('rok').onclick=()=>{S=fresh();save();closeM();render()}}
 let tt;function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),1800)}
 
-// ===== Запуск =====
+// ================= Запуск =================
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));render()});
 S=load()||fresh();
 const away=(Date.now()-S.last)/60e3;
 render();
 if(away>5)setTimeout(()=>toast(`С возвращением! Тебя не было ${away>90?Math.round(away/60)+' ч':Math.round(away)+' мин'} — урожай ждёт`),300);
-setInterval(()=>{if(!document.getElementById('modal').classList.contains('show')&&tab!=='menu')render()},2000);
+setInterval(()=>{if(!document.getElementById('modal').classList.contains('show')&&tab!=='menu'&&!document.activeElement.matches('select'))render()},2000);
 setInterval(save,10000);
 addEventListener('visibilitychange',()=>{if(document.hidden)save();else render()});
 </script>
