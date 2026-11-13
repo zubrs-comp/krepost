@@ -106,6 +106,49 @@ h2{font-size:16px;margin:14px 12px 6px}
 .opt .pv{height:52px;border-radius:6px;overflow:hidden;flex:none;position:relative;background:#2a1f1a}
 .opt .pv svg{width:100%;height:100%}
 .hint{margin:8px 12px}
+/* ===== Снаряжение ===== */
+.r0{color:#cfcfcf}.r1{color:#5ab0ff}.r2{color:#c48aff}.r3{color:#ffc04a}
+.slotrow{display:flex;gap:6px;margin-top:8px}
+.slot{flex:1;background:#1b1622;border:2px solid #4d3e5c;border-radius:10px;padding:4px;text-align:center;font-size:10px;color:var(--dim);min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.slot svg{width:38px;height:38px}
+.slot.b1{border-color:#3a7ac0}.slot.b2{border-color:#8a4ad0}.slot.b3{border-color:#e0a030;box-shadow:0 0 10px rgba(255,180,50,.35)}
+.icon{width:46px;height:46px;flex:none;border-radius:10px;background:radial-gradient(circle,#3d3150,#1b1622);border:2px solid #4d3e5c;display:flex;align-items:center;justify-content:center}
+.icon svg{width:40px;height:40px}
+.icon.b1{border-color:#3a7ac0}.icon.b2{border-color:#8a4ad0}.icon.b3{border-color:#e0a030}
+.portrait{width:70px;height:96px;flex:none;border-radius:12px;background:radial-gradient(circle at 50% 70%,#4d3e5c,#1b1622);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.stats{font-size:12px;color:var(--ink);margin-top:3px}
+/* ===== Арена ===== */
+.arena{position:relative;height:190px;border-radius:12px;overflow:hidden;margin:8px 0;background:linear-gradient(#2a2038,#4a3548 60%,#6b4a2f 60%,#4a321e)}
+.arena .team{position:absolute;bottom:18px;left:6px;display:flex;align-items:flex-end;gap:0;flex-wrap:wrap;max-width:58%}
+.arena .team>div{margin-right:-6px}
+.arena .foe{position:absolute;bottom:22px;right:14px;font-size:84px;line-height:1;filter:drop-shadow(0 6px 4px rgba(0,0,0,.5))}
+.lunge{animation:lunge .35s}
+@keyframes lunge{50%{transform:translateX(16px)}}
+.lungeL{animation:lungeL .35s}
+@keyframes lungeL{50%{transform:translateX(-22px) scale(1.08)}}
+.hit{animation:hit .3s}
+@keyframes hit{25%{transform:translateX(-5px);filter:brightness(2) drop-shadow(0 0 6px red)}75%{transform:translateX(5px)}}
+.dmg{position:absolute;font-weight:900;font-size:20px;color:#ffe08a;text-shadow:0 2px 0 #000,0 0 6px #000;animation:up .8s forwards;pointer-events:none}
+.dmg.bad{color:#ff7070}
+@keyframes up{to{transform:translateY(-40px);opacity:0}}
+/* ===== Сундуки ===== */
+.chests{display:flex;justify-content:space-around;align-items:flex-end;margin:14px 0 6px;min-height:150px}
+.chest{width:30%;text-align:center;cursor:pointer;position:relative}
+.chest svg{width:100%;height:auto;overflow:visible}
+.chest .lid{transition:transform .5s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:10% 100%}
+.chest.open .lid{transform:translate(-4px,-10px) rotate(-28deg)}
+.chest .shine{opacity:0;transition:opacity .4s}
+.chest.open .shine{opacity:1}
+.chest.idle{animation:wob 1.6s ease-in-out infinite}
+.chest:nth-child(2).idle{animation-delay:.3s}.chest:nth-child(3).idle{animation-delay:.6s}
+@keyframes wob{0%,100%{transform:rotate(0)}10%{transform:rotate(-4deg)}20%{transform:rotate(4deg)}30%{transform:rotate(0)}}
+.chest.shake{animation:shk .5s}
+@keyframes shk{20%{transform:rotate(-8deg) scale(1.05)}40%{transform:rotate(8deg) scale(1.1)}60%{transform:rotate(-6deg) scale(1.1)}80%{transform:rotate(4deg)}}
+.chest.missed{opacity:.45;filter:grayscale(.6)}
+.chest .prize{font-size:12px;font-weight:800;min-height:34px;margin-top:4px}
+.burst{animation:burst .9s ease-out forwards;transform-box:fill-box}
+@keyframes burst{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),-46px);opacity:0}}
+.itemcard{display:flex;gap:10px;align-items:center;background:var(--panel2);border-radius:12px;padding:10px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -140,6 +183,13 @@ h2{font-size:16px;margin:14px 12px 6px}
     <linearGradient id="winsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2d6a"/><stop offset=".6" stop-color="#c46a6a"/><stop offset="1" stop-color="#f3b06a"/></linearGradient>
     <linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8414a"/><stop offset="1" stop-color="#7e1f2a"/></linearGradient>
     <linearGradient id="purple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5bc0"/><stop offset="1" stop-color="#4a2a78"/></linearGradient>
+    <pattern id="mail" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" fill="#8a909c"/><circle cx="1.5" cy="1.5" r="1.1" fill="none" stroke="#c9ced8" stroke-width=".55"/></pattern>
+    <linearGradient id="leather" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8703f"/><stop offset="1" stop-color="#5e3a1e"/></linearGradient>
+    <radialGradient id="rg1"><stop offset="0" stop-color="#5ab0ff" stop-opacity=".55"/><stop offset="1" stop-color="#5ab0ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="rg2"><stop offset="0" stop-color="#c48aff" stop-opacity=".7"/><stop offset="1" stop-color="#c48aff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="rg3"><stop offset="0" stop-color="#ffc04a" stop-opacity=".8"/><stop offset="1" stop-color="#ffc04a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="skinShade" x1="0" x2="1"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".14"/></linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6fa"/><stop offset=".5" stop-color="#aab1bd"/><stop offset="1" stop-color="#6b7280"/></linearGradient>
     <linearGradient id="pillar" x1="0" x2="1"><stop offset="0" stop-color="#6e6676"/><stop offset=".4" stop-color="#b8b0bf"/><stop offset="1" stop-color="#5a5262"/></linearGradient>
   </defs>
 </svg>
@@ -152,6 +202,7 @@ h2{font-size:16px;margin:14px 12px 6px}
 <nav class="tabs">
   <button data-t="castle" class="on"><b>🏯</b>Крепость</button>
   <button data-t="people"><b>🧑‍🌾</b>Жители</button>
+  <button data-t="items"><b>🎒</b>Вещи</button>
   <button data-t="raid"><b>⚔️</b>Набеги</button>
   <button data-t="menu"><b>⚙️</b>Меню</button>
 </nav>
@@ -184,12 +235,28 @@ const SPEED=1;
 // ================= Состояние =================
 let S,moving=null,tab='castle';
 const rand=n=>Math.floor(Math.random()*n),rnd=a=>a[rand(a.length)];
-function newDweller(){return {id:Date.now()+Math.random(),name:rnd(NAMES),skin:rand(SKIN.length),hair:rand(HAIR.length),lvl:1,xp:0,
-  sk:{farm:1+rand(4),trade:1+rand(4),craft:1+rand(4),fight:1+rand(4)},room:null}}
+const NM=['Ярема','Мирон','Остап','Гордей','Тихон','Добрыня','Лука','Ратибор','Всеслав','Елисей','Богдан','Святогор'];
+const NF=['Злата','Велта','Ладимира','Белава','Рада','Веселина','Снежана','Олеся','Милава','Дарина','Забава','Любава'];
+const EYES=['#4a7ab0','#5a8a3a','#7a4a22','#3a2a1a','#6a6a7a'];
+const PANTS=['#4a3a5a','#3a4a5a','#5a4a32','#3a3a3a','#5a3a32'];
+function looks(p){if(p.g===undefined)p.g=NF.includes(p.name)?1:NM.includes(p.name)?0:rand(2);
+  if(p.hs===undefined)p.hs=p.g?2+rand(3):rand(2);if(p.beard===undefined)p.beard=!p.g&&Math.random()<.45;
+  if(p.eye===undefined)p.eye=rand(EYES.length);if(p.pants===undefined)p.pants=rand(PANTS.length);if(!p.eq)p.eq={weapon:null,armor:null,helmet:null};return p}
+function newDweller(){const g=rand(2);return looks({id:Date.now()+Math.random(),g,name:rnd(g?NF:NM),skin:rand(SKIN.length),hair:rand(HAIR.length),lvl:1,xp:0,
+  sk:{farm:1+rand(4),trade:1+rand(4),craft:1+rand(4),fight:1+rand(4)},room:null})}
+function normalize(s){
+  s.people.forEach(looks);
+  if(!s.items){s.items=[];s.iid=0;
+    const g=s.rooms.find(r=>r.t==='guard'),f=g&&s.people.find(p=>p.room===g.id)||s.people[0];
+    if(f){const a=mkItem(s,'weapon','sword',0,0),b=mkItem(s,'armor','leather',0,0);f.eq.weapon=a.id;f.eq.armor=b.id}
+    mkItem(s,'helmet','helm',0,0);
+  }
+  return s;
+}
 function mainSkill(p){return Object.keys(p.sk).reduce((a,k)=>p.sk[k]>p.sk[a]?k:a,Object.keys(p.sk)[0])}
 function addRoom(s,t,f,c,lvl=1){const r={id:++s.nid,t,lvl,f,c,stock:0};s.rooms.push(r);return r}
 function fresh(old){
-  const s={v:3,nid:0,res:{food:150,gold:150,ore:40},tower:1,rooms:[],people:[],last:Date.now(),nextRecruit:Date.now()+30*60e3,stage:0,log:[]};
+  const s={v:3,nid:0,res:{food:150,gold:150,ore:40},tower:1,rooms:[],people:[],last:Date.now(),nextRecruit:Date.now()+30*60e3,stage:0,log:[],items:old&&old.items,iid:old&&old.iid};
   const R={garden:addRoom(s,'garden',0,0),treasury:addRoom(s,'treasury',0,3),forge:addRoom(s,'forge',1,0),bunk:addRoom(s,'bunk',1,2),guard:addRoom(s,'guard',2,0)};
   if(old&&old.res){
     s.res=old.res;s.stage=old.stage||0;s.log=old.log||[];s.tower=old.tower||(old.lvl&&old.lvl.tower)||1;s.nextRecruit=old.nextRecruit||s.nextRecruit;
@@ -206,7 +273,34 @@ function fresh(old){
   return s;
 }
 function save(){tick(Date.now());S.last=Date.now();try{localStorage.setItem('vk_save',JSON.stringify(S))}catch(e){}}
-function load(){try{const t=localStorage.getItem('vk_save');if(t){const s=JSON.parse(t);return s.v===3?s:fresh(s)}}catch(e){}return null}
+function load(){try{const t=localStorage.getItem('vk_save');if(t){const s=JSON.parse(t);return normalize(s.v===3?s:fresh(s))}}catch(e){}return null}
+
+// ================= Вещи =================
+const RAR=[{n:'Обычная',c:'#cfcfcf'},{n:'Редкая',c:'#5ab0ff'},{n:'Эпическая',c:'#c48aff'},{n:'Легендарная',c:'#ffc04a'}];
+const SLOTN={weapon:'Оружие',armor:'Броня',helmet:'Шлем'};
+const KINDS={
+  weapon:{sword:['Короткий меч','Стальной меч','Рунный клинок','Клинок заката'],axe:['Топорик','Боевой топор','Секира бури','Секира предков'],
+          spear:['Копьё','Пика стражи','Копьё молний','Копьё зари'],mace:['Дубина','Булава','Звёздная булава','Молот грома']},
+  armor:{leather:['Кожаная куртка','Дублёная куртка','Куртка следопыта','Куртка теней'],mail:['Кольчуга','Двойная кольчуга','Мифриловая кольчуга','Кольчуга феникса'],
+          plate:['Нагрудник','Латы стража','Латы рыцаря','Латы рассвета']},
+  helmet:{hood:['Кожаный капюшон','Капюшон охотника','Капюшон ночи','Капюшон звездочёта'],helm:['Шлем','Шлем дозорного','Крылатый шлем','Шлем победы'],
+          great:['Глухой шлем','Закрытый шлем','Шлем паладина','Шлем-корона']}
+};
+const KMUL={sword:1,axe:1.15,spear:.95,mace:1.1,leather:.8,mail:1,plate:1.25,hood:.8,helm:1,great:1.2};
+function mkItem(s,slot,kind,r,lvl){
+  const pw=(1+lvl*.35)*[1,1.7,2.8,4.5][r]*KMUL[kind];
+  const it={id:++s.iid,slot,kind,r,lvl,name:KINDS[slot][kind][r],
+    atk:slot==='weapon'?Math.round(5*pw):slot==='helmet'&&r>=2?Math.round(1.5*pw):0,
+    hp:slot==='armor'?Math.round(30*pw):slot==='helmet'?Math.round(14*pw):r>=2?Math.round(8*pw):0};
+  s.items.push(it);return it;
+}
+function rollRar(boost=0){const w=[60-boost*4,28+boost*1.5,10+boost*1.8,2+boost*.7];let x=Math.random()*w.reduce((a,b)=>a+b);for(let i=0;i<4;i++){if((x-=w[i])<0)return i}return 0}
+function randItem(lvl,boost){const slot=rnd(['weapon','weapon','armor','helmet']);return mkItem(S,slot,rnd(Object.keys(KINDS[slot])),rollRar(boost),lvl)}
+const item=id=>id==null?null:S.items.find(i=>i.id===id);
+const owner=it=>S.people.find(p=>p.eq&&p.eq[it.slot]===it.id);
+function gearStats(p){let atk=0,hp=0;for(const k in p.eq){const it=item(p.eq[k]);if(it){atk+=it.atk;hp+=it.hp}}return {atk,hp}}
+const sellPrice=it=>Math.round(25*Math.pow(2.4,it.r)*(1+it.lvl*.3));
+const statTxt=it=>[it.atk?`⚔️${it.atk}`:'',it.hp?`❤️${it.hp}`:''].filter(Boolean).join(' ');
 
 // ================= Экономика =================
 const room=id=>S.rooms.find(r=>r.id==id);
@@ -335,29 +429,88 @@ hall:(W,L)=>interior(W,'#3a1a2e',250)+win(52,22,30,46)+win(418,22,30,46)+torch(2
 function art(t,W,L=1){return `<svg class="art" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice">${ART[t](W,L)}</svg>`}
 function emptyArt(){return `<svg class="art" viewBox="0 0 100 ${H}" preserveAspectRatio="xMidYMid slice"><rect width="100" height="${H}" fill="url(#rock)"/><rect width="100" height="${H}" fill="url(#vigH)"/><rect width="100" height="${H}" fill="url(#vigV)"/></svg>`}
 
-function person(p,s=26){
-  const k=mainSkill(p),body=SKCOL[k],sk=SKIN[p.skin||0],hr=HAIR[p.hair||0],o='#2a1a12';
-  const hat={
-    farm:`<ellipse cx="12" cy="4.5" rx="10" ry="2.6" fill="#e2c26a" stroke="${o}" stroke-width=".7"/><path d="M7 4.5q0-6 5-6t5 6z" fill="#efd283" stroke="${o}" stroke-width=".7"/><path d="M7.2 3.6h9.6" stroke="#b5462f" stroke-width="1.4"/>`,
-    trade:`<path d="M5.2 6q0-7 7-7 6.5 0 6.6 6z" fill="#3e7d4a" stroke="${o}" stroke-width=".7"/><path d="M17 1q5-4 7 0" stroke="#e05a4a" stroke-width="1.5" fill="none"/>`,
-    craft:`<rect x="5.4" y="4" width="13.2" height="2.6" rx="1" fill="#5a3a22"/><circle cx="9.6" cy="5.3" r="1.9" fill="#9fd4ff" stroke="${o}" stroke-width=".6"/><circle cx="14.4" cy="5.3" r="1.9" fill="#9fd4ff" stroke="${o}" stroke-width=".6"/>`,
-    fight:`<path d="M5 8.5q0-9.5 7-9.5t7 9.5z" fill="url(#steel)" stroke="${o}" stroke-width=".7"/><rect x="11.3" y="5" width="1.4" height="6" fill="#7a808c"/><path d="M12 -1v-3" stroke="#c4463f" stroke-width="2.2" stroke-linecap="round"/>`
-  }[k];
-  const apron=k==='craft'?`<path d="M8.5 15.5h7v8h-7z" fill="#7a4a2a" stroke="${o}" stroke-width=".5"/>`:k==='fight'?`<path d="M8 16h8v6H8z" fill="url(#steel)" opacity=".9"/>`:'';
-  return `<svg width="${s}" height="${(s*1.42).toFixed(1)}" viewBox="0 -4 24 35" overflow="visible">
-    <ellipse cx="12" cy="30.3" rx="7" ry="1.6" fill="#000" opacity=".35"/>
-    <rect class="lg1" x="8.2" y="22" width="3.4" height="8" rx="1.3" fill="#3a2a20" stroke="${o}" stroke-width=".5"/>
-    <rect class="lg2" x="12.4" y="22" width="3.4" height="8" rx="1.3" fill="#4a3628" stroke="${o}" stroke-width=".5"/>
-    <rect x="3.3" y="14.6" width="3.6" height="7.6" rx="1.8" fill="${body}" stroke="${o}" stroke-width=".6"/><circle cx="5.1" cy="22.4" r="1.6" fill="${sk}" stroke="${o}" stroke-width=".5"/>
-    <rect x="17.1" y="14.6" width="3.6" height="7.6" rx="1.8" fill="${body}" stroke="${o}" stroke-width=".6"/><circle cx="18.9" cy="22.4" r="1.6" fill="${sk}" stroke="${o}" stroke-width=".5"/>
-    <path d="M6 15q6-3.4 12 0l1 8.6H5z" fill="${body}" stroke="${o}" stroke-width=".7"/><path d="M7 15.6q5-2 10 0" stroke="#fff" stroke-opacity=".3" fill="none"/>
-    ${apron}<rect x="5.4" y="19.6" width="13.2" height="1.7" fill="#4a2e18"/><rect x="11" y="19.4" width="2" height="2.1" fill="#e3b343"/>
-    <circle cx="12" cy="8.6" r="6.8" fill="${sk}" stroke="${o}" stroke-width=".7"/>
-    <path d="M5.2 8.6a6.8 6.8 0 0 1 13.6 0q-2.2-3.4-6.8-3.2T5.2 8.6z" fill="${hr}"/>
-    <ellipse cx="9.6" cy="9.4" rx="1.05" ry="1.4" fill="#1e1410"/><ellipse cx="14.4" cy="9.4" rx="1.05" ry="1.4" fill="#1e1410"/>
-    <circle cx="9.9" cy="8.9" r=".4" fill="#fff"/><circle cx="14.7" cy="8.9" r=".4" fill="#fff"/>
-    <circle cx="7.9" cy="11.4" r="1.2" fill="#ff8a8a" opacity=".45"/><circle cx="16.1" cy="11.4" r="1.2" fill="#ff8a8a" opacity=".45"/>
-    <path d="M10.7 12.2q1.3 1.1 2.6 0" stroke="${o}" stroke-width=".7" fill="none" stroke-linecap="round"/>${hat}</svg>`;
+// ---- Персонажи (оригинальный дизайн) ----
+const O='#2a1a12';
+function weaponShape(k,r){
+  const m=r===3?'url(#gold)':r===2?'#d4b0ff':r===1?'url(#silver)':'url(#steel)';
+  const t=r===3?'#ffc04a':r===2?'#8a4ad0':r===1?'#3a6ab0':'#6a4a2a';
+  const glow=r>=1?`<circle cx="0" cy="-16" r="${8+r*2}" fill="url(#rg${r})"/>`:'';
+  switch(k){
+    case 'sword':return glow+`<rect x="-1.2" y="-1" width="2.4" height="6" rx="1" fill="${t}" stroke="${O}" stroke-width=".5"/><circle cx="0" cy="5.6" r="1.6" fill="url(#gold)" stroke="${O}" stroke-width=".4"/><rect x="-4.6" y="-2.8" width="9.2" height="2.1" rx="1" fill="url(#gold)" stroke="${O}" stroke-width=".5"/><path d="M-1.7 -3V-22L0 -26 1.7 -22V-3z" fill="${m}" stroke="${O}" stroke-width=".6"/><path d="M0 -4V-23" stroke="#fff" stroke-opacity=".55" stroke-width=".6"/>`;
+    case 'axe':return glow+`<rect x="-1" y="-24" width="2" height="30" rx="1" fill="url(#wood)" stroke="${O}" stroke-width=".5"/><path d="M1 -23q10-3 10 6.5t-10 6z" fill="${m}" stroke="${O}" stroke-width=".6"/><path d="M8 -20q2 3 0 7" stroke="#fff" stroke-opacity=".5" fill="none" stroke-width=".6"/>${r?`<path d="M-1 -22q-6 3.5 0 8z" fill="${m}" stroke="${O}" stroke-width=".5"/>`:''}<rect x="-1.5" y="-1" width="3" height="4" fill="${t}"/>`;
+    case 'spear':return glow+`<rect x="-.9" y="-34" width="1.8" height="42" rx=".9" fill="url(#wood)" stroke="${O}" stroke-width=".4"/><path d="M0 -44l3.2 8-3.2 3-3.2-3z" fill="${m}" stroke="${O}" stroke-width=".6"/><rect x="-1.7" y="-33" width="3.4" height="2.6" fill="${t}"/>${r>=2?`<path d="M1.7 -32q4 2 2 6" stroke="${t}" stroke-width="1.2" fill="none"/>`:''}`;
+    case 'mace':return glow+`<rect x="-1" y="-16" width="2" height="22" rx="1" fill="url(#wood)" stroke="${O}" stroke-width=".5"/>${[0,60,120,180,240,300].map(a=>`<path d="M-1.4 -23.4l1.4 -3 1.4 3z" transform="rotate(${a} 0 -19.5)" fill="${m}" stroke="${O}" stroke-width=".4"/>`).join('')}<circle cx="0" cy="-19.5" r="5" fill="${m}" stroke="${O}" stroke-width=".6"/><circle cx="-1.5" cy="-21" r="1.3" fill="#fff" opacity=".5"/><rect x="-1.5" y="0" width="3" height="4" fill="${t}"/>`;
+    case 'hoe':return `<rect x="-.9" y="-26" width="1.8" height="32" rx=".9" fill="url(#wood)" stroke="${O}" stroke-width=".4"/><path d="M.9 -26h-8v4.5h8z" fill="url(#steel)" stroke="${O}" stroke-width=".5"/>`;
+    case 'hammer':return `<rect x="-.9" y="-12" width="1.8" height="16" rx=".9" fill="url(#wood)" stroke="${O}" stroke-width=".4"/><rect x="-4.5" y="-17" width="9" height="5.5" rx="1" fill="url(#steel)" stroke="${O}" stroke-width=".5"/>`;
+    case 'pouch':return `<path d="M-4.5 1q-1 6.5 4.5 6.5t4.5-6.5q-1-3.5-4.5-3.5t-4.5 3.5z" fill="#a87a4a" stroke="${O}" stroke-width=".5"/><path d="M-2.2 -2.4h4.4" stroke="#6a4a22" stroke-width="1.2"/><circle cx="0" cy="3" r="1.5" fill="url(#gold)"/>`;
+  }
+  return '';
+}
+function armorShape(k,r){const tr=r>=1?RAR[r].c:null;
+  if(k==='leather')return `<path d="M12.3 24.6Q20 21.4 27.7 24.6L28.8 38.6H11.2z" fill="url(#leather)" stroke="${O}" stroke-width=".6"/><path d="M20 24v14.5" stroke="#3e2412" stroke-width=".7" stroke-dasharray="1.2 1"/><path d="M13 31h14" stroke="#3e2412" stroke-width=".5" opacity=".6"/>${tr?`<path d="M12.3 24.6Q20 21.4 27.7 24.6" stroke="${tr}" stroke-width="1.3" fill="none"/>`:''}`;
+  if(k==='mail')return `<path d="M11.6 24.6Q20 20.8 28.4 24.6L29.6 41H10.4z" fill="url(#mail)" stroke="${O}" stroke-width=".6"/><path d="M10.4 41H29.6" stroke="${tr||'#5b6170'}" stroke-width="1.4"/>${tr?`<path d="M11.6 24.6Q20 20.8 28.4 24.6" stroke="${tr}" stroke-width="1.2" fill="none"/>`:''}`;
+  return `<path d="M11.8 24.6Q20 20.4 28.2 24.6L28.7 37.4Q20 40.6 11.3 37.4z" fill="url(#steel)" stroke="${O}" stroke-width=".7"/><path d="M20 22.8v16" stroke="#5b6170" stroke-width=".8"/><path d="M14 28.4q6 2 12 0M13.4 33q6.6 2 13.2 0" stroke="#fff" stroke-opacity=".45" fill="none" stroke-width=".7"/>${tr?`<path d="M11.8 24.6Q20 20.4 28.2 24.6" stroke="${tr}" stroke-width="1.5" fill="none"/><circle cx="20" cy="30.5" r="2" fill="${tr}" stroke="${O}" stroke-width=".4"/>`:''}`;
+}
+function sleeve(k){return k==='plate'?'url(#steel)':k==='mail'?'url(#mail)':k==='leather'?'url(#leather)':null}
+function pauldrons(k,r){if(k!=='plate'&&k!=='mail')return '';const f=k==='plate'?'url(#steel)':'url(#mail)',tr=r>=1?RAR[r].c:O;
+  return `<path d="M7.4 27.6q0-5 5-4.8l1.6 4.4z" fill="${f}" stroke="${tr}" stroke-width=".7"/><path d="M32.6 27.6q0-5-5-4.8l-1.6 4.4z" fill="${f}" stroke="${tr}" stroke-width=".7"/>`}
+function helmetShape(k,r){const tr=r>=1?RAR[r].c:'#5b6170';
+  if(k==='hood')return `<path d="M8.6 18q-1-14.6 11.4-14.6T31.4 18q-1.6-7.4-11.4-7.4T8.6 18z" fill="url(#leather)" stroke="${O}" stroke-width=".7"/><path d="M8.8 17q0 7.6 3.6 9.6M31.2 17q0 7.6-3.6 9.6" stroke="#6a4224" stroke-width="2.6" fill="none"/>${r>=1?`<path d="M10.5 11q9.5-6 19 0" stroke="${tr}" stroke-width="1" fill="none"/>`:''}`;
+  if(k==='helm')return `${r>=2?`<path d="M9 12q-7-4-7-9 4 3 8 4zM31 12q7-4 7-9-4 3-8 4z" fill="#f3e9d7" stroke="${O}" stroke-width=".5"/>`:''}<path d="M9.4 15.4q0-11.6 10.6-11.6t10.6 11.6z" fill="url(#steel)" stroke="${O}" stroke-width=".7"/><path d="M13 9q3-3.6 7-3.6" stroke="#fff" stroke-opacity=".6" fill="none"/><rect x="8.8" y="13.6" width="22.4" height="3.2" rx="1.6" fill="${r>=1?tr:'#7a808c'}" stroke="${O}" stroke-width=".5"/><rect x="19.2" y="15" width="1.6" height="6.4" rx=".6" fill="#7a808c" stroke="${O}" stroke-width=".4"/>`;
+  return `<path d="M8.8 23V12.4q0-9.6 11.2-9.6t11.2 9.6V23q-11.2 4.4-22.4 0z" fill="url(#steel)" stroke="${O}" stroke-width=".7"/><rect x="11.6" y="13.4" width="16.8" height="2.4" rx="1" fill="#1a1216"/><path d="M20 15.8v8" stroke="#5b6170" stroke-width=".8"/>${[0,1,2].map(i=>`<circle cx="${16.5+i*3.5}" cy="20" r=".6" fill="#1a1216"/>`).join('')}<path d="M13 7q3.4-3 7-3" stroke="#fff" stroke-opacity=".6" fill="none"/><path d="M20 3q-2-6 2-9 1 4 6 5-5 1-8 4z" fill="${r>=1?tr:'#c4463f'}" stroke="${O}" stroke-width=".4"/>`;
+}
+function hairBack(p,hr){return p.hs===2?`<path d="M8.6 14q-2.6 17 3.4 23h16q6-6 3.4-23z" fill="${hr}" stroke="${O}" stroke-width=".6"/>`:p.hs===3?`<path d="M28 9q9 4 6 18q-2.5-8-7-11z" fill="${hr}" stroke="${O}" stroke-width=".6"/>`:p.hs===4?`<circle cx="20" cy="3.6" r="4.4" fill="${hr}" stroke="${O}" stroke-width=".6"/>`:''}
+function hairFront(p,hr){
+  if(p.hs===0)return `<path d="M9.6 15q-.6-11 10.4-11 10.6 0 10.4 11-2.2-4.4-5-4.6-2 2-4.4 1-3 2.2-6 .2-2.6 1.2-5.4 3.4z" fill="${hr}" stroke="${O}" stroke-width=".6"/>`;
+  if(p.hs===1)return `<path d="M9.4 16q-.4-12 10.6-12t10.6 12q-2-1.2-2.8-5.2H12.2Q11.4 14.8 9.4 16z" fill="${hr}" stroke="${O}" stroke-width=".6"/>`;
+  return `<path d="M9.6 16q0-12 10.4-12t10.4 12q-5.4-2.2-8.6-7.4-3 6.2-12.2 7.4z" fill="${hr}" stroke="${O}" stroke-width=".6"/>`;
+}
+function profHat(k){return {
+  farm:`<ellipse cx="20" cy="7.4" rx="15" ry="3.6" fill="#e2c26a" stroke="${O}" stroke-width=".7"/><path d="M12.6 7.4q0-7.6 7.4-7.6t7.4 7.6z" fill="#efd283" stroke="${O}" stroke-width=".7"/><path d="M12.8 6h14.4" stroke="#b5462f" stroke-width="1.8"/><path d="M8 7.6q12 2.6 24 0" stroke="#c8a24a" stroke-width=".5" fill="none"/>`,
+  trade:`<path d="M9.4 10q0-9 10.6-9 10 0 10.4 8.6z" fill="#3e7d4a" stroke="${O}" stroke-width=".7"/><path d="M9 10h21.6" stroke="#2a5a34" stroke-width="2"/><path d="M27 4q7-6 10 1-5-2-9 1z" fill="#e05a4a" stroke="${O}" stroke-width=".4"/>`,
+  craft:`<path d="M9.6 12q0-4 10.4-4.2 10.4.2 10.4 4.2z" fill="#a83a2a" stroke="${O}" stroke-width=".6"/><circle cx="16" cy="9.2" r="2.6" fill="#9fd4ff" stroke="#4a3a22" stroke-width="1"/><circle cx="24" cy="9.2" r="2.6" fill="#9fd4ff" stroke="#4a3a22" stroke-width="1"/><circle cx="15.3" cy="8.4" r=".8" fill="#fff"/><circle cx="23.3" cy="8.4" r=".8" fill="#fff"/>`,
+  fight:`<path d="M9.6 11.4q10.4-3 20.8 0v2.4q-10.4-3-20.8 0z" fill="#c4463f" stroke="${O}" stroke-width=".5"/><path d="M30 12q4 1 5 5-3-2-5-2z" fill="#c4463f"/>`}[k]}
+function person(p,s=30,o={}){
+  looks(p);
+  const k=mainSkill(p),body=SKCOL[k],sk=SKIN[p.skin||0],hr=HAIR[p.hair||0],ey=EYES[p.eye],pn=PANTS[p.pants];
+  const W=item(p.eq.weapon),A=item(p.eq.armor),Hm=item(p.eq.helmet);
+  const sl=A?sleeve(A.kind):null,arm=sl||body;
+  const tool=W?weaponShape(W.kind,W.r):weaponShape({farm:'hoe',craft:'hammer',trade:'pouch',fight:''}[k],0);
+  const face=!(Hm&&Hm.kind==='great');
+  return `<svg width="${s}" height="${(s*1.5).toFixed(1)}" viewBox="0 -6 40 66" overflow="visible">
+  <ellipse cx="20" cy="57.6" rx="11" ry="2.2" fill="#000" opacity=".35"/>
+  ${Hm?'':hairBack(p,hr)}
+  <rect x="26.4" y="24.6" width="5.4" height="13.4" rx="2.7" fill="${arm}" stroke="${O}" stroke-width=".6"/><rect x="26.4" y="24.6" width="5.4" height="13.4" rx="2.7" fill="#000" opacity=".15"/><circle cx="29.1" cy="38.6" r="2.6" fill="${sk}" stroke="${O}" stroke-width=".5"/>
+  <g class="lg1"><rect x="13.6" y="38" width="5.4" height="14" rx="2" fill="${pn}" stroke="${O}" stroke-width=".55"/><path d="M12.6 50.6h7.2v5.6h-7.6q-1.4 0-1-1.6z" fill="#3a2414" stroke="${O}" stroke-width=".55"/></g>
+  <g class="lg2"><rect x="21" y="38" width="5.4" height="14" rx="2" fill="${pn}" stroke="${O}" stroke-width=".55"/><rect x="21" y="38" width="5.4" height="14" rx="2" fill="#000" opacity=".12"/><path d="M20.4 50.6h7.2v5.6H20z" fill="#3a2414" stroke="${O}" stroke-width=".55"/></g>
+  <path d="M12 24.6Q20 20.6 28 24.6L30 42H10z" fill="${body}" stroke="${O}" stroke-width=".7"/>
+  <path d="M20 22.6Q24 22 28 24.6L30 42H20z" fill="#000" opacity=".12"/><path d="M16.6 23q3.4 3 6.8 0" stroke="${O}" stroke-width=".6" fill="#f3e9d7"/>
+  ${A?armorShape(A.kind,A.r):''}
+  <rect x="10.6" y="37.4" width="18.8" height="2.6" rx=".8" fill="#4a2e18" stroke="${O}" stroke-width=".4"/><rect x="18.6" y="37" width="2.8" height="3.4" rx=".6" fill="url(#gold)" stroke="${O}" stroke-width=".3"/>
+  <rect x="17.4" y="22" width="5.2" height="4" fill="${sk}"/><rect x="17.4" y="22" width="5.2" height="4" fill="#000" opacity=".1"/>
+  <circle cx="9.6" cy="16.6" r="2.2" fill="${sk}" stroke="${O}" stroke-width=".5"/><circle cx="30.4" cy="16.6" r="2.2" fill="${sk}" stroke="${O}" stroke-width=".5"/>
+  <ellipse cx="20" cy="15.4" rx="10.3" ry="10.6" fill="${sk}" stroke="${O}" stroke-width=".75"/><ellipse cx="20" cy="15.4" rx="10.3" ry="10.6" fill="url(#skinShade)"/>
+  ${face?`<ellipse cx="16.2" cy="16.4" rx="2.15" ry="2.6" fill="#fff" stroke="${O}" stroke-width=".4"/><ellipse cx="23.8" cy="16.4" rx="2.15" ry="2.6" fill="#fff" stroke="${O}" stroke-width=".4"/>
+  <circle cx="16.6" cy="16.8" r="1.55" fill="${ey}"/><circle cx="24.2" cy="16.8" r="1.55" fill="${ey}"/><circle cx="16.7" cy="17" r=".75" fill="#140c08"/><circle cx="24.3" cy="17" r=".75" fill="#140c08"/>
+  <circle cx="17.2" cy="16.1" r=".55" fill="#fff"/><circle cx="24.8" cy="16.1" r=".55" fill="#fff"/>
+  ${p.g?`<path d="M14.6 15.2l-1.3-.9M14.9 14.4l-1-1.1M25.4 15.2l1.3-.9M25.1 14.4l1-1.1" stroke="${O}" stroke-width=".45"/>`:''}
+  <path d="M13.8 12.6q2.4-1.4 4.6-.2M21.6 12.4q2.2-1.2 4.6.2" stroke="${hr==='#e8e2d8'?'#8a8070':hr}" stroke-width="${p.g?.8:1.4}" fill="none" stroke-linecap="round"/>
+  <path d="M20.2 18.2q1.2 2.2-.4 2.7" stroke="#a8704e" stroke-width=".7" fill="none" stroke-linecap="round"/>
+  <ellipse cx="13.4" cy="20.4" rx="1.8" ry="1.1" fill="#ff7a7a" opacity=".35"/><ellipse cx="26.6" cy="20.4" rx="1.8" ry="1.1" fill="#ff7a7a" opacity=".35"/>
+  ${p.beard?`<path d="M11.4 18.6q.6 9.6 8.6 9.6t8.6-9.6q-2 3.6-4.8 3.4-1.6 1.4-3.8 1.4t-3.8-1.4q-2.8.2-4.8-3.4z" fill="${hr}" stroke="${O}" stroke-width=".5"/><path d="M16.6 21.6q3.4-1.6 6.8 0" stroke="${O}" stroke-width=".4" fill="${hr}"/>`
+   :`<path d="M18 22.4q2 1.5 4 0" stroke="#7a3226" stroke-width=".85" fill="${p.g?'#d86a6a':'none'}" stroke-linecap="round"/>`}`:''}
+  ${Hm?helmetShape(Hm.kind,Hm.r):hairFront(p,hr)+(p.hs===4||p.hs===2&&k!=='farm'?'':'')+(o.noHat?'':profHat(k))}
+  <rect x="8.2" y="24.6" width="5.4" height="13.4" rx="2.7" fill="${arm}" stroke="${O}" stroke-width=".6"/>
+  ${A?pauldrons(A.kind,A.r):''}
+  <g transform="translate(10.9,38.6) rotate(-14)">${tool}</g>
+  <circle cx="10.9" cy="38.6" r="2.7" fill="${sk}" stroke="${O}" stroke-width=".5"/>
+  </svg>`;
+}
+function itemIcon(it){
+  const inner=it.slot==='weapon'?`<g transform="translate(14,32) rotate(38) scale(${it.kind==='spear'?.68:.95})">${weaponShape(it.kind,it.r)}</g>`
+   :it.slot==='armor'?`<g transform="translate(0,-8) scale(1.0)">${it.kind!=='leather'?pauldrons(it.kind,it.r):''}${armorShape(it.kind,it.r)}</g>`
+   :`<g transform="translate(0,6)">${helmetShape(it.kind,it.r)}</g>`;
+  return `<svg viewBox="2 0 36 36" overflow="visible">${it.r?`<circle cx="20" cy="18" r="18" fill="url(#rg${it.r})"/>`:''}${inner}</svg>`;
 }
 function sideArt(f,right){return `<svg viewBox="0 0 26 104" preserveAspectRatio="none">
   <rect x="9" y="30" width="8" height="26" rx="4" fill="#1a1216"/><rect x="11" y="32" width="4" height="22" rx="2" fill="${f%2?'#2a2040':'#ffcf7a'}" opacity="${f%2?1:.75}"/>
@@ -423,28 +576,98 @@ function recruit(paid){if(S.people.length>=maxPeople()){toast('Нет места
 function addLog(t){S.log.unshift(new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})+' '+t);S.log=S.log.slice(0,40)}
 
 // ================= Бой =================
-function armyPower(){let hp=0,atk=0,n=0;
-  S.rooms.filter(r=>r.t==='guard').forEach(r=>{const b=1+.25*(r.lvl-1);crew(r).forEach(p=>{n++;hp+=(30+p.sk.fight*8+p.lvl*6)*b;atk+=(p.sk.fight*2+p.lvl)*b})});
-  return {hp:Math.round(hp),atk:Math.round(atk),n}}
+function fighterStats(p,b=1){const g=gearStats(p);return {hp:Math.round((30+p.sk.fight*8+p.lvl*6+g.hp)*b),atk:Math.round((p.sk.fight*2+p.lvl+g.atk)*b)}}
+function fighters(){const out=[];S.rooms.filter(r=>r.t==='guard').forEach(r=>{const b=1+.25*(r.lvl-1);crew(r).forEach(p=>out.push({p,b}))});return out}
+function armyPower(){let hp=0,atk=0;const f=fighters();f.forEach(({p,b})=>{const s=fighterStats(p,b);hp+=s.hp;atk+=s.atk});return {hp,atk,n:f.length,list:f}}
 function enemy(){const b=ENEMIES[S.stage%ENEMIES.length],loop=Math.floor(S.stage/ENEMIES.length),m=Math.pow(2.2,loop);return {...b,hp:Math.round(b.hp*m),atk:Math.round(b.atk*m),loop}}
-function fight(){const a=armyPower();if(!a.n){toast('В Караульне нет воинов');return}
-  const e=enemy();let ah=a.hp,eh=e.hp;const rounds=[];
-  while(ah>0&&eh>0&&rounds.length<40){eh-=Math.round(a.atk*(.8+Math.random()*.4));if(eh<=0)break;ah-=Math.round(e.atk*(.8+Math.random()*.4));rounds.push([ah,eh])}
-  rounds.push([Math.max(0,ah),Math.max(0,eh)]);showFight(a,e,rounds,eh<=0)}
-function showFight(a,e,rounds,win){
-  openM(`<h2 style="margin-top:0">⚔️ Набег: ${e.i} ${e.n}</h2>
-  <div>🛡️ Твой отряд</div><div class="hp"><div id="ah" style="width:100%;background:var(--green)"></div></div>
-  <div style="margin-top:8px">${e.i} Враг</div><div class="hp"><div id="eh" style="width:100%;background:var(--red)"></div></div>
-  <p id="fres" style="font-weight:700;min-height:22px"></p><button class="act" style="width:100%;padding:14px" id="fclose" disabled>…</button>`);
-  let i=0;const iv=setInterval(()=>{const [ah,eh]=rounds[i];
-    document.getElementById('ah').style.width=Math.max(0,ah/a.hp*100)+'%';document.getElementById('eh').style.width=Math.max(0,eh/e.hp*100)+'%';
-    if(++i>=rounds.length){clearInterval(iv);const fr=document.getElementById('fres'),btn=document.getElementById('fclose');btn.disabled=false;btn.textContent='Готово';
-      if(win){const loot={gold:Math.round(e.hp*.8),food:Math.round(e.hp*.5),ore:Math.round(e.hp*.3)};
+function arena(a,e){return `<div class="arena"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 300 190" preserveAspectRatio="none">
+  <rect width="300" height="114" fill="url(#bricks)" opacity=".55"/><rect y="114" width="300" height="76" fill="url(#planks)"/><rect y="114" width="300" height="76" fill="#000" opacity=".25"/>
+  ${torch(40,50)}${torch(260,50)}<rect width="300" height="190" fill="url(#vigH)"/></svg>
+  <div class="team" id="team">${a.list.slice(0,6).map(({p})=>`<div>${person(p,40)}</div>`).join('')}</div><div class="foe" id="foe">${e.i}</div></div>`}
+function fight(){const a=armyPower();if(!a.n){toast('Поставь жителей в Караульню');return}
+  const e=enemy();let ah=a.hp,eh=e.hp;const steps=[];
+  while(ah>0&&eh>0&&steps.length<60){let d=Math.round(a.atk*(.8+Math.random()*.4));eh-=d;steps.push({w:'a',d,ah,eh});if(eh<=0)break;
+    d=Math.round(e.atk*(.8+Math.random()*.4));ah-=d;steps.push({w:'e',d,ah,eh})}
+  showFight(a,e,steps,eh<=0)}
+function floatDmg(host,txt,bad,x){const d=document.createElement('div');d.className='dmg'+(bad?' bad':'');d.textContent=txt;d.style.left=x+'%';d.style.top='40%';host.appendChild(d);setTimeout(()=>d.remove(),800)}
+function showFight(a,e,steps,win){
+  openM(`<h2 style="margin-top:0">⚔️ ${e.n}${e.loop?' +'+e.loop:''}</h2>${arena(a,e)}
+  <div class="row sub"><span class="grow">🛡️ Отряд</span><span id="aht">${a.hp}</span></div><div class="hp"><div id="ah" style="width:100%;background:var(--green)"></div></div>
+  <div class="row sub" style="margin-top:6px"><span class="grow">${e.i} Враг</span><span id="eht">${e.hp}</span></div><div class="hp"><div id="eh" style="width:100%;background:var(--red)"></div></div>
+  <p id="fres" style="font-weight:800;min-height:22px;text-align:center"></p><button class="act" style="width:100%;padding:14px" id="fclose" disabled>Идёт бой…</button>`);
+  const team=document.getElementById('team'),foe=document.getElementById('foe'),ar=document.querySelector('.arena');
+  const fast=steps.length>24?250:420;let i=0;
+  const iv=setInterval(()=>{const s=steps[i];
+    team.classList.remove('lunge','hit');foe.classList.remove('lungeL','hit');void team.offsetWidth;
+    if(s.w==='a'){team.classList.add('lunge');foe.classList.add('hit');floatDmg(ar,'-'+s.d,false,72)}
+    else{foe.classList.add('lungeL');team.classList.add('hit');floatDmg(ar,'-'+s.d,true,22)}
+    const ah=Math.max(0,s.ah),eh=Math.max(0,s.eh);
+    document.getElementById('ah').style.width=ah/a.hp*100+'%';document.getElementById('eh').style.width=eh/e.hp*100+'%';
+    document.getElementById('aht').textContent=ah;document.getElementById('eht').textContent=eh;
+    if(++i>=steps.length){clearInterval(iv);const fr=document.getElementById('fres'),btn=document.getElementById('fclose');btn.disabled=false;
+      if(win){const loot={food:Math.round(e.hp*.4),ore:Math.round(e.hp*.25)};
         for(const k in loot)S.res[k]=Math.min(storeCap(),S.res[k]+loot[k]);
-        S.rooms.filter(r=>r.t==='guard').forEach(r=>crew(r).forEach(p=>gainXp(p,20+S.stage*5)));S.stage++;
-        fr.textContent='Победа! Добыча: '+fmtCost(loot);addLog(`🏆 Разбиты: ${e.n}`)}
-      else{fr.textContent='Отряд отступил. Прокачай воинов или Караульню.';addLog(`💀 Поражение: ${e.n}`)}
-      save();btn.onclick=()=>{closeM();render()}}},180)}
+        a.list.forEach(({p})=>gainXp(p,20+S.stage*5));S.stage++;foe.style.opacity=.2;
+        fr.innerHTML=`🏆 Победа! Добыча: ${fmtCost(loot)}`;addLog(`🏆 Разбиты: ${e.n}`);btn.textContent='🎁 К сундукам';
+        save();btn.onclick=()=>openLoot(e)}
+      else{fr.textContent='Отряд отступил. Прокачай воинов, надень снаряжение или улучши Караульню.';addLog(`💀 Поражение: ${e.n}`);btn.textContent='Готово';
+        save();btn.onclick=()=>{closeM();render()}}}},fast)}
+
+// ---- Сундуки ----
+const TIERS=[{n:'Деревянный',b:'url(#wood)',m:'#5a5e68',item:.35,boost:0,mul:1},{n:'Железный',b:'#4a3424',m:'url(#silver)',item:.6,boost:3,mul:1.6},{n:'Королевский',b:'url(#purple)',m:'url(#gold)',item:1,boost:7,mul:2.6}];
+function chestSvg(t){const T_=TIERS[t];
+  return `<svg viewBox="0 -24 80 94"><ellipse cx="40" cy="66" rx="34" ry="5" fill="#000" opacity=".35"/>
+  <g class="shine"><circle cx="40" cy="28" r="44" fill="url(#glow)"/></g>
+  <rect x="9" y="27" width="62" height="8" fill="#1a0f08"/><ellipse class="shine" cx="40" cy="30" rx="27" ry="6" fill="url(#gold)"/>
+  <rect x="6" y="30" width="68" height="34" rx="4" fill="${T_.b}" stroke="${O}" stroke-width="1.2"/><path d="M8 40h64M8 52h64" stroke="#000" stroke-opacity=".2"/>
+  <rect x="13" y="30" width="6" height="34" fill="${T_.m}" stroke="${O}" stroke-width=".6"/><rect x="61" y="30" width="6" height="34" fill="${T_.m}" stroke="${O}" stroke-width=".6"/>
+  <rect x="33" y="34" width="14" height="14" rx="2.5" fill="${T_.m}" stroke="${O}" stroke-width=".8"/><circle cx="40" cy="40" r="2" fill="${O}"/><path d="M40 41v4" stroke="${O}" stroke-width="2"/>
+  ${t===2?'<circle cx="24" cy="47" r="2.6" fill="#6fe0ff" stroke="#fff" stroke-width=".5"/><circle cx="56" cy="47" r="2.6" fill="#e2453c" stroke="#fff" stroke-width=".5"/>':''}
+  <g class="lid"><path d="M6 31V22Q6 6 40 6T74 22V31z" fill="${T_.b}" stroke="${O}" stroke-width="1.2"/><path d="M12 14Q40 0 68 14" stroke="#fff" stroke-opacity=".25" fill="none" stroke-width="2"/>
+   <path d="M13 31V11M19 31V9" stroke="${O}" stroke-opacity="0"/><rect x="13" y="9" width="6" height="22" fill="${T_.m}" stroke="${O}" stroke-width=".6"/><rect x="61" y="9" width="6" height="22" fill="${T_.m}" stroke="${O}" stroke-width=".6"/>
+   <rect x="34" y="24" width="12" height="7" rx="2" fill="${T_.m}" stroke="${O}" stroke-width=".7"/></g></svg>`}
+let LOOT=null;
+function openLoot(e){
+  const x=Math.random()+S.stage*.03,tier=x>1.1?2:x>.7?1:0,T_=TIERS[tier];
+  const prizes=[0,1,2].map(()=>{const it=Math.random()<T_.item;const slot=rnd(['weapon','weapon','armor','helmet']);
+    return {coins:Math.round(e.hp*(.6+Math.random()*.9)*T_.mul),item:it?{slot,kind:rnd(Object.keys(KINDS[slot])),r:rollRar(T_.boost+S.stage*.3)}:null}});
+  LOOT={prizes,picked:null,lvl:Math.floor(S.stage/2)};
+  openM(`<h2 style="margin-top:0;text-align:center">🎁 ${T_.n} сундук</h2><p class="sub" style="text-align:center">Выбери один из трёх — внутри монеты и, может быть, вещь</p>
+  <div class="chests">${[0,1,2].map(i=>`<div class="chest idle" id="ch${i}" onclick="pickChest(${i})">${chestSvg(tier)}<div class="prize" id="pz${i}"></div></div>`).join('')}</div>
+  <div id="lootres"></div><button class="act" style="width:100%;padding:14px;margin-top:8px;display:none" id="lootok" onclick="closeM();render()">Забрать</button>`);
+}
+function prizeTxt(z){return `<span style="color:var(--gold)">🪙${fmt(z.coins)}</span>${z.item?`<br><span class="r${z.item.r}">${KINDS[z.item.slot][z.item.kind][z.item.r]}</span>`:''}`}
+function burstCoins(el){const svg=el.querySelector('svg');let s='';for(let i=0;i<8;i++)s+=`<circle class="burst" style="--dx:${(i-3.5)*7}px;animation-delay:${i*.04}s" cx="40" cy="26" r="3.4" fill="url(#gold)" stroke="#a36d10" stroke-width=".6"/>`;svg.insertAdjacentHTML('beforeend',s)}
+function pickChest(i){if(!LOOT||LOOT.picked!==null)return;LOOT.picked=i;
+  document.querySelectorAll('.chest').forEach(c=>c.classList.remove('idle'));
+  const el=document.getElementById('ch'+i);el.classList.add('shake');
+  setTimeout(()=>{el.classList.remove('shake');el.classList.add('open');burstCoins(el);
+    const z=LOOT.prizes[i];const room_=storeCap()-S.res.gold;const got=Math.max(0,Math.min(z.coins,room_));S.res.gold+=got;
+    let html=`<p style="text-align:center;font-weight:800">+🪙${fmt(got)}${got<z.coins?' <span class="sub">(склад полон)</span>':''}</p>`;
+    if(z.item){const it=mkItem(S,z.item.slot,z.item.kind,z.item.r,LOOT.lvl);html+=itemCard(it,'Новая вещь!');addLog(`🎁 Из сундука: ${it.name}`)}
+    document.getElementById('pz'+i).innerHTML=prizeTxt(z);document.getElementById('lootres').innerHTML=html;save();header();
+    setTimeout(()=>{[0,1,2].filter(j=>j!==i).forEach(j=>{const c=document.getElementById('ch'+j);c.classList.add('open','missed');document.getElementById('pz'+j).innerHTML=prizeTxt(LOOT.prizes[j])});
+      document.getElementById('lootok').style.display=''},700)},520)}
+function itemCard(it,title){return `<div class="itemcard"><div class="icon b${it.r}">${itemIcon(it)}</div><div style="flex:1"><div class="sub">${title||SLOTN[it.slot]}</div><b class="r${it.r}">${it.name}</b><div class="stats">${RAR[it.r].n} · ${statTxt(it)}</div></div></div>`}
+
+// ---- Кузня: ковка ----
+const craftCost=r=>({ore:Math.round(50*Math.pow(1.45,r.lvl-1)),gold:Math.round(40*Math.pow(1.45,r.lvl-1))});
+function craft(id){const r=room(id),c=craftCost(r);if(!canPay(c)){toast('Нужно '+fmtCost(c));return}
+  if(!crew(r).length){toast('В Кузне нет мастеров');return}
+  pay(c);const sk=crew(r).reduce((a,p)=>a+p.sk.craft,0);const it=randItem(Math.floor(S.stage/2)+r.lvl-1,(r.lvl-1)*2+sk*.3);
+  addLog(`⚒️ Выкована вещь: ${it.name}`);save();header();
+  openM(`<h2 style="margin-top:0">⚒️ Кузня выковала</h2>${itemCard(it)}<div class="row" style="margin-top:10px"><button class="act" style="flex:1" onclick="craft(${id})">Ещё раз: ${fmtCost(c)}</button><button class="act sec" onclick="tab='items';syncTabs();closeM();render()">В сумку</button></div>`)}
+
+// ---- Экипировка ----
+function equip(iid,pid){const it=item(iid),p=S.people.find(x=>x.id==pid);if(!it||!p)return;
+  const prev=owner(it);if(prev)prev.eq[it.slot]=null;p.eq[it.slot]=it.id;toast(`${p.name}: ${it.name}`);save();render()}
+function unequip(pid,slot){const p=S.people.find(x=>x.id==pid);if(p){p.eq[slot]=null;save();render()}}
+function sell(iid){const it=item(iid);if(!it||owner(it))return;const pr=sellPrice(it);S.res.gold=Math.min(storeCap(),S.res.gold+pr);S.items=S.items.filter(x=>x!==it);toast(`Продано: +🪙${pr}`);save();render()}
+function openSlot(pid,slot){const p=S.people.find(x=>x.id==pid);const cur=item(p.eq[slot]);
+  const list=S.items.filter(i=>i.slot===slot&&i!==cur).sort((a,b)=>(b.atk+b.hp)-(a.atk+a.hp));
+  openM(`<div class="row"><b class="grow" style="font-size:17px">${SLOTN[slot]} для ${p.name}</b><button class="act sec" onclick="closeM()">✕</button></div>
+  ${cur?itemCard(cur,'Надето')+`<button class="act sec" style="margin-top:6px" onclick="unequip(${p.id},'${slot}');closeM()">Снять</button>`:''}
+  <h2>В сумке</h2>${list.length?list.map(it=>{const o=owner(it);return `<div class="opt"><div class="icon b${it.r}">${itemIcon(it)}</div><div style="flex:1;min-width:0"><b class="r${it.r}">${it.name}</b><div class="stats">${statTxt(it)}${o?` · <span class="sub">у ${o.name}</span>`:''}</div></div><button class="act" onclick="equip(${it.id},${p.id});closeM()">Надеть</button></div>`}).join(''):'<p class="sub">Пусто. Вещи выпадают из сундуков после боя и куются в Кузне.</p>'}`)}
 function gainXp(p,x){p.xp+=x;while(p.xp>=p.lvl*50){p.xp-=p.lvl*50;p.lvl++;const k=rnd(Object.keys(p.sk));p.sk[k]++;addLog(`⭐ ${p.name} достиг ур. ${p.lvl}`)}}
 function train(id){const p=S.people.find(x=>x.id==id);const c={food:40*p.lvl};
   if(!canPay(c)){toast('Нужно '+fmtCost(c));return}pay(c);gainXp(p,50);toast(`${p.name} потренировался`);save();render()}
@@ -461,13 +684,13 @@ function openRoom(id){
   if(r.t==='bunk')info=`<p>Даёт ${2+r.lvl} мест для жителей.</p>`;
   if(r.t==='guard')info=`<p>Бонус к силе воинов: +${(r.lvl-1)*25}%</p>`;
   const free=S.people.filter(p=>p.room!==r.id);
-  const workers=t.skill?`<h2>Работники ${cr.length}/${slots(r)}</h2>`+cr.map(p=>`<div class="opt">${person(p,26)}<div style="flex:1"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span><div class="sub">${SKILLS[t.skill]} ${p.sk[t.skill]}</div></div><button class="act sec" onclick="assign(${p.id},'none');openRoom(${id})">✕</button></div>`).join('')+
+  const workers=t.skill?`<h2>Работники ${cr.length}/${slots(r)}</h2>`+cr.map(p=>`<div class="opt">${person(p,28)}<div style="flex:1"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span><div class="sub">${SKILLS[t.skill]} ${p.sk[t.skill]}</div></div><button class="act sec" onclick="assign(${p.id},'none');openRoom(${id})">✕</button></div>`).join('')+
     (cr.length<slots(r)&&free.length?`<select onchange="assign(this.value,${id});openRoom(${id})"><option>＋ Поставить жителя…</option>${free.sort((a,b)=>b.sk[t.skill]-a.sk[t.skill]).map(p=>`<option value="${p.id}">${p.name} — ${SKILLS[t.skill]} ${p.sk[t.skill]}${p.room?' (занят)':''}</option>`).join('')}</select>`:''):'';
   openM(`<div class="opt" style="padding:0;overflow:hidden;height:96px;position:relative">${art(r.t,t.w*100,r.lvl)}</div>
   <div class="row"><div class="grow"><b style="font-size:17px">${t.i} ${t.n}</b> <span class="pill">ур. ${r.lvl}</span><div class="sub">${t.d} · этаж ${r.f+1}</div></div><button class="act sec" onclick="closeM()">✕</button></div>
   ${info}<div class="row" style="flex-wrap:wrap">${t.res?`<button class="act" onclick="collectRoom(${id});openRoom(${id})">Собрать</button>`:''}
   <button class="act sec" onclick="upgrade(${id})" ${canPay(c)&&r.lvl<=S.tower?'':'disabled'}>⬆️ Ур. ${r.lvl+1}: ${fmtCost(c)}</button>
-  <button class="act sec" onclick="startMove(${id})">↔️ Переставить</button></div>${workers}`);
+  <button class="act sec" onclick="startMove(${id})">↔️ Переставить</button>${r.t==='forge'?`<button class="act" onclick="craft(${id})">⚒️ Выковать: ${fmtCost(craftCost(r))}</button>`:''}</div>${workers}`);
 }
 function openHall(){const c=towerCost();
   openM(`<div class="opt" style="padding:0;overflow:hidden;height:96px;position:relative">${art('hall',500)}</div>
@@ -502,7 +725,7 @@ function render(){
   tick(Date.now());header();
   const sc=document.querySelector('.scroller');if(sc)lastScroll=sc.scrollLeft;
   const v=document.getElementById('view');
-  v.innerHTML=tab==='castle'?castleView():tab==='people'?peopleView():tab==='raid'?raidView():menuView();
+  v.innerHTML=tab==='castle'?castleView():tab==='people'?peopleView():tab==='raid'?raidView():tab==='items'?itemsView():menuView();
   const ns=document.querySelector('.scroller');if(ns)ns.scrollLeft=lastScroll===null?(ns.scrollWidth-ns.clientWidth)/2:lastScroll;
 }
 function refresh(){tick(Date.now());header();
@@ -537,23 +760,38 @@ function castleView(){
   <h2>Летопись</h2><div class="log" style="margin:0 12px">${S.log.map(l=>`<div>${l}</div>`).join('')||'<div>Пока тихо…</div>'}</div>`;
 }
 const roomName=r=>`${T[r.t].i} ${T[r.t].n} (эт. ${r.f+1})`;
+function slotBtns(p){return `<div class="slotrow">${['weapon','armor','helmet'].map(sl=>{const it=item(p.eq[sl]);
+  return `<div class="slot ${it?'b'+it.r:''}" onclick="openSlot(${p.id},'${sl}')">${it?itemIcon(it)+`<span class="r${it.r}" style="font-size:9.5px">${statTxt(it)}</span>`:`<b style="font-size:20px;opacity:.5">＋</b>${SLOTN[sl]}`}</div>`}).join('')}</div>`}
 function peopleView(){
   const left=S.nextRecruit-Date.now();
   const free=left<=0?`<button class="act" onclick="recruit(false)">Позвать</button>`:`<span class="pill">бесплатно через ${Math.ceil(left/60e3)} мин</span>`;
   const work=S.rooms.filter(r=>T[r.t].skill);
   const opts=p=>`<option value="none">— отдыхает —</option>`+work.map(r=>`<option value="${r.id}" ${p.room===r.id?'selected':''}>${roomName(r)} ${crew(r).length}/${slots(r)}</option>`).join('');
   return `<div class="card row"><span class="grow">Новые жители</span>${free}<button class="act sec" onclick="recruit(true)">🪙${100*S.people.length}</button></div>`+
-  S.people.map(p=>`<div class="card"><div class="row">${person(p,34)}<div class="grow"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span>
-  <div class="bar"><div style="width:${p.xp/(p.lvl*50)*100}%"></div></div></div>
-  <button class="act sec" onclick="train(${p.id})">🏋️ 🥕${40*p.lvl}</button></div>
-  <div class="sub" style="margin:6px 0 0">${Object.keys(p.sk).map(k=>SKILLS[k]+' '+p.sk[k]).join(' · ')}</div>
-  <select onchange="assign(${p.id},this.value)">${opts(p)}</select></div>`).join('');
+  S.people.map(p=>{const fs=fighterStats(p);return `<div class="card"><div class="row" style="align-items:flex-start"><div class="portrait">${person(p,60)}</div>
+  <div class="grow" style="min-width:0"><b>${p.name}</b> <span class="pill">ур. ${p.lvl}</span>
+  <div class="bar"><div style="width:${p.xp/(p.lvl*50)*100}%"></div></div>
+  <div class="stats">⚔️ ${fs.atk} · ❤️ ${fs.hp}</div>
+  <div class="sub" style="margin-top:3px">${Object.keys(p.sk).map(k=>SKILLS[k]+' '+p.sk[k]).join(' · ')}</div>
+  <button class="act sec" style="margin-top:6px;padding:6px 10px" onclick="train(${p.id})">🏋️ Тренировать 🥕${40*p.lvl}</button></div></div>
+  ${slotBtns(p)}<select onchange="assign(${p.id},this.value)">${opts(p)}</select></div>`}).join('');
+}
+function itemsView(){
+  const list=[...S.items].sort((a,b)=>b.r-a.r||(b.atk+b.hp)-(a.atk+a.hp));
+  const fg=S.rooms.find(r=>r.t==='forge');
+  return `<div class="card"><b>🎒 Сумка</b> <span class="pill">${list.length} вещ.</span><p class="sub">Вещи выпадают из сундуков после побед и куются в Кузне. Надетое видно на жителе и усиливает его в бою.</p>
+  ${fg?`<button class="act" style="width:100%" onclick="craft(${fg.id})">⚒️ Выковать в Кузне: ${fmtCost(craftCost(fg))}</button>`:''}</div>`+
+  (list.length?list.map(it=>{const o=owner(it);return `<div class="card row"><div class="icon b${it.r}">${itemIcon(it)}</div>
+   <div style="flex:1;min-width:0"><b class="r${it.r}">${it.name}</b><div class="stats">${SLOTN[it.slot]} · ${statTxt(it)}</div><div class="sub">${o?'Надето: '+o.name:RAR[it.r].n}</div>
+   <select onchange="if(this.value)equip(${it.id},this.value)"><option value="">${o?'Передать…':'Надеть на…'}</option>${S.people.filter(p=>p!==o).map(p=>`<option value="${p.id}">${p.name} (⚔️${fighterStats(p).atk})</option>`).join('')}</select></div>
+   ${o?`<button class="act sec" onclick="unequip(${o.id},'${it.slot}')">Снять</button>`:`<button class="act sec" onclick="sell(${it.id})">🪙${sellPrice(it)}</button>`}</div>`}).join(''):'<p class="sub hint">Пока пусто.</p>');
 }
 function raidView(){const e=enemy(),a=armyPower();
-  return `<div class="card" style="text-align:center"><div style="font-size:56px">${e.i}</div><b>${e.n}${e.loop?' +'+e.loop:''}</b>
-  <div class="sub">❤️ ${e.hp} · 🗡️ ${e.atk}</div><p>Твой отряд: ${a.n} воин. · ❤️ ${a.hp} · 🗡️ ${a.atk}</p>
+  return `<div class="card"><div style="text-align:center"><b style="font-size:17px">${e.n}${e.loop?' +'+e.loop:''}</b><div class="sub">❤️ ${e.hp} · ⚔️ ${e.atk}</div></div>
+  ${a.n?arena(a,e):'<p class="sub">В Караульне никого нет — поставь туда жителей.</p>'}
+  <p style="text-align:center">Твой отряд: ${a.n} воин. · ❤️ ${a.hp} · ⚔️ ${a.atk}</p>
   <button class="act" style="width:100%;padding:14px" onclick="fight()">⚔️ В бой</button></div>
-  <div class="card sub">Воины — жители в Караульнях. Сила зависит от навыка «Бой», уровня жителя и уровня Караульни. Пройдено волн: ${S.stage}.</div>`}
+  <div class="card sub">Воины — жители в Караульнях. Сила зависит от навыка «Бой», уровня, снаряжения и уровня Караульни. После победы — сундук с монетами и шансом на вещь. Пройдено волн: ${S.stage}.</div>`}
 function menuView(){
   return `<div class="card"><b>Как играть</b><p class="sub">Комнаты работают, даже когда игра закрыта. Заходи вечером, собирай урожай, строй и переставляй комнаты, отбивай набеги. Склад общий и ограничен уровнем Башни старосты.</p></div>
   <div class="card"><b>Сохранение</b><p class="sub">Прогресс хранится в этом браузере. Скопируй код, чтобы не потерять его или перенести.</p>
@@ -562,14 +800,15 @@ function menuView(){
   <div class="card"><button class="act sec" style="background:var(--red)" onclick="askReset()">Начать заново</button></div>`}
 function copyCode(){const t=document.getElementById('code');navigator.clipboard.writeText(t.value).then(()=>toast('Скопировано'),()=>{t.select();toast('Выдели и скопируй вручную')})}
 function importCode(){openM(`<b>Вставь код сохранения</b><textarea id="imp"></textarea><div class="row" style="margin-top:8px"><button class="act" id="iok">Загрузить</button><button class="act sec" onclick="closeM()">Отмена</button></div>`);
-  document.getElementById('iok').onclick=()=>{try{let s=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('imp').value.trim()))));if(!s.res)throw 0;if(s.v!==3)s=fresh(s);S=s;save();closeM();toast('Загружено');render()}catch(e){toast('Код не подходит')}}}
+  document.getElementById('iok').onclick=()=>{try{let s=JSON.parse(decodeURIComponent(escape(atob(document.getElementById('imp').value.trim()))));if(!s.res)throw 0;if(s.v!==3)s=fresh(s);S=normalize(s);save();closeM();toast('Загружено');render()}catch(e){toast('Код не подходит')}}}
 function askReset(){openM(`<b>Точно начать заново?</b><p>Весь прогресс пропадёт.</p><div class="row"><button class="act" style="background:var(--red)" id="rok">Да</button><button class="act sec" onclick="closeM()">Нет</button></div>`);
-  document.getElementById('rok').onclick=()=>{S=fresh();save();closeM();render()}}
+  document.getElementById('rok').onclick=()=>{S=normalize(fresh());save();closeM();render()}}
 let tt;function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),1800)}
 
 // ================= Запуск =================
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));render()});
-S=load()||fresh();
+function syncTabs(){document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x.dataset.t===tab))}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;syncTabs();render()});
+S=load()||normalize(fresh());
 const away=(Date.now()-S.last)/60e3;
 render();walkLoop();
 if(away>5)setTimeout(()=>toast(`С возвращением! Тебя не было ${away>90?Math.round(away/60)+' ч':Math.round(away)+' мин'} — урожай ждёт`),300);
