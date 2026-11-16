@@ -1,0 +1,21 @@
+{
+  "_comment": "Имена жителей: ru/en, f — женское",
+  "names": [
+    {"ru": "Арвид", "en": "Arvid"}, {"ru": "Бранка", "en": "Branka", "f": true},
+    {"ru": "Велимир", "en": "Velimir"}, {"ru": "Гресса", "en": "Gressa", "f": true},
+    {"ru": "Дорн", "en": "Dorn"}, {"ru": "Ельга", "en": "Elga", "f": true},
+    {"ru": "Жарко", "en": "Zharko"}, {"ru": "Зоряна", "en": "Zoryana", "f": true},
+    {"ru": "Ивор", "en": "Ivor"}, {"ru": "Калина", "en": "Kalina", "f": true},
+    {"ru": "Лютобор", "en": "Lutobor"}, {"ru": "Мирта", "en": "Mirta", "f": true},
+    {"ru": "Нестор", "en": "Nestor"}, {"ru": "Ольха", "en": "Olkha", "f": true},
+    {"ru": "Пеллан", "en": "Pellan"}, {"ru": "Рогнеда", "en": "Rogneda", "f": true},
+    {"ru": "Свен", "en": "Sven"}, {"ru": "Тиса", "en": "Tisa", "f": true},
+    {"ru": "Ульрих", "en": "Ulrich"}, {"ru": "Фрея", "en": "Freya", "f": true},
+    {"ru": "Хальвар", "en": "Halvar"}, {"ru": "Цвета", "en": "Tsveta", "f": true},
+    {"ru": "Чеслав", "en": "Cheslav"}, {"ru": "Шира", "en": "Shira", "f": true},
+    {"ru": "Эймунд", "en": "Eymund"}, {"ru": "Юна", "en": "Yuna", "f": true},
+    {"ru": "Ярополк", "en": "Yaropolk"}, {"ru": "Ася", "en": "Asya", "f": true},
+    {"ru": "Бьорн", "en": "Bjorn"}, {"ru": "Веста", "en": "Vesta", "f": true},
+    {"ru": "Гуннар", "en": "Gunnar"}, {"ru": "Дана", "en": "Dana", "f": true}
+  ]
+}

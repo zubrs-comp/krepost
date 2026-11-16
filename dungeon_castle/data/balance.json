@@ -1,0 +1,24 @@
+{
+  "_comment": "Общий баланс MVP",
+  "grid_rows": 3,
+  "grid_cols": 3,
+  "throne_cell": [2, 1],
+  "start_rooms": [
+    {"type": "kitchen", "row": 2, "col": 0},
+    {"type": "mint", "row": 2, "col": 2}
+  ],
+  "start_resources": {"gold": 150, "food": 120},
+  "start_residents": 5,
+  "stat_min": 2,
+  "stat_max": 9,
+  "food_per_resident_min": 0.3,
+  "hunger_efficiency": 0.5,
+  "offline_cap_hours": 8,
+  "autosave_seconds": 30,
+  "xp_per_min": 4.0,
+  "xp_base": 60.0,
+  "xp_exp": 1.5,
+  "max_resident_level": 10,
+  "efficiency_base": 0.5,
+  "efficiency_per_stat": 0.1
+}

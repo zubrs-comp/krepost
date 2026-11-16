@@ -1,0 +1,59 @@
+{
+  "_comment": "Типы комнат. rate — выработка в минуту на одного работника с эффективностью 1.0. Все числа балансируются здесь.",
+  "throne": {
+    "name": "ROOM_THRONE",
+    "desc": "ROOM_THRONE_DESC",
+    "buildable": false,
+    "resource": "",
+    "stat": "",
+    "slots": [99],
+    "max_level": 1,
+    "capacity": {"gold": 400, "food": 300},
+    "colors": {"wall": "#7a4e8c", "floor": "#4a2f55", "accent": "#e8c35a"}
+  },
+  "kitchen": {
+    "name": "ROOM_KITCHEN",
+    "desc": "ROOM_KITCHEN_DESC",
+    "buildable": true,
+    "resource": "food",
+    "stat": "agi",
+    "rate": 4.0,
+    "level_bonus": 0.5,
+    "buffer": [80, 160, 280, 450, 700],
+    "slots": [2, 2, 3, 3, 4],
+    "max_level": 5,
+    "cost": [60, 140, 320, 700, 1500],
+    "build_time": [8, 20, 45, 90, 150],
+    "colors": {"wall": "#b5643a", "floor": "#6b3a22", "accent": "#ffb347"}
+  },
+  "mint": {
+    "name": "ROOM_MINT",
+    "desc": "ROOM_MINT_DESC",
+    "buildable": true,
+    "resource": "gold",
+    "stat": "int",
+    "rate": 5.0,
+    "level_bonus": 0.5,
+    "buffer": [100, 200, 350, 560, 900],
+    "slots": [2, 2, 3, 3, 4],
+    "max_level": 5,
+    "cost": [80, 180, 400, 850, 1800],
+    "build_time": [10, 25, 50, 100, 160],
+    "colors": {"wall": "#3d6f8f", "floor": "#22445a", "accent": "#ffd84a"}
+  },
+  "storage": {
+    "name": "ROOM_STORAGE",
+    "desc": "ROOM_STORAGE_DESC",
+    "buildable": true,
+    "resource": "",
+    "stat": "str",
+    "slots": [1, 1, 2, 2, 2],
+    "max_level": 5,
+    "capacity": {"gold": 500, "food": 400},
+    "capacity_level_mult": 0.8,
+    "worker_bonus": 0.1,
+    "cost": [100, 220, 480, 1000, 2100],
+    "build_time": [10, 25, 50, 100, 160],
+    "colors": {"wall": "#6e7a48", "floor": "#3f4628", "accent": "#d9b77a"}
+  }
+}

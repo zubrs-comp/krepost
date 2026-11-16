@@ -1,0 +1,76 @@
+keys,en,ru
+ROOM_THRONE,Throne Hall,Тронный зал
+ROOM_THRONE_DESC,Heart of the castle. Idle residents rest here. Holds the main treasury.,Сердце замка. Здесь отдыхают свободные жители и хранится основная казна.
+ROOM_KITCHEN,Kitchen,Кухня
+ROOM_KITCHEN_DESC,Cooks food for the residents. Workers need Agility.,Готовит еду для жителей. Работникам нужна ловкость.
+ROOM_MINT,Mint,Монетный двор
+ROOM_MINT_DESC,Strikes gold coins. Workers need Intellect.,Чеканит золото. Работникам нужен интеллект.
+ROOM_STORAGE,Storehouse,Склад
+ROOM_STORAGE_DESC,Raises the gold and food limits. Strong workers squeeze in even more.,Увеличивает лимит золота и еды. Сильные работники уложат ещё больше.
+TOAST_ROOM_FULL,No free places in this room,В этой комнате нет свободных мест
+TOAST_STORAGE_FULL,Storage is full — build or upgrade a Storehouse,Склады полны — постройте или улучшите склад
+TOAST_NO_GOLD,Not enough gold,Не хватает золота
+TOAST_BUILT,%s is ready!,%s: стройка завершена!
+TOAST_HUNGRY,Out of food! Residents work at half speed,Еда закончилась! Жители работают вполсилы
+TOAST_LEVELUP,%s reached level %d!,%s достиг(ла) уровня %d!
+TOAST_COLLECTED,"Collected: %d gold, %d food","Собрано: %d золота, %d еды"
+TOAST_NOTHING,Nothing to collect yet,Пока нечего собирать
+TOAST_UPGRADE_STARTED,Upgrade started,Улучшение началось
+TOAST_RESET,A new reign begins,Начато новое правление
+LVL_SHORT,Lv %d,ур. %d
+LVL_LONG,level %d,уровень %d
+CELL_BUILD,Build,Построить
+BUILDING_LEFT,Building: %s,Стройка: %s
+BUILDING_DONE,Finishing…,Завершается…
+DUNGEON_SOON,The Deep — sealed for now,Глубь — пока запечатана
+BTN_RESIDENTS,Residents,Жители
+BTN_COLLECT_ALL,Collect all,Собрать всё
+BTN_CENTER,Castle,К замку
+BTN_SHOW,Show,Найти
+BTN_UNASSIGN,Rest,Снять
+BTN_COLLECT,Collect,Собрать
+BTN_UPGRADE,Upgrade: %d gold,Улучшить: %d зол.
+MAX_LEVEL,Max level,Макс. уровень
+BTN_BUILD,Build,Построить
+BTN_OK,OK,Хорошо
+ROOM_RATE,Output: %.1f %s / min,Выработка: %.1f %s в минуту
+ROOM_STORED,Ready: %d / %d (tap the room to collect),"Готово: %d из %d (тапните комнату, чтобы собрать)"
+ROOM_CAPACITY,"Treasury limit: %d gold, %d food","Лимит казны: %d золота, %d еды"
+FOOD_USE,Residents eat %.1f food per minute,Жители съедают %.1f еды в минуту
+THRONE_IDLE,Resting residents: %d,Отдыхают: %d
+ROOM_WORKERS,Workers: %d / %d,Работники: %d из %d
+RES_GOLD,gold,золота
+RES_FOOD,food,еды
+STAT_STR,Strength,Сила
+STAT_AGI,Agility,Ловкость
+STAT_INT,Intellect,Интеллект
+STAT_STR_SHORT,STR,СИЛ
+STAT_AGI_SHORT,AGI,ЛОВ
+STAT_INT_SHORT,INT,ИНТ
+HINT_DRAG,Drag a resident with your finger into a room to put them to work.,"Перетащите жителя пальцем в комнату, чтобы он там работал."
+BUILD_TITLE,Build a room,Строительство
+BUILD_INFO,%d gold • %s,%d золота • %s
+RESIDENTS_TITLE,Residents (%d),Жители (%d)
+XP_LINE,Experience: %d / %d,Опыт: %d из %d
+WORKS_IN,Location: %s,Где: %s
+EFF_TITLE,Efficiency by room:,Эффективность в комнатах:
+SETTINGS_TITLE,Settings,Настройки
+SET_LANGUAGE,Language,Язык
+SET_FPS,Frame rate,Частота кадров
+SET_RESET,Start over,Начать заново
+SET_RESET_CONFIRM,Sure? Tap again to erase progress,Точно? Нажмите ещё раз — прогресс сотрётся
+SET_ABOUT,"Dungeon Castle %s. Offline, no purchases. Art is placeholder for now — see CREDITS.md.","Dungeon Castle %s. Офлайн, без покупок. Графика пока временная — см. CREDITS.md."
+OFFLINE_TITLE,While you were away,Пока вас не было
+OFFLINE_AWAY,You were away for %s.,Вас не было %s.
+OFFLINE_CAPPED,(only the first %d hours count),(засчитаны первые %d ч)
+OFFLINE_GAINS,Rooms produced %d gold and %d food.,Комнаты выработали %d золота и %d еды.
+OFFLINE_LEVELUPS,Level-ups: %d,Повышений уровня: %d
+OFFLINE_HINT,Tap rooms to collect it.,"Тапните по комнатам, чтобы собрать."
+DUR_MIN,%d min,%d мин
+DUR_HM,%d h %d min,%d ч %d мин
+WELCOME_TITLE,A hundred years later,Сто лет спустя
+WELCOME_BODY,"Ardein fell in a single night, and its castle sank into the Deep. You are the heir, and you have come back to the ruins with five settlers.
+
+Drag residents into the Kitchen and the Mint. Tap a room to collect what it has made. Build new rooms on empty cells.","Королевство Ардейн пало за одну ночь, и замок ушёл в Глубь. Вы — наследник и вернулись к руинам с пятью переселенцами.
+
+Перетащите жителей на кухню и в монетный двор. Тапайте по комнатам, чтобы забрать готовое. На пустых клетках стройте новые комнаты."
