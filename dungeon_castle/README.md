@@ -9,10 +9,10 @@ scenes/    сцены (.tscn)
 scripts/   логика: autoload/ (данные, состояние, сохранение), model/, castle/ (вид замка)
 ui/        интерфейс (HUD, тема)
 data/      баланс в JSON и строки локализации (data/i18n/strings.csv)
-assets/    графика (на этапе 1 пусто, всё процедурное)
+assets/    графика: sprites/ — запечённые из 3D-моделей спрайты (см. CREDITS.md)
 audio/     звук (этап 5)
 tests/     дымовой тест со скриншотами
-tools/     скрипт сборки APK
+tools/     скрипт сборки APK; sprite_baker/ — запекатель 3D → 2D-спрайты
 ```
 
 ## Запуск на ПК
@@ -20,6 +20,14 @@ tools/     скрипт сборки APK
 зумирует.
 
 Дымовой тест: `godot --path . res://tests/smoke_test.tscn` (скриншоты сохраняются в `user://shots`).
+
+## Спрайты персонажей
+Люди и монстры — 3D-модели Quaternius (CC0), отрендеренные в 2D-атласы:
+```
+tools/sprite_baker/fetch_models.sh /tmp/models          # скачать модели
+godot --path tools/sprite_baker -- /tmp/models          # запечь в assets/sprites
+```
+Что запекать, перекраска и анимации — в `tools/sprite_baker/bake_config.json`.
 
 ## Сборка APK
 1. Установите Godot 4.5.1 и шаблоны экспорта: Editor → Manage Export Templates → Download.

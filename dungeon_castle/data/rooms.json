@@ -1,59 +1,521 @@
 {
-  "_comment": "Типы комнат. rate — выработка в минуту на одного работника с эффективностью 1.0. Все числа балансируются здесь.",
-  "throne": {
-    "name": "ROOM_THRONE",
-    "desc": "ROOM_THRONE_DESC",
-    "buildable": false,
-    "resource": "",
-    "stat": "",
-    "slots": [99],
-    "max_level": 1,
-    "capacity": {"gold": 400, "food": 300},
-    "colors": {"wall": "#7a4e8c", "floor": "#4a2f55", "accent": "#e8c35a"}
+ "_comment": "Типы комнат. zone: castle/dungeon. rate — выработка в минуту на работника с эффективностью 1.0. cost — по уровням.",
+ "throne": {
+  "name": "ROOM_THRONE",
+  "desc": "ROOM_THRONE_DESC",
+  "zone": "castle",
+  "buildable": false,
+  "resource": "",
+  "stat": "",
+  "slots": [
+   99
+  ],
+  "max_level": 1,
+  "pop": 5,
+  "capacity": {
+   "gold": 400,
+   "food": 300,
+   "stone": 150,
+   "ore": 60,
+   "essence": 40
   },
-  "kitchen": {
-    "name": "ROOM_KITCHEN",
-    "desc": "ROOM_KITCHEN_DESC",
-    "buildable": true,
-    "resource": "food",
-    "stat": "agi",
-    "rate": 4.0,
-    "level_bonus": 0.5,
-    "buffer": [80, 160, 280, 450, 700],
-    "slots": [2, 2, 3, 3, 4],
-    "max_level": 5,
-    "cost": [60, 140, 320, 700, 1500],
-    "build_time": [8, 20, 45, 90, 150],
-    "colors": {"wall": "#b5643a", "floor": "#6b3a22", "accent": "#ffb347"}
-  },
-  "mint": {
-    "name": "ROOM_MINT",
-    "desc": "ROOM_MINT_DESC",
-    "buildable": true,
-    "resource": "gold",
-    "stat": "int",
-    "rate": 5.0,
-    "level_bonus": 0.5,
-    "buffer": [100, 200, 350, 560, 900],
-    "slots": [2, 2, 3, 3, 4],
-    "max_level": 5,
-    "cost": [80, 180, 400, 850, 1800],
-    "build_time": [10, 25, 50, 100, 160],
-    "colors": {"wall": "#3d6f8f", "floor": "#22445a", "accent": "#ffd84a"}
-  },
-  "storage": {
-    "name": "ROOM_STORAGE",
-    "desc": "ROOM_STORAGE_DESC",
-    "buildable": true,
-    "resource": "",
-    "stat": "str",
-    "slots": [1, 1, 2, 2, 2],
-    "max_level": 5,
-    "capacity": {"gold": 500, "food": 400},
-    "capacity_level_mult": 0.8,
-    "worker_bonus": 0.1,
-    "cost": [100, 220, 480, 1000, 2100],
-    "build_time": [10, 25, 50, 100, 160],
-    "colors": {"wall": "#6e7a48", "floor": "#3f4628", "accent": "#d9b77a"}
+  "colors": {
+   "wall": "#7a4e8c",
+   "floor": "#4a2f55",
+   "accent": "#e8c35a"
   }
+ },
+ "kitchen": {
+  "name": "ROOM_KITCHEN",
+  "desc": "ROOM_KITCHEN_DESC",
+  "zone": "castle",
+  "buildable": true,
+  "resource": "food",
+  "stat": "agi",
+  "rate": 4.0,
+  "level_bonus": 0.5,
+  "buffer": [
+   80,
+   160,
+   280,
+   450,
+   700
+  ],
+  "slots": [
+   2,
+   2,
+   3,
+   3,
+   4
+  ],
+  "max_level": 5,
+  "cost": [
+   {
+    "gold": 60
+   },
+   {
+    "gold": 140
+   },
+   {
+    "gold": 320,
+    "stone": 40
+   },
+   {
+    "gold": 700,
+    "stone": 120
+   },
+   {
+    "gold": 1500,
+    "stone": 300,
+    "ore": 40
+   }
+  ],
+  "build_time": [
+   8,
+   20,
+   45,
+   90,
+   150
+  ],
+  "colors": {
+   "wall": "#b5643a",
+   "floor": "#6b3a22",
+   "accent": "#ffb347"
+  }
+ },
+ "mint": {
+  "name": "ROOM_MINT",
+  "desc": "ROOM_MINT_DESC",
+  "zone": "castle",
+  "buildable": true,
+  "resource": "gold",
+  "stat": "int",
+  "rate": 5.0,
+  "level_bonus": 0.5,
+  "buffer": [
+   100,
+   200,
+   350,
+   560,
+   900
+  ],
+  "slots": [
+   2,
+   2,
+   3,
+   3,
+   4
+  ],
+  "max_level": 5,
+  "cost": [
+   {
+    "gold": 80
+   },
+   {
+    "gold": 180
+   },
+   {
+    "gold": 400,
+    "stone": 50
+   },
+   {
+    "gold": 850,
+    "stone": 140
+   },
+   {
+    "gold": 1800,
+    "stone": 320,
+    "ore": 50
+   }
+  ],
+  "build_time": [
+   10,
+   25,
+   50,
+   100,
+   160
+  ],
+  "colors": {
+   "wall": "#3d6f8f",
+   "floor": "#22445a",
+   "accent": "#ffd84a"
+  }
+ },
+ "storage": {
+  "name": "ROOM_STORAGE",
+  "desc": "ROOM_STORAGE_DESC",
+  "zone": "castle",
+  "buildable": true,
+  "resource": "",
+  "stat": "str",
+  "slots": [
+   1,
+   1,
+   2,
+   2,
+   2
+  ],
+  "max_level": 5,
+  "capacity": {
+   "gold": 500,
+   "food": 400,
+   "stone": 300,
+   "ore": 120,
+   "essence": 60
+  },
+  "capacity_level_mult": 0.8,
+  "worker_bonus": 0.1,
+  "cost": [
+   {
+    "gold": 100
+   },
+   {
+    "gold": 220,
+    "stone": 30
+   },
+   {
+    "gold": 480,
+    "stone": 100
+   },
+   {
+    "gold": 1000,
+    "stone": 240,
+    "ore": 30
+   },
+   {
+    "gold": 2100,
+    "stone": 480,
+    "ore": 90
+   }
+  ],
+  "build_time": [
+   10,
+   25,
+   50,
+   100,
+   160
+  ],
+  "colors": {
+   "wall": "#6e7a48",
+   "floor": "#3f4628",
+   "accent": "#d9b77a"
+  }
+ },
+ "bedroom": {
+  "name": "ROOM_BEDROOM",
+  "desc": "ROOM_BEDROOM_DESC",
+  "zone": "castle",
+  "buildable": true,
+  "resource": "",
+  "stat": "",
+  "slots": [
+   0
+  ],
+  "max_level": 5,
+  "pop_levels": [
+   3,
+   4,
+   5,
+   6,
+   8
+  ],
+  "cost": [
+   {
+    "gold": 120
+   },
+   {
+    "gold": 260,
+    "stone": 40
+   },
+   {
+    "gold": 560,
+    "stone": 120
+   },
+   {
+    "gold": 1100,
+    "stone": 260,
+    "ore": 30
+   },
+   {
+    "gold": 2200,
+    "stone": 500,
+    "ore": 80
+   }
+  ],
+  "build_time": [
+   10,
+   25,
+   50,
+   100,
+   160
+  ],
+  "colors": {
+   "wall": "#8c6a4e",
+   "floor": "#5a3f2c",
+   "accent": "#e9d6b0"
+  }
+ },
+ "farm": {
+  "name": "ROOM_FARM",
+  "desc": "ROOM_FARM_DESC",
+  "zone": "dungeon",
+  "min_tier": 1,
+  "buildable": true,
+  "resource": "food",
+  "stat": "int",
+  "rate": 5.0,
+  "level_bonus": 0.5,
+  "buffer": [
+   100,
+   200,
+   340,
+   520,
+   800
+  ],
+  "slots": [
+   2,
+   2,
+   3,
+   3,
+   4
+  ],
+  "max_level": 5,
+  "cost": [
+   {
+    "gold": 90,
+    "stone": 30
+   },
+   {
+    "gold": 200,
+    "stone": 70
+   },
+   {
+    "gold": 420,
+    "stone": 150
+   },
+   {
+    "gold": 900,
+    "stone": 300,
+    "ore": 40
+   },
+   {
+    "gold": 1800,
+    "stone": 600,
+    "ore": 100
+   }
+  ],
+  "build_time": [
+   10,
+   25,
+   50,
+   100,
+   160
+  ],
+  "colors": {
+   "wall": "#3f3a52",
+   "floor": "#2a2638",
+   "accent": "#9be36b"
+  }
+ },
+ "mine": {
+  "name": "ROOM_MINE",
+  "desc": "ROOM_MINE_DESC",
+  "zone": "dungeon",
+  "min_tier": 1,
+  "buildable": true,
+  "resource": "ore",
+  "stat": "str",
+  "rate": 1.5,
+  "level_bonus": 0.5,
+  "vein_bonus": 0.5,
+  "buffer": [
+   30,
+   60,
+   110,
+   180,
+   280
+  ],
+  "slots": [
+   2,
+   2,
+   3,
+   3,
+   4
+  ],
+  "max_level": 5,
+  "cost": [
+   {
+    "gold": 120,
+    "stone": 40
+   },
+   {
+    "gold": 260,
+    "stone": 90
+   },
+   {
+    "gold": 540,
+    "stone": 180
+   },
+   {
+    "gold": 1100,
+    "stone": 360,
+    "ore": 60
+   },
+   {
+    "gold": 2200,
+    "stone": 700,
+    "ore": 140
+   }
+  ],
+  "build_time": [
+   12,
+   30,
+   60,
+   110,
+   170
+  ],
+  "colors": {
+   "wall": "#4a3a2e",
+   "floor": "#2e241c",
+   "accent": "#d98b4a"
+  }
+ },
+ "prison": {
+  "name": "ROOM_PRISON",
+  "desc": "ROOM_PRISON_DESC",
+  "zone": "dungeon",
+  "min_tier": 2,
+  "buildable": true,
+  "resource": "essence",
+  "stat": "str",
+  "rate": 0.5,
+  "rate_mode": "captives",
+  "captives": [
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "level_bonus": 0.0,
+  "buffer": [
+   20,
+   40,
+   70,
+   110,
+   170
+  ],
+  "slots": [
+   1,
+   1,
+   2,
+   2,
+   2
+  ],
+  "max_level": 5,
+  "cost": [
+   {
+    "gold": 200,
+    "stone": 100,
+    "ore": 30
+   },
+   {
+    "gold": 420,
+    "stone": 200,
+    "ore": 60
+   },
+   {
+    "gold": 850,
+    "stone": 380,
+    "ore": 110
+   },
+   {
+    "gold": 1700,
+    "stone": 700,
+    "ore": 200
+   },
+   {
+    "gold": 3200,
+    "stone": 1200,
+    "ore": 350
+   }
+  ],
+  "build_time": [
+   15,
+   35,
+   70,
+   120,
+   180
+  ],
+  "colors": {
+   "wall": "#3a3a40",
+   "floor": "#24242a",
+   "accent": "#b0b0c0"
+  }
+ },
+ "alchemy": {
+  "name": "ROOM_ALCHEMY",
+  "desc": "ROOM_ALCHEMY_DESC",
+  "zone": "dungeon",
+  "min_tier": 3,
+  "buildable": true,
+  "resource": "essence",
+  "stat": "int",
+  "rate": 0.6,
+  "level_bonus": 0.5,
+  "buffer": [
+   15,
+   30,
+   55,
+   90,
+   140
+  ],
+  "slots": [
+   1,
+   2,
+   2,
+   3,
+   3
+  ],
+  "max_level": 5,
+  "cost": [
+   {
+    "gold": 250,
+    "stone": 80,
+    "ore": 20
+   },
+   {
+    "gold": 520,
+    "stone": 160,
+    "ore": 50
+   },
+   {
+    "gold": 1050,
+    "stone": 320,
+    "ore": 100
+   },
+   {
+    "gold": 2100,
+    "stone": 600,
+    "ore": 200
+   },
+   {
+    "gold": 4000,
+    "stone": 1100,
+    "ore": 380
+   }
+  ],
+  "build_time": [
+   15,
+   35,
+   70,
+   120,
+   180
+  ],
+  "colors": {
+   "wall": "#2f4a46",
+   "floor": "#1e302d",
+   "accent": "#7cf0c8"
+  }
+ }
 }

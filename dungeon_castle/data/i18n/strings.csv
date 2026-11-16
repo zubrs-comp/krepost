@@ -9,11 +9,10 @@ ROOM_STORAGE,Storehouse,Склад
 ROOM_STORAGE_DESC,Raises the gold and food limits. Strong workers squeeze in even more.,Увеличивает лимит золота и еды. Сильные работники уложат ещё больше.
 TOAST_ROOM_FULL,No free places in this room,В этой комнате нет свободных мест
 TOAST_STORAGE_FULL,Storage is full — build or upgrade a Storehouse,Склады полны — постройте или улучшите склад
-TOAST_NO_GOLD,Not enough gold,Не хватает золота
 TOAST_BUILT,%s is ready!,%s: стройка завершена!
 TOAST_HUNGRY,Out of food! Residents work at half speed,Еда закончилась! Жители работают вполсилы
 TOAST_LEVELUP,%s reached level %d!,%s достиг(ла) уровня %d!
-TOAST_COLLECTED,"Collected: %d gold, %d food","Собрано: %d золота, %d еды"
+TOAST_COLLECTED,Collected: %s,Собрано: %s
 TOAST_NOTHING,Nothing to collect yet,Пока нечего собирать
 TOAST_UPGRADE_STARTED,Upgrade started,Улучшение началось
 TOAST_RESET,A new reign begins,Начато новое правление
@@ -25,11 +24,10 @@ BUILDING_DONE,Finishing…,Завершается…
 DUNGEON_SOON,The Deep — sealed for now,Глубь — пока запечатана
 BTN_RESIDENTS,Residents,Жители
 BTN_COLLECT_ALL,Collect all,Собрать всё
-BTN_CENTER,Castle,К замку
 BTN_SHOW,Show,Найти
 BTN_UNASSIGN,Rest,Снять
 BTN_COLLECT,Collect,Собрать
-BTN_UPGRADE,Upgrade: %d gold,Улучшить: %d зол.
+BTN_UPGRADE,Upgrade: %s,Улучшить: %s
 MAX_LEVEL,Max level,Макс. уровень
 BTN_BUILD,Build,Построить
 BTN_OK,OK,Хорошо
@@ -49,8 +47,7 @@ STAT_AGI_SHORT,AGI,ЛОВ
 STAT_INT_SHORT,INT,ИНТ
 HINT_DRAG,Drag a resident with your finger into a room to put them to work.,"Перетащите жителя пальцем в комнату, чтобы он там работал."
 BUILD_TITLE,Build a room,Строительство
-BUILD_INFO,%d gold • %s,%d золота • %s
-RESIDENTS_TITLE,Residents (%d),Жители (%d)
+RESIDENTS_TITLE,Residents (%d/%d),Жители (%d/%d)
 XP_LINE,Experience: %d / %d,Опыт: %d из %d
 WORKS_IN,Location: %s,Где: %s
 EFF_TITLE,Efficiency by room:,Эффективность в комнатах:
@@ -63,7 +60,7 @@ SET_ABOUT,"Dungeon Castle %s. Offline, no purchases. Art is placeholder for now 
 OFFLINE_TITLE,While you were away,Пока вас не было
 OFFLINE_AWAY,You were away for %s.,Вас не было %s.
 OFFLINE_CAPPED,(only the first %d hours count),(засчитаны первые %d ч)
-OFFLINE_GAINS,Rooms produced %d gold and %d food.,Комнаты выработали %d золота и %d еды.
+OFFLINE_GAINS,Produced: %s.,Выработано: %s.
 OFFLINE_LEVELUPS,Level-ups: %d,Повышений уровня: %d
 OFFLINE_HINT,Tap rooms to collect it.,"Тапните по комнатам, чтобы собрать."
 DUR_MIN,%d min,%d мин
@@ -71,6 +68,102 @@ DUR_HM,%d h %d min,%d ч %d мин
 WELCOME_TITLE,A hundred years later,Сто лет спустя
 WELCOME_BODY,"Ardein fell in a single night, and its castle sank into the Deep. You are the heir, and you have come back to the ruins with five settlers.
 
-Drag residents into the Kitchen and the Mint. Tap a room to collect what it has made. Build new rooms on empty cells.","Королевство Ардейн пало за одну ночь, и замок ушёл в Глубь. Вы — наследник и вернулись к руинам с пятью переселенцами.
+Drag residents into rooms to put them to work. Tap a room to collect what it has made.
 
-Перетащите жителей на кухню и в монетный двор. Тапайте по комнатам, чтобы забрать готовое. На пустых клетках стройте новые комнаты."
+Under the castle lies the Deep. Drag a strong resident onto the glowing rock to start digging.","Королевство Ардейн пало за одну ночь, и замок ушёл в Глубь. Вы — наследник и вернулись к руинам с пятью переселенцами.
+
+Перетаскивайте жителей в комнаты, чтобы они работали. Тапайте по комнатам, чтобы забрать готовое.
+
+Под замком — Глубь. Перетащите сильного жителя на подсвеченную породу, и он начнёт копать."
+RES_STONE,stone,камня
+RES_ORE,ore,руды
+RES_ESSENCE,essence,эссенции
+RESNAME_GOLD,Gold,Золото
+RESNAME_FOOD,Food,Еда
+RESNAME_STONE,Stone,Камень
+RESNAME_ORE,Ore,Руда
+RESNAME_ESSENCE,Essence,Эссенция
+BTN_LORE,Chronicle,Летопись
+BTN_DEEP,The Deep,Глубь
+BTN_CASTLE,Castle,Замок
+BTN_CONTINUE,Continue,Дальше
+BTN_FIGHT,To battle!,В бой!
+BTN_RECRUIT,Take in a settler: %s,Принять переселенца: %s
+BTN_SEND_DIGGER,Send the strongest idle resident,Отправить самого сильного из отдыхающих
+ABILITY_QUAKE,Cave-in!,Обвал!
+BATTLE_WON,Victory!,Победа!
+BATTLE_LOST,Retreat,Отступление
+BATTLE_LOST_HINT,"The squad fell back to the castle. Nobody died — level up residents, pick a stronger squad or use an elixir.","Отряд отступил в замок. Никто не погиб — прокачайте жителей, соберите отряд сильнее или возьмите эликсир."
+BATTLE_REWARD,Spoils: %s,Добыча: %s
+BATTLE_TIME,%d s,%d с
+BATTLE_XP,Fighters gained %d experience,Бойцы получили %d опыта
+BEDROOM_BEDS,Beds: %d,Мест: %d
+BIOME_ROOTS,The Roots,Корни
+BIOME_FLOODED,Flooded Ruins,Затопленные руины
+BIOME_MYCELIUM,Mycelium Grottoes,Мицелиевые гроты
+BIOME_LAVA,Lava Halls,Лавовые залы
+BIOME_ANCIENT,The Ancient City,Древний город
+BIOME_NETHER,The Nether Court,Нижний Двор
+BUILD_TITLE_DEEP,Build on tier %d,Стройка на ярусе %d
+CELL_BOSS,Boss lair,Логово босса
+CELL_DIG,Dig,Копать
+CELL_LAIR,Monster lair,Логово монстров
+DEEP_UNKNOWN,Unexplored,Неизведанное
+DIGGERS,Diggers: %d / %d,Копатели: %d из %d
+DIGGING_AT,"digging, tier %d","копает, ярус %d"
+DIG_WORD,Digging,Раскопки
+ELIXIR,"Strength elixir: %d essence, +%d%% damage","Эликсир силы: %d эссенции, +%d%% урона"
+ENEMY_GRYZEN,Gryzen,Грызень
+ENEMY_SLIME,Cave slime,Пещерная слизь
+ENEMY_SPIKY,Spiny slime,Шипастая слизь
+ENEMY_TROLL,Cave troll,Пещерный тролль
+FIGHT_BOSS,Gryzen's lair,Логово Грызеня
+FIGHT_ENEMIES,Enemies: %s,Враги: %s
+FIGHT_LAIR,"Lair, tier %d","Логово, ярус %d"
+FIGHT_SQUAD,Squad: %d / %d — tap to pick,"Отряд: %d из %d — тапните, чтобы выбрать"
+HINT_DIG,Drag residents onto the rock. Strength speeds up digging. Cleared cells give stone and room for underground buildings.,Перетащите жителей на породу. Сила ускоряет раскопки. Расчищенная клетка даёт камень и место под подземную комнату.
+LORE_EMPTY,No pages yet. Pieces of the chronicle lie on the stairwells of the Deep.,Пока пусто. Обрывки летописи лежат у лестниц Глуби.
+LORE_FOUND,Chronicle page found,Найдена страница летописи
+LORE_TITLE,Chronicle (%d/%d),Летопись (%d/%d)
+MINE_VEIN,Built on an ore vein: +50% ore,Стоит на рудной жиле: +50% руды
+NEED_TIER,Opens from tier %d,Доступно с яруса %d
+NO_BEDS,No free beds — build a Bedroom,Нет мест — постройте спальню
+ODDS_GOOD,Odds: in our favour,Шансы: на нашей стороне
+ODDS_EVEN,Odds: even,Шансы: равные
+ODDS_BAD,Odds: dangerous,Шансы: опасно
+OFFLINE_CELLS,Cells dug out: %d,Расчищено клеток: %d
+POP_LINE,Residents: %d of %d places,Жителей: %d из %d мест
+PRISON_LINE,Captives: %d / %d. Guarded captives give essence.,Пленники: %d из %d. Под охраной дают эссенцию.
+ROCK_BLOCKED,No way through yet. Dig from the stairwell or a cleared cell next to it.,Сюда пока не подойти. Копайте от лестницы или соседней расчищенной клетки.
+ROCK_ETA,Done in %s,Готово через %s
+ROCK_HP,Rock: %d / %d,Порода: %d из %d
+ROCK_TITLE,"Rock, tier %d","Порода, ярус %d"
+ROOM_ALCHEMY,Alchemy Lab,Алхимическая лаборатория
+ROOM_ALCHEMY_DESC,Distils essence for elixirs. Workers need Intellect.,Перегоняет эссенцию для эликсиров. Работникам нужен интеллект.
+ROOM_BEDROOM,Bedroom,Спальня
+ROOM_BEDROOM_DESC,Beds for new settlers.,Места для новых переселенцев.
+ROOM_FARM,Mushroom Farm,Грибная ферма
+ROOM_FARM_DESC,Grows glowing mushrooms — food. Workers need Intellect.,Растит светящиеся грибы — еду. Работникам нужен интеллект.
+ROOM_MINE,Mine,Шахта
+ROOM_MINE_DESC,Extracts copper ore. Even better on a vein. Workers need Strength.,"Добывает медную руду, на жиле — больше. Работникам нужна сила."
+ROOM_PRISON,Monster Gaol,Тюрьма для монстров
+ROOM_PRISON_DESC,Holds captured monsters. Guarded captives slowly give essence.,Держит пленных монстров. Под охраной они понемногу дают эссенцию.
+STAIR_DOWN,Way down to tier %d,Спуск на ярус %d
+TIER_N,Tier %d,Ярус %d
+TOAST_BOSS_DOWN,Gryzen is defeated! The way down is open.,Грызень повержен! Путь вниз открыт.
+TOAST_CANT_DIG,Can't reach this rock yet,К этой породе пока не подойти
+TOAST_CAPTIVE,A monster was taken captive,Монстр взят в плен
+TOAST_CHEST,A chest in the rubble!,В завале — сундук!
+TOAST_DIG_FULL,Only two diggers fit here,Здесь помещаются только двое
+TOAST_LAIR,A monster lair! Gather a squad,Логово монстров! Соберите отряд
+TOAST_LAIR_FAR,Dig a way to the lair first,Сначала прокопайте путь к логову
+TOAST_NO_BEDS,No free beds,Нет свободных мест
+TOAST_NO_IDLE,Everyone is busy. Free someone in the Throne Hall,Все заняты. Освободите кого-нибудь в тронный зал
+TOAST_NO_RES,Not enough resources,Не хватает ресурсов
+TOAST_RECRUITED,%s joined the castle,%s теперь живёт в замке
+TOAST_TIER_OPEN,Tier %d is open!,Открыт ярус %d!
+TOAST_VEIN,An ore vein!,Рудная жила!
+TREASURY_TITLE,Treasury,Казна
+TREASURY_HINT,Storehouses raise the limits. Resources above the limit stay in the rooms.,Склады поднимают лимиты. Сверх лимита ресурсы ждут в комнатах.
+VEIN_HERE,There's an ore vein here — a Mine will produce +50%.,Здесь рудная жила — шахта даст +50%.
+VEIN_SHORT,vein,жила

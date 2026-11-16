@@ -4,7 +4,12 @@ extends CanvasLayer
 
 const UITheme = preload("res://ui/ui_theme.gd")
 const ResIcon = preload("res://ui/res_icon.gd")
-const VERSION := "0.1.0 (MVP)"
+const BattleView = preload("res://ui/battle_view.gd")
+const BattleSim = preload("res://scripts/battle/battle_sim.gd")
+const Sprites = preload("res://scripts/castle/sprites.gd")
+const Layout = preload("res://scripts/castle/layout.gd")
+const VERSION := "0.2.0"
+const RES_ORDER := ["gold", "food", "stone", "ore", "essence"]
 
 var castle: Node2D   # CastleView, задаёт main.gd
 
@@ -26,6 +31,13 @@ var _dyn_accum: float = 0.0
 var _reset_armed: bool = false
 var _safe_top: float = 0.0
 var _safe_bottom: float = 0.0
+## Очередь диалогов (находки летописи, офлайн-отчёт и т.п.)
+var _dialog_queue: Array = []
+var _dialog_dim: ColorRect
+var _battle: Control = null
+## Выбранные бойцы и эликсир для подготовки к бою
+var _squad: Array = []
+var _elixir: bool = false
 
 
 func _ready() -> void:
@@ -46,6 +58,8 @@ func _ready() -> void:
 	GameState.toast.connect(show_toast)
 	GameState.offline_report.connect(_on_offline_report)
 	GameState.locale_changed.connect(_on_locale_changed)
+	GameState.dungeon_changed.connect(_rebuild_sheet_soft)
+	GameState.lore_found.connect(_on_lore_found)
 	get_viewport().size_changed.connect(_apply_safe_area)
 	_apply_safe_area()
 	_update_resources()
@@ -77,6 +91,8 @@ func _apply_safe_area() -> void:
 func blocks(p: Vector2) -> bool:
 	if _dialog != null and is_instance_valid(_dialog):
 		return true
+	if _battle != null and is_instance_valid(_battle):
+		return true
 	for c in [_top, _bottom, _sheet]:
 		if c.visible and c.get_global_rect().has_point(p):
 			return true
@@ -90,43 +106,56 @@ func _build_top() -> void:
 	_top.add_theme_stylebox_override("panel", UITheme.box(Color(0.16, 0.12, 0.11, 0.92), UITheme.BORDER, 4, 22, 10))
 	_top.anchor_left = 0
 	_top.anchor_right = 1
-	_top.offset_left = 16
-	_top.offset_right = -16
+	_top.offset_left = 12
+	_top.offset_right = -12
 	_root.add_child(_top)
 	var hb := HBoxContainer.new()
-	hb.add_theme_constant_override("separation", 10)
+	hb.add_theme_constant_override("separation", 4)
 	_top.add_child(hb)
-	for k in ["gold", "food", "people"]:
+	for k in RES_ORDER:
 		var cell := HBoxContainer.new()
 		cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		cell.add_theme_constant_override("separation", 6)
-		cell.add_child(ResIcon.new(k, 56))
+		cell.add_theme_constant_override("separation", 2)
+		cell.add_child(ResIcon.new(k, 48))
 		var l := Label.new()
-		l.add_theme_font_size_override("font_size", 30)
+		l.add_theme_font_size_override("font_size", 27)
 		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		cell.add_child(l)
 		hb.add_child(cell)
 		_res_labels[k] = l
+	# Тап по ресурсам — подробности о лимитах
+	var tap := Button.new()
+	tap.flat = true
+	tap.custom_minimum_size = Vector2(0, 0)
+	tap.mouse_filter = Control.MOUSE_FILTER_STOP
+	tap.pressed.connect(open_treasury)
+	hb.add_child(tap)
+	tap.visible = false
+	for cell in hb.get_children():
+		if cell is HBoxContainer:
+			cell.mouse_filter = Control.MOUSE_FILTER_STOP
+			cell.gui_input.connect(func(ev: InputEvent) -> void:
+				if ev is InputEventMouseButton and not ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+					open_treasury())
 	var gear := Button.new()
-	gear.custom_minimum_size = Vector2(80, 80)
-	gear.add_child(ResIcon.new("gear", 56))
+	gear.custom_minimum_size = Vector2(76, 76)
+	gear.add_child(ResIcon.new("gear", 52))
 	(gear.get_child(0) as Control).position = Vector2(12, 12)
 	gear.pressed.connect(open_settings)
 	hb.add_child(gear)
 
-
 func _update_resources() -> void:
 	if _res_labels.is_empty():
 		return
-	for k in ["gold", "food"]:
+	for k in RES_ORDER:
 		var cap := GameState.capacity(k)
 		var v := int(GameState.res[k])
 		var l: Label = _res_labels[k]
-		l.text = "%s/%s" % [_short(v), _short(int(cap))]
+		l.text = _short(v)
 		var warn: bool = (k == "food" and GameState.hungry) or v >= int(cap)
 		l.add_theme_color_override("font_color", UITheme.BAD if warn else UITheme.TEXT)
-	(_res_labels["people"] as Label).text = str(GameState.residents.size())
-
+	if _bottom != null and _bottom.get_child_count() > 0:
+		(_bottom.get_child(0) as Button).text = tr("BTN_RESIDENTS") + " %d/%d" % [GameState.residents.size(), GameState.population_cap()]
 
 static func _short(v: int) -> String:
 	if v >= 100000:
@@ -153,31 +182,53 @@ func _build_bottom() -> void:
 
 func _rebuild_bottom() -> void:
 	for c in _bottom.get_children():
+		_bottom.remove_child(c)
 		c.queue_free()
 	var items := [
 		["BTN_RESIDENTS", open_residents],
 		["BTN_COLLECT_ALL", _collect_all],
-		["BTN_CENTER", func() -> void: castle.reset_camera()],
+		["BTN_LORE", open_lore],
+		["BTN_DEEP", _toggle_view],
 	]
 	for it in items:
 		var b := Button.new()
 		b.text = tr(it[0])
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.custom_minimum_size.y = 110
+		b.add_theme_font_size_override("font_size", 27)
+		b.clip_text = true
 		b.pressed.connect(it[1])
 		_bottom.add_child(b)
+	_update_resources()
 
+
+## Кнопка переключения «Глубь» ↔ «Замок»
+func _toggle_view() -> void:
+	if castle.is_deep_view():
+		castle.reset_camera()
+	else:
+		castle.focus_deep()
+
+
+func _update_view_button() -> void:
+	if castle != null and _bottom.get_child_count() >= 4:
+		(_bottom.get_child(3) as Button).text = tr("BTN_CASTLE") if castle.is_deep_view() else tr("BTN_DEEP")
 
 func _collect_all() -> void:
-	var before := {"gold": GameState.res["gold"], "food": GameState.res["food"]}
-	GameState.collect_all()
-	var g := int(GameState.res["gold"] - before["gold"])
-	var f := int(GameState.res["food"] - before["food"])
-	if g > 0 or f > 0:
-		show_toast(tr("TOAST_COLLECTED") % [g, f])
-	else:
+	var got := GameState.collect_all()
+	if got.is_empty():
 		show_toast(tr("TOAST_NOTHING"))
+	else:
+		show_toast(tr("TOAST_COLLECTED") % cost_text(got))
 
+
+## «120 золота, 40 камня»
+func cost_text(cost: Dictionary) -> String:
+	var parts: Array = []
+	for k in RES_ORDER:
+		if cost.has(k) and float(cost[k]) >= 1.0:
+			parts.append("%d %s" % [int(cost[k]), tr("RES_" + k.to_upper())])
+	return ", ".join(parts)
 
 # ------------------------------------------------------------------ выдвижная панель
 
@@ -214,6 +265,19 @@ func close_sheet() -> void:
 	_dyn.clear()
 
 
+## Перестройка при изменениях подземелья — не чаще раза в 0.5 с (раскопки шлют сигнал часто)
+var _soft_pending: bool = false
+
+
+func _rebuild_sheet_soft() -> void:
+	if _soft_pending or not _sheet_builder.is_valid():
+		return
+	_soft_pending = true
+	get_tree().create_timer(0.5).timeout.connect(func() -> void:
+		_soft_pending = false
+		_rebuild_sheet())
+
+
 func _rebuild_sheet() -> void:
 	if not _sheet_builder.is_valid():
 		return
@@ -243,6 +307,7 @@ func _process(delta: float) -> void:
 	_dyn_accum += delta
 	if _dyn_accum >= 0.25:
 		_dyn_accum = 0.0
+		_update_view_button()
 		for f in _dyn:
 			f.call()
 
@@ -344,10 +409,19 @@ func _build_room(room_id: int) -> void:
 		_label(tr("ROOM_CAPACITY") % [int(GameState.capacity("gold")), int(GameState.capacity("food"))], 30)
 	if room.type == "throne":
 		_label(tr("FOOD_USE") % GameState.food_consumption_per_min(), 28, UITheme.MUTED)
+		_label(tr("POP_LINE") % [GameState.residents.size(), GameState.population_cap()], 28, UITheme.MUTED)
+	if d.has("pop_levels"):
+		_label(tr("BEDROOM_BEDS") % int(DB.by_level(d["pop_levels"], room.level)), 30)
+	if room.type == "prison":
+		_label(tr("PRISON_LINE") % [GameState.captives(room), GameState.captive_cap(room)], 30)
+	if room.type == "mine" and GameState.is_vein(room.row, room.col):
+		_label(tr("MINE_VEIN"), 28, Color("#ffcf8a"))
 	_sep()
 	# Работники
 	var workers := GameState.workers_in(room.id)
-	if room.type == "throne":
+	if GameState.worker_slots(room) == 0:
+		pass
+	elif room.type == "throne":
 		_label(tr("THRONE_IDLE") % workers.size(), 30)
 	else:
 		_label(tr("ROOM_WORKERS") % [workers.size(), GameState.worker_slots(room)]
@@ -386,10 +460,10 @@ func _build_room(room_id: int) -> void:
 			_rebuild_sheet(), hb2, room.stored >= 1.0)
 	if room.type != "throne":
 		var cost := GameState.upgrade_cost(room)
-		if cost < 0:
+		if cost.is_empty():
 			_button(tr("MAX_LEVEL"), func() -> void: pass, hb2, false)
 		else:
-			_button(tr("BTN_UPGRADE") % cost, func() -> void:
+			_button(tr("BTN_UPGRADE") % cost_text(cost), func() -> void:
 				if GameState.upgrade(room):
 					show_toast(tr("TOAST_UPGRADE_STARTED")), hb2,
 				GameState.can_afford(cost) and room.build_finish <= 0.0)
@@ -412,33 +486,49 @@ func _build_build(row: int, col: int) -> void:
 	if GameState.room_at(row, col) != null:
 		close_sheet()
 		return
-	_title(tr("BUILD_TITLE"))
-	for type_id in DB.buildable_types():
+	var dungeon := Layout.is_dungeon_row(row)
+	var tier := Layout.tier_of(row) if dungeon else 0
+	_title(tr("BUILD_TITLE_DEEP") % tier if dungeon else tr("BUILD_TITLE"))
+	if dungeon and GameState.is_vein(row, col):
+		_label(tr("VEIN_HERE"), 28, Color("#ffcf8a"), true)
+	var types := DB.buildable_types("dungeon" if dungeon else "castle", tier)
+	# Ещё не открытые по глубине — показываем серыми с подсказкой
+	var locked: Array = []
+	if dungeon:
+		for k in DB.rooms.keys():
+			var dd: Dictionary = DB.rooms[k]
+			if str(dd.get("zone", "")) == "dungeon" and not types.has(k):
+				locked.append(k)
+	for type_id in types + locked:
 		var d: Dictionary = DB.room(type_id)
-		var cost := GameState.build_cost(type_id, 1)
+		var cost := GameState.room_cost(type_id, 1)
+		var is_locked: bool = locked.has(type_id)
 		var box := VBoxContainer.new()
 		box.add_theme_constant_override("separation", 6)
 		_sheet_box.add_child(box)
 		_target_box = box
-		_label(tr(str(d["name"])), 34, Color("#ffd27a"))
+		_label(tr(str(d["name"])), 34, Color("#ffd27a") if not is_locked else UITheme.MUTED)
 		_label(tr(str(d.get("desc", ""))), 26, UITheme.MUTED, true)
 		_target_box = null
 		var hb := _hbox(box)
 		var info := Label.new()
-		info.text = tr("BUILD_INFO") % [cost, _fmt_time(GameState.build_time(type_id, 1))]
-		info.add_theme_font_size_override("font_size", 28)
+		if is_locked:
+			info.text = tr("NEED_TIER") % int(d.get("min_tier", 1))
+		else:
+			info.text = "%s • %s" % [cost_text(cost), _fmt_time(GameState.build_time(type_id, 1))]
+		info.add_theme_font_size_override("font_size", 26)
+		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		hb.add_child(info)
 		var b := Button.new()
 		b.text = tr("BTN_BUILD")
-		b.custom_minimum_size = Vector2(260, 88)
-		b.disabled = not GameState.can_afford(cost)
+		b.custom_minimum_size = Vector2(240, 88)
+		b.disabled = is_locked or not GameState.can_afford(cost)
 		b.pressed.connect(func() -> void:
 			if GameState.build(type_id, row, col):
 				close_sheet())
 		hb.add_child(b)
 		_sep()
-
 
 # ------------------------------------------------------------------ жители
 
@@ -447,7 +537,11 @@ func open_residents() -> void:
 
 
 func _build_residents() -> void:
-	_title(tr("RESIDENTS_TITLE") % GameState.residents.size())
+	_title(tr("RESIDENTS_TITLE") % [GameState.residents.size(), GameState.population_cap()])
+	var rc := GameState.recruit_cost()
+	var free := GameState.residents.size() < GameState.population_cap()
+	_button(tr("BTN_RECRUIT") % cost_text(rc) if free else tr("NO_BEDS"), func() -> void: GameState.recruit(),
+		null, free and GameState.can_afford(rc))
 	_label(tr("HINT_DRAG"), 26, UITheme.MUTED, true)
 	for r in GameState.residents:
 		var room = GameState.get_room(r.room_id)
@@ -456,6 +550,8 @@ func _build_residents() -> void:
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		info.add_theme_font_size_override("font_size", 28)
 		var where: String = tr(str(room.def().get("name", ""))) if room != null else "-"
+		if r.is_digging():
+			where = tr("DIGGING_AT") % int(r.dig[0])
 		info.text = "%s  %s\n%s %d  %s %d  %s %d  →  %s" % [
 			r.display_name(), tr("LVL_SHORT") % r.level,
 			tr("STAT_STR_SHORT"), r.stat("str"), tr("STAT_AGI_SHORT"), r.stat("agi"),
@@ -486,11 +582,14 @@ func _build_resident(id: int) -> void:
 	for st in ["str", "agi", "int"]:
 		_label("%s: %d" % [tr("STAT_" + st.to_upper()), r.stat(st)], 32)
 	var room = GameState.get_room(r.room_id)
-	if room != null:
+	if r.is_digging():
+		_label(tr("WORKS_IN") % (tr("DIGGING_AT") % int(r.dig[0])), 30, Color("#ffd27a"))
+	elif room != null:
 		_label(tr("WORKS_IN") % tr(str(room.def().get("name", ""))), 30, Color("#ffd27a"))
 	_sep()
 	_label(tr("EFF_TITLE"), 30)
-	for type_id in DB.buildable_types():
+	_label("  %s — %d%%" % [tr("DIG_WORD"), int(GameState.stat_efficiency(r, "str") * 100)], 28, UITheme.MUTED)
+	for type_id in DB.buildable_types("castle") + DB.buildable_types("dungeon", 99):
 		var d: Dictionary = DB.room(type_id)
 		if str(d.get("stat", "")) == "":
 			continue
@@ -569,7 +668,13 @@ func _on_offline_report(seconds: float, gains: Dictionary) -> void:
 	lines.append(tr("OFFLINE_AWAY") % _fmt_duration(seconds))
 	if seconds > cap_h * 3600.0:
 		lines.append(tr("OFFLINE_CAPPED") % int(cap_h))
-	lines.append(tr("OFFLINE_GAINS") % [int(gains.get("gold", 0)), int(gains.get("food", 0))])
+	var g := {}
+	for k in RES_ORDER:
+		if float(gains.get(k, 0)) >= 1.0:
+			g[k] = gains[k]
+	lines.append(tr("OFFLINE_GAINS") % (cost_text(g) if not g.is_empty() else "0"))
+	if int(gains.get("cells", 0)) > 0:
+		lines.append(tr("OFFLINE_CELLS") % int(gains["cells"]))
 	if int(gains.get("levelups", 0)) > 0:
 		lines.append(tr("OFFLINE_LEVELUPS") % int(gains["levelups"]))
 	lines.append(tr("OFFLINE_HINT"))
@@ -585,16 +690,17 @@ func _fmt_duration(sec: float) -> String:
 
 func show_dialog(title: String, body: String) -> void:
 	if _dialog != null and is_instance_valid(_dialog):
-		_dialog.queue_free()
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.5)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_root.add_child(dim)
+		_dialog_queue.append([title, body])
+		return
+	_dialog_dim = ColorRect.new()
+	_dialog_dim.color = Color(0, 0, 0, 0.5)
+	_dialog_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root.add_child(_dialog_dim)
 	_dialog = PanelContainer.new()
 	_dialog.anchor_left = 0.08
 	_dialog.anchor_right = 0.92
-	_dialog.anchor_top = 0.3
-	_dialog.anchor_bottom = 0.3
+	_dialog.anchor_top = 0.25
+	_dialog.anchor_bottom = 0.25
 	_root.add_child(_dialog)
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 20)
@@ -604,6 +710,7 @@ func show_dialog(title: String, body: String) -> void:
 	t.add_theme_font_size_override("font_size", 42)
 	t.add_theme_color_override("font_color", Color("#ffd27a"))
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(t)
 	var b := Label.new()
 	b.text = body
@@ -613,8 +720,229 @@ func show_dialog(title: String, body: String) -> void:
 	var ok := Button.new()
 	ok.text = tr("BTN_OK")
 	ok.custom_minimum_size.y = 100
-	ok.pressed.connect(func() -> void:
-		dim.queue_free()
-		_dialog.queue_free()
-		_dialog = null)
+	ok.pressed.connect(_close_dialog)
 	vb.add_child(ok)
+
+
+func _close_dialog() -> void:
+	if _dialog_dim != null and is_instance_valid(_dialog_dim):
+		_dialog_dim.queue_free()
+	if _dialog != null and is_instance_valid(_dialog):
+		_dialog.queue_free()
+	_dialog = null
+	if not _dialog_queue.is_empty():
+		var nx: Array = _dialog_queue.pop_front()
+		show_dialog.call_deferred(nx[0], nx[1])
+
+
+# ------------------------------------------------------------------ казна
+
+func open_treasury() -> void:
+	_open_sheet(_build_treasury)
+
+
+func _build_treasury() -> void:
+	_title(tr("TREASURY_TITLE"))
+	for k in RES_ORDER:
+		var hb := _hbox()
+		hb.add_child(ResIcon.new(k, 52))
+		var l := Label.new()
+		l.text = "%s: %d / %d" % [tr("RESNAME_" + k.to_upper()), int(GameState.res[k]), int(GameState.capacity(k))]
+		l.add_theme_font_size_override("font_size", 30)
+		hb.add_child(l)
+	_label(tr("TREASURY_HINT"), 26, UITheme.MUTED, true)
+
+
+# ------------------------------------------------------------------ летопись
+
+func _on_lore_found(id: String) -> void:
+	var e: Dictionary = DB.lore.get(id, {})
+	show_dialog(tr("LORE_FOUND") + "\n" + DB.loc(e.get("title", {})), DB.loc(e.get("text", {})))
+
+
+func open_lore() -> void:
+	_open_sheet(_build_lore)
+
+
+func _build_lore() -> void:
+	_title(tr("LORE_TITLE") % [GameState.lore.size(), DB.lore.size()])
+	if GameState.lore.is_empty():
+		_label(tr("LORE_EMPTY"), 28, UITheme.MUTED, true)
+	for id in GameState.lore:
+		var e: Dictionary = DB.lore.get(id, {})
+		_label(DB.loc(e.get("title", {})), 34, Color("#ffd27a"))
+		_label(DB.loc(e.get("text", {})), 28, UITheme.TEXT, true)
+		_sep()
+
+
+# ------------------------------------------------------------------ подземелье: клетки
+
+func open_dungeon(tier: int, dc: int) -> void:
+	var c := GameState.cell(tier, dc)
+	match str(c.get("s", "")):
+		"rock": _open_sheet(func() -> void: _build_rock(tier, dc))
+		"lair", "boss":
+			if GameState.is_reachable(tier, dc):
+				_squad = _auto_squad()
+				_elixir = false
+				_open_sheet(func() -> void: _build_fight(tier, dc))
+			else:
+				show_toast(tr("TOAST_LAIR_FAR"))
+		"stair": show_toast(tr("STAIR_DOWN") % (tier + 1))
+
+
+func _build_rock(tier: int, dc: int) -> void:
+	var c := GameState.cell(tier, dc)
+	if str(c.get("s", "")) != "rock":
+		close_sheet()
+		return
+	_title(tr("ROCK_TITLE") % tier)
+	_label(tr(str(DB.biome(tier).get("name", ""))), 28, UITheme.MUTED)
+	var hl := _label("", 30)
+	var upd := func() -> void:
+		var cc := GameState.cell(tier, dc)
+		var rate := GameState.dig_rate(tier, dc)
+		var line := tr("ROCK_HP") % [int(cc.get("hp", 0)), int(cc.get("max", 0))]
+		if rate > 0:
+			line += "\n" + tr("ROCK_ETA") % _fmt_time(float(cc.get("hp", 0)) / rate * 60.0)
+		hl.text = line
+	upd.call()
+	_dyn.append(upd)
+	if not GameState.is_diggable(tier, dc):
+		_label(tr("ROCK_BLOCKED"), 28, UITheme.BAD, true)
+		return
+	var diggers := GameState.diggers_at(tier, dc)
+	_label(tr("DIGGERS") % [diggers.size(), GameState.max_diggers()], 30)
+	for w in diggers:
+		var hb := _hbox()
+		var info := Label.new()
+		info.text = "%s  %s  %s %d • %d%%" % [w.display_name(), tr("LVL_SHORT") % w.level, tr("STAT_STR_SHORT"),
+			w.stat("str"), int(GameState.stat_efficiency(w, "str") * 100)]
+		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		info.add_theme_font_size_override("font_size", 28)
+		hb.add_child(info)
+		var b := Button.new()
+		b.text = tr("BTN_UNASSIGN")
+		b.custom_minimum_size = Vector2(190, 80)
+		b.pressed.connect(func() -> void: GameState.assign(w, GameState.throne()))
+		hb.add_child(b)
+	_label(tr("HINT_DIG"), 26, UITheme.MUTED, true)
+	# Быстрое назначение: самый сильный из отдыхающих в тронном зале
+	if diggers.size() < GameState.max_diggers():
+		_button(tr("BTN_SEND_DIGGER"), func() -> void:
+			var best = null
+			for r in GameState.residents:
+				if r.is_digging() or r.room_id != GameState.throne().id:
+					continue
+				if best == null or r.stat("str") > best.stat("str"):
+					best = r
+			if best == null:
+				show_toast(tr("TOAST_NO_IDLE"))
+			else:
+				GameState.assign_dig(best, tier, dc))
+
+
+# ------------------------------------------------------------------ бой
+
+func _auto_squad() -> Array:
+	var list: Array = GameState.residents.duplicate()
+	list.sort_custom(func(a, b) -> bool: return a.level * 10 + a.stat("str") > b.level * 10 + b.stat("str"))
+	var out: Array = []
+	for i in mini(int(DB.balance.get("squad_size", 3)), list.size()):
+		out.append(list[i].id)
+	return out
+
+
+func _build_fight(tier: int, dc: int) -> void:
+	var c := GameState.cell(tier, dc)
+	if not str(c.get("s", "")) in ["lair", "boss"]:
+		close_sheet()
+		return
+	var boss := str(c["s"]) == "boss"
+	_title(tr("FIGHT_BOSS") if boss else tr("FIGHT_LAIR") % tier)
+	var foes := GameState.enemies_at(tier, dc)
+	var names: Array = []
+	var foe_units: Array = []
+	for e in foes:
+		names.append(tr(str(e["name"])))
+		foe_units.append(BattleSim.enemy_unit(e))
+	_label(tr("FIGHT_ENEMIES") % ", ".join(names), 28, UITheme.BAD, true)
+	var size := int(DB.balance.get("squad_size", 3))
+	_label(tr("FIGHT_SQUAD") % [_squad.size(), size], 30)
+	var heroes: Array = []
+	for r in GameState.residents:
+		var on: bool = _squad.has(r.id)
+		var b := Button.new()
+		b.custom_minimum_size.y = 80
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.text = "%s %s   %s %d  %s %d  %s %d" % ["[x]" if on else "[  ]", r.display_name(), tr("STAT_STR_SHORT"),
+			r.stat("str"), tr("STAT_AGI_SHORT"), r.stat("agi"), tr("STAT_INT_SHORT"), r.stat("int")]
+		b.add_theme_font_size_override("font_size", 26)
+		if on:
+			b.add_theme_stylebox_override("normal", UITheme.box(Color("#4a6a2a"), Color("#bfe07a"), 4, 16, 14))
+		b.pressed.connect(func() -> void:
+			if _squad.has(r.id):
+				_squad.erase(r.id)
+			elif _squad.size() < size:
+				_squad.append(r.id)
+			_rebuild_sheet())
+		_sheet_box.add_child(b)
+		if on:
+			heroes.append(BattleSim.hero_unit(r, 0.0))
+	# Эликсир силы за эссенцию
+	var ec := int(DB.balance.get("elixir_cost", 10))
+	var bonus := float(DB.balance.get("elixir_bonus", 0.3))
+	var eb := Button.new()
+	eb.custom_minimum_size.y = 80
+	eb.text = ("[x] " if _elixir else "[  ] ") + tr("ELIXIR") % [ec, int(bonus * 100)]
+	eb.disabled = GameState.res["essence"] < ec and not _elixir
+	eb.add_theme_font_size_override("font_size", 26)
+	eb.pressed.connect(func() -> void:
+		_elixir = not _elixir
+		_rebuild_sheet())
+	_sheet_box.add_child(eb)
+	var mine := BattleSim.power(heroes) * (1.0 + (bonus if _elixir else 0.0))
+	var theirs := BattleSim.power(foe_units)
+	var ratio := mine / maxf(theirs, 1.0)
+	var verdict := tr("ODDS_GOOD") if ratio > 1.3 else (tr("ODDS_EVEN") if ratio > 0.9 else tr("ODDS_BAD"))
+	_label(verdict, 30, UITheme.GOOD if ratio > 1.3 else (UITheme.TEXT if ratio > 0.9 else UITheme.BAD))
+	_button(tr("BTN_FIGHT"), func() -> void: _start_battle(tier, dc), null, not _squad.is_empty())
+
+
+func _start_battle(tier: int, dc: int) -> void:
+	var use_elixir := _elixir and GameState.pay({"essence": int(DB.balance.get("elixir_cost", 10))})
+	var bonus := float(DB.balance.get("elixir_bonus", 0.3)) if use_elixir else 0.0
+	var heroes: Array = []
+	for id in _squad:
+		var r = GameState.get_resident(id)
+		if r != null:
+			heroes.append(BattleSim.hero_unit(r, bonus))
+	var foes: Array = []
+	for e in GameState.enemies_at(tier, dc):
+		foes.append(BattleSim.enemy_unit(e))
+	var sim := BattleSim.new()
+	sim.setup(heroes, foes)
+	close_sheet()
+	var boss := str(GameState.cell(tier, dc).get("s", "")) == "boss"
+	var bv := BattleView.new()
+	_battle = bv
+	_root.add_child(bv)
+	var ids := _squad.duplicate()
+	bv.start(sim, tr("FIGHT_BOSS") if boss else tr("FIGHT_LAIR") % tier, DB.biome(tier).get("colors", {}),
+		func(won: bool) -> void:
+			var rw := GameState.fight_result(tier, dc, won, ids)
+			var txt := ""
+			if won:
+				var g := {}
+				for k in RES_ORDER:
+					if rw.has(k):
+						g[k] = rw[k]
+				txt = tr("BATTLE_REWARD") % cost_text(g)
+				if rw.has("captive"):
+					txt += "\n" + tr("TOAST_CAPTIVE")
+				txt += "\n" + tr("BATTLE_XP") % int(rw.get("xp", 0))
+			else:
+				txt = tr("BATTLE_LOST_HINT")
+			bv.show_result(txt))
+	bv.closed.connect(func(_w: bool) -> void: _battle = null)
+

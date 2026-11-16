@@ -1,0 +1,58 @@
+{
+ "_comment": "Обрывки истории о падении Ардейна. Находятся на лестничных клетках ярусов и у боссов.",
+ "order": {
+  "tier": 2,
+  "title": {
+   "ru": "Приказ №114",
+   "en": "Decree No. 114"
+  },
+  "text": {
+   "ru": "«Именем короля Освальда: рыть, не считаясь с жертвами, пока не будет найдена главная жила. Кто остановит работы — лишится земли и имени». На обороте приписка чужой рукой: «Он не спит уже третью неделю».",
+   "en": "\"In the name of King Oswald: dig, regardless of the cost, until the main vein is found. Whoever halts the work shall lose land and name.\" On the back, in another hand: \"He has not slept for three weeks.\""
+  }
+ },
+ "miner": {
+  "tier": 4,
+  "title": {
+   "ru": "Письмо рудокопа",
+   "en": "A miner's letter"
+  },
+  "text": {
+   "ru": "«Ильва, стены здесь тёплые, как печь. Парни говорят, что слышат пение в камне. Я не слышу. Только иногда, когда гаснет факел, кажется, что кто-то дышит рядом. Береги дочку. Скоро вернусь».",
+   "en": "\"Ilva, the walls down here are warm as an oven. The lads say they hear singing in the stone. I don't. Only sometimes, when a torch goes out, it feels like something breathes beside me. Look after our girl. I'll be home soon.\""
+  }
+ },
+ "ledger": {
+  "tier": 6,
+  "title": {
+   "ru": "Счётная книга казны",
+   "en": "Treasury ledger"
+  },
+  "text": {
+   "ru": "Королевство заняло у южных банкиров под будущий эмберит сумму, втрое большую годового дохода. Подпись под займом — не короля, а сенешаля. Король, похоже, о займе не знал.",
+   "en": "The kingdom borrowed from southern bankers against future emberite: three times its yearly income. The loan is signed not by the king but by his seneschal. The king, it seems, never knew."
+  }
+ },
+ "seal": {
+  "tier": 8,
+  "title": {
+   "ru": "Обрывок летописи",
+   "en": "A torn chronicle page"
+  },
+  "text": {
+   "ru": "«…печать на сотом зале несёт герб нашего же дома. Её поставили не враги. Её поставили мы — давно, ещё до Освальда, и знали зачем. Я пытался сказать об этом при дворе, но сенешаль…» Дальше страница оторвана.",
+   "en": "\"…the seal on the hundredth hall bears our own house's crest. It was not set by enemies. We set it, long ago, before Oswald, and we knew why. I tried to speak of it at court, but the seneschal…\" The rest of the page is torn away."
+  }
+ },
+ "gryzen": {
+  "tier": 10,
+  "title": {
+   "ru": "Язык колокола",
+   "en": "The bell's clapper"
+  },
+  "text": {
+   "ru": "В логове Грызеня — бронзовый язык большого колокола с замковой башни. Значит, колокола в ту ночь опрокинули не сверху. Их стащили вниз. Кто-то из Глуби хотел, чтобы город не услышал тревогу.",
+   "en": "In Gryzen's lair lies the bronze clapper of the great bell from the castle tower. So the bells were not toppled from above that night. They were dragged down. Someone in the Deep wanted the city not to hear the alarm."
+  }
+ }
+}

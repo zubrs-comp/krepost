@@ -1,0 +1,42 @@
+{
+ "_comment": "Враги. Сила растёт с ярусом: x(1 + tier_scale*(ярус-1)).",
+ "tier_scale": 0.18,
+ "slime": {
+  "name": "ENEMY_SLIME",
+  "sprite": "slime",
+  "hp": 45,
+  "atk": 6,
+  "interval": 1.3,
+  "scale": 0.9
+ },
+ "spiky_slime": {
+  "name": "ENEMY_SPIKY",
+  "sprite": "spiky_slime",
+  "hp": 60,
+  "atk": 9,
+  "interval": 1.5,
+  "scale": 0.9
+ },
+ "troll": {
+  "name": "ENEMY_TROLL",
+  "sprite": "troll",
+  "hp": 130,
+  "atk": 14,
+  "interval": 1.9,
+  "scale": 0.85
+ },
+ "gryzen": {
+  "name": "ENEMY_GRYZEN",
+  "sprite": "gryzen",
+  "hp": 1200,
+  "atk": 30,
+  "interval": 2.2,
+  "scale": 1.0,
+  "boss": true,
+  "ability": {
+   "type": "quake",
+   "every": 4,
+   "mult": 0.6
+  }
+ }
+}

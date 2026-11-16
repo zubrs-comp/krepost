@@ -12,6 +12,8 @@ var stored: float = 0.0
 var build_finish: float = 0.0
 ## Уровень, который комната получит после окончания стройки
 var target_level: int = 1
+## Доп. данные комнаты (например, captives — пленники в тюрьме)
+var extra: Dictionary = {}
 
 
 func is_building(now: float) -> bool:
@@ -26,6 +28,7 @@ func to_dict() -> Dictionary:
 	return {
 		"id": id, "type": type, "level": level, "row": row, "col": col,
 		"stored": stored, "build_finish": build_finish, "target_level": target_level,
+		"extra": extra.duplicate(),
 	}
 
 
@@ -38,3 +41,4 @@ func from_dict(d: Dictionary) -> void:
 	stored = float(d.get("stored", 0.0))
 	build_finish = float(d.get("build_finish", 0.0))
 	target_level = int(d.get("target_level", level))
+	extra = d.get("extra", {})

@@ -1,0 +1,44 @@
+{
+  "_comment": "Что запекать. src — путь относительно папки моделей (fetch_models.sh). colors — замена цвета материала по имени, hide — скрыть узлы.",
+  "out_dir": "../../assets/sprites",
+  "human_anims": {
+    "idle":   {"src": ["Idle_Neutral", "Idle"], "frames": 8, "fps": 8, "loop": true},
+    "walk":   {"src": ["Walk"], "frames": 8, "fps": 10, "loop": true},
+    "work":   {"src": ["Interact", "PickUp"], "frames": 8, "fps": 9, "loop": true},
+    "attack": {"src": ["Sword_Slash", "Punch_Right"], "frames": 8, "fps": 14, "loop": false},
+    "hit":    {"src": ["HitRecieve", "HitRecieve_2"], "frames": 4, "fps": 10, "loop": false},
+    "death":  {"src": ["Death"], "frames": 8, "fps": 10, "loop": false, "yaw": 10}
+  },
+  "monster_anims": {
+    "idle":   {"src": ["Idle", "Flying_Idle"], "frames": 8, "fps": 8, "loop": true},
+    "walk":   {"src": ["Walk", "Fast_Flying", "Run"], "frames": 8, "fps": 10, "loop": true},
+    "attack": {"src": ["Weapon", "Punch", "Bite_Front", "Headbutt"], "frames": 8, "fps": 14, "loop": false},
+    "hit":    {"src": ["HitReact", "HitRecieve"], "frames": 4, "fps": 10, "loop": false},
+    "death":  {"src": ["Death"], "frames": 8, "fps": 10, "loop": false, "yaw": 10}
+  },
+  "humans": [
+    {"id": "m_adventurer", "src": "spm/assets/characters/crowd/men/Adventurer.gltf", "female": false, "hide": ["Backpack"]},
+    {"id": "m_farmer", "src": "spm/assets/characters/crowd/men/Farmer.gltf", "female": false},
+    {"id": "m_worker", "src": "spm/assets/characters/crowd/men/Worker.gltf", "female": false,
+     "colors": {"Worker_Yellow": "#5a3b22", "Worker_Vest": "#7a4a24"}},
+    {"id": "m_king", "src": "spm/assets/characters/crowd/men/King.gltf", "female": false, "ruler": true},
+    {"id": "f_adventurer", "src": "spm/assets/characters/crowd/women/Adventurer.gltf", "female": true},
+    {"id": "f_medieval", "src": "spm/assets/characters/crowd/women/Medieval.gltf", "female": true, "hide": ["Sword"]},
+    {"id": "f_witch", "src": "spm/assets/characters/crowd/women/Witch.gltf", "female": true},
+    {"id": "f_worker", "src": "spm/assets/characters/crowd/women/Worker.gltf", "female": true,
+     "colors": {"Worker_Yellow": "#6b4a2a", "Worker_Vest": "#8a5a2e"}}
+  ],
+  "human_variants": [
+    {"suffix": "a", "colors": {}},
+    {"suffix": "b", "colors": {"Skin": "#8d5a3a", "Green": "#4a2a5a", "LightGreen": "#6a4a7a", "LightBlue": "#5a3020",
+      "Blue": "#5a1a1a", "Purple": "#123a5a", "DarkBrown": "#2a3a4a", "LightBrown": "#3a5a3a", "White": "#c9b48a",
+      "Brown_02": "#4a3a2a", "Beige": "#7a6a4a", "Worker_Vest": "#3a5a7a"}}
+  ],
+  "monsters": [
+    {"id": "slime", "src": "ec/Assets/Quaternius/Ultimate Monsters/Blob/glTF/GreenBlob.gltf", "frame": [160, 140], "height": 0.9},
+    {"id": "spiky_slime", "src": "ec/Assets/Quaternius/Ultimate Monsters/Blob/glTF/GreenSpikyBlob.gltf", "frame": [160, 150], "height": 1.0},
+    {"id": "troll", "src": "ec/Assets/Quaternius/Ultimate Monsters/Big/glTF/Orc.gltf", "frame": [180, 200], "height": 1.6},
+    {"id": "gryzen", "src": "ec/Assets/Quaternius/Ultimate Monsters/Big/glTF/Orc_Skull.gltf", "frame": [320, 320], "height": 3.0,
+     "colors": {}}
+  ]
+}

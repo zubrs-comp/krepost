@@ -13,8 +13,16 @@ var xp: float = 0.0
 var stats: Dictionary = {"str": 1, "agi": 1, "int": 1}
 ## id комнаты, где находится житель
 var room_id: int = 0
-## Вариант внешности: цвет одежды/волос/кожи
+## Вариант внешности (старое поле, для совместимости сохранений)
 var look: int = 0
+## Спрайт из assets/sprites (например, m_worker_b)
+var sprite: String = ""
+## Клетка подземелья, где житель копает: [ярус, колонка] или пусто
+var dig: Array = []
+
+
+func is_digging() -> bool:
+	return dig.size() == 2
 
 
 func display_name() -> String:
@@ -38,6 +46,7 @@ func to_dict() -> Dictionary:
 	return {
 		"id": id, "name_idx": name_idx, "female": female, "level": level, "xp": xp,
 		"stats": stats.duplicate(), "room_id": room_id, "look": look,
+		"sprite": sprite, "dig": dig.duplicate(),
 	}
 
 
@@ -52,3 +61,7 @@ func from_dict(d: Dictionary) -> void:
 		stats[k] = int(s.get(k, 1))
 	room_id = int(d.get("room_id", 0))
 	look = int(d.get("look", 0))
+	sprite = str(d.get("sprite", ""))
+	dig = []
+	for v in d.get("dig", []):
+		dig.append(int(v))

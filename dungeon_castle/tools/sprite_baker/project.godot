@@ -1,0 +1,11 @@
+; Отдельный мини-проект: запекает 3D-модели (glTF, CC0) в 2D-спрайтовые атласы для игры.
+config_version=5
+[application]
+config/name="Sprite Baker"
+run/main_scene="res://baker.tscn"
+[display]
+window/size/viewport_width=320
+window/size/viewport_height=320
+[rendering]
+renderer/rendering_method="gl_compatibility"
+anti_aliasing/quality/msaa_3d=2

@@ -1,0 +1,910 @@
+{
+	"f_adventurer_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_adventurer_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_adventurer_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_adventurer_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_medieval_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_medieval_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_medieval_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_medieval_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_witch_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_witch_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_witch_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_witch_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_worker_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_worker_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"f_worker_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": true,
+		"fh": 200,
+		"file": "f_worker_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"gryzen": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 2
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 4
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 3
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			}
+		},
+		"feet": 312.0,
+		"fh": 320,
+		"file": "gryzen.png",
+		"fw": 320,
+		"kind": "monster"
+	},
+	"m_adventurer_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_adventurer_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"m_adventurer_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_adventurer_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"m_farmer_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_farmer_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"m_farmer_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_farmer_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"m_king_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_king_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": true
+	},
+	"m_king_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_king_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": true
+	},
+	"m_worker_a": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_worker_a.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"m_worker_b": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 3
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 5
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 4
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			},
+			"work": {
+				"fps": 9.0,
+				"frames": 8,
+				"loop": true,
+				"row": 2
+			}
+		},
+		"feet": 192.0,
+		"female": false,
+		"fh": 200,
+		"file": "m_worker_b.png",
+		"fw": 128,
+		"kind": "human",
+		"ruler": false
+	},
+	"slime": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 2
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 4
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 3
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			}
+		},
+		"feet": 132.0,
+		"fh": 140,
+		"file": "slime.png",
+		"fw": 160,
+		"kind": "monster"
+	},
+	"spiky_slime": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 2
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 4
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 3
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			}
+		},
+		"feet": 142.0,
+		"fh": 150,
+		"file": "spiky_slime.png",
+		"fw": 160,
+		"kind": "monster"
+	},
+	"troll": {
+		"anims": {
+			"attack": {
+				"fps": 14.0,
+				"frames": 8,
+				"loop": false,
+				"row": 2
+			},
+			"death": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": false,
+				"row": 4
+			},
+			"hit": {
+				"fps": 10.0,
+				"frames": 4,
+				"loop": false,
+				"row": 3
+			},
+			"idle": {
+				"fps": 8.0,
+				"frames": 8,
+				"loop": true,
+				"row": 0
+			},
+			"walk": {
+				"fps": 10.0,
+				"frames": 8,
+				"loop": true,
+				"row": 1
+			}
+		},
+		"feet": 192.0,
+		"fh": 200,
+		"file": "troll.png",
+		"fw": 180,
+		"kind": "monster"
+	}
+}

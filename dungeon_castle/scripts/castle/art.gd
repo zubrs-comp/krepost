@@ -5,18 +5,6 @@ extends RefCounted
 
 const OUTLINE := Color(0.1, 0.07, 0.08, 1.0)
 
-# Палитры внешности жителей
-const TUNICS := [
-	Color("#c0392b"), Color("#2e86c1"), Color("#27ae60"), Color("#8e44ad"),
-	Color("#d68910"), Color("#16a085"), Color("#cb4335"), Color("#5d6d7e"),
-]
-const HAIRS := [
-	Color("#3b2414"), Color("#d4a017"), Color("#7b3f00"), Color("#1c1c1c"),
-	Color("#a0522d"), Color("#e5c07b"), Color("#8b2500"), Color("#5a5a5a"),
-]
-const SKINS := [Color("#f2c9a0"), Color("#e0ac80"), Color("#c68642"), Color("#8d5524")]
-
-
 static func font() -> Font:
 	return ThemeDB.fallback_font
 
@@ -60,63 +48,39 @@ static func people(ci: CanvasItem, c: Vector2, r: float) -> void:
 		ci.draw_rect(Rect2(p + Vector2(-r * 0.24, 0.0), Vector2(r * 0.48, r * 0.58)), Color("#2e86c1"))
 
 
+static func stone(ci: CanvasItem, c: Vector2, r: float) -> void:
+	var pts := PackedVector2Array([c + Vector2(-r * 0.9, r * 0.5), c + Vector2(-r * 0.6, -r * 0.5),
+		c + Vector2(r * 0.1, -r * 0.85), c + Vector2(r * 0.85, -r * 0.3), c + Vector2(r * 0.8, r * 0.55)])
+	ci.draw_colored_polygon(_grow(pts, r * 0.14), OUTLINE)
+	ci.draw_colored_polygon(pts, Color("#9a9aa2"))
+	ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-r * 0.6, -r * 0.5), c + Vector2(r * 0.1, -r * 0.85),
+		c + Vector2(r * 0.1, -r * 0.1)]), Color("#c4c4cc"))
+
+
+static func ore(ci: CanvasItem, c: Vector2, r: float) -> void:
+	stone(ci, c, r)
+	for o in [Vector2(-0.3, 0.1), Vector2(0.35, 0.05), Vector2(0.0, -0.4)]:
+		ci.draw_circle(c + o * r, r * 0.2, Color("#d98b4a"))
+		ci.draw_circle(c + o * r + Vector2(-r * 0.05, -r * 0.05), r * 0.08, Color("#ffd9a8"))
+
+
+static func essence(ci: CanvasItem, c: Vector2, r: float) -> void:
+	# Флакон с сиреневой эссенцией
+	ci.draw_circle(c + Vector2(0, r * 0.2), r * 0.72, OUTLINE)
+	ci.draw_circle(c + Vector2(0, r * 0.2), r * 0.6, Color("#b061e8"))
+	ci.draw_circle(c + Vector2(-r * 0.2, r * 0.05), r * 0.2, Color("#e7c3ff"))
+	ci.draw_rect(Rect2(c + Vector2(-r * 0.22, -r * 0.85), Vector2(r * 0.44, r * 0.5)), OUTLINE)
+	ci.draw_rect(Rect2(c + Vector2(-r * 0.14, -r * 0.8), Vector2(r * 0.28, r * 0.42)), Color("#d8c8e8"))
+
+
 static func resource_icon(ci: CanvasItem, res_id: String, c: Vector2, r: float) -> void:
 	match res_id:
 		"gold": coin(ci, c, r)
 		"food": food(ci, c, r)
 		"people": people(ci, c, r)
-
-
-# ------------------------------------------------------------------ житель
-
-## Рисует жителя: ноги в точке origin, рост ~84 px. t — время для анимации.
-static func resident(ci: CanvasItem, origin: Vector2, look: int, female: bool, facing: float,
-		walking: bool, t: float, working: bool) -> void:
-	var tunic: Color = TUNICS[look % TUNICS.size()]
-	var hair: Color = HAIRS[(look * 3 + 1) % HAIRS.size()]
-	var skin: Color = SKINS[(look * 5 + 2) % SKINS.size()]
-	var bob := -absf(sin(t * 9.0)) * 4.0 if walking else 0.0
-	var leg := sin(t * 9.0) * 6.0 if walking else 0.0
-	var o := origin + Vector2(0, bob)
-	# Тень
-	ci.draw_set_transform(origin + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
-	ci.draw_circle(Vector2.ZERO, 20.0, Color(0, 0, 0, 0.25))
-	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-	# Ноги
-	ci.draw_line(o + Vector2(-7, -24), o + Vector2(-7 + leg, -2), OUTLINE, 8.0)
-	ci.draw_line(o + Vector2(7, -24), o + Vector2(7 - leg, -2), OUTLINE, 8.0)
-	ci.draw_line(o + Vector2(-7, -24), o + Vector2(-7 + leg, -4), Color("#4a3426"), 5.0)
-	ci.draw_line(o + Vector2(7, -24), o + Vector2(7 - leg, -4), Color("#4a3426"), 5.0)
-	# Длинные волосы за спиной
-	if female:
-		ci.draw_rect(Rect2(o + Vector2(-15, -74), Vector2(30, 34)), OUTLINE)
-		ci.draw_rect(Rect2(o + Vector2(-13, -72), Vector2(26, 32)), hair)
-	# Туника (у женщин — платье пошире)
-	var w := 34.0 if female else 30.0
-	var body := PackedVector2Array([
-		o + Vector2(-w * 0.4, -56), o + Vector2(w * 0.4, -56),
-		o + Vector2(w * 0.55, -20), o + Vector2(-w * 0.55, -20),
-	])
-	ci.draw_colored_polygon(_grow(body, 2.5), OUTLINE)
-	ci.draw_colored_polygon(body, tunic)
-	ci.draw_line(o + Vector2(-w * 0.45, -34), o + Vector2(w * 0.45, -34), tunic.darkened(0.35), 4.0)
-	# Руки: при работе машут
-	var arm := sin(t * 6.0) * 10.0 if working and not walking else 0.0
-	ci.draw_line(o + Vector2(-w * 0.42, -52), o + Vector2(-w * 0.62, -32 - arm), OUTLINE, 8.0)
-	ci.draw_line(o + Vector2(w * 0.42, -52), o + Vector2(w * 0.62, -32 + arm), OUTLINE, 8.0)
-	ci.draw_line(o + Vector2(-w * 0.42, -52), o + Vector2(-w * 0.62, -32 - arm), skin, 5.0)
-	ci.draw_line(o + Vector2(w * 0.42, -52), o + Vector2(w * 0.62, -32 + arm), skin, 5.0)
-	# Голова
-	var h := o + Vector2(0, -68)
-	ci.draw_circle(h, 15.0, OUTLINE)
-	ci.draw_circle(h, 13.0, skin)
-	# Причёска
-	ci.draw_circle(h + Vector2(0, -5), 13.0, hair)
-	ci.draw_rect(Rect2(h + Vector2(-13, -6), Vector2(26, 4)), hair)
-	# Глаза смотрят в сторону движения
-	var ex := 4.0 * facing
-	ci.draw_circle(h + Vector2(ex - 4, 2), 2.2, OUTLINE)
-	ci.draw_circle(h + Vector2(ex + 4, 2), 2.2, OUTLINE)
+		"stone": stone(ci, c, r)
+		"ore": ore(ci, c, r)
+		"essence": essence(ci, c, r)
 
 
 static func _grow(poly: PackedVector2Array, d: float) -> PackedVector2Array:
@@ -133,10 +97,16 @@ static func _grow(poly: PackedVector2Array, d: float) -> PackedVector2Array:
 # ------------------------------------------------------------------ интерьеры комнат
 
 ## Рисует интерьер комнаты в прямоугольнике r (r — внутреннее пространство)
-static func room_interior(ci: CanvasItem, type_id: String, r: Rect2, colors: Dictionary, t: float) -> void:
+static func room_interior(ci: CanvasItem, type_id: String, r: Rect2, colors: Dictionary, t: float,
+		cave: bool = false) -> void:
 	var wall := Color(str(colors.get("wall", "#666666")))
 	var floor_c := Color(str(colors.get("floor", "#333333")))
 	var accent := Color(str(colors.get("accent", "#ffffff")))
+	var base := Vector2(r.position.x, r.end.y - 18)
+	if cave:
+		# В подземелье стена — пещера (её рисует клетка), только сама обстановка
+		_interior_props(ci, type_id, r, base, accent, t)
+		return
 	# Задняя стена с кладкой
 	ci.draw_rect(r, wall)
 	var brick := wall.darkened(0.12)
@@ -158,12 +128,96 @@ static func room_interior(ci: CanvasItem, type_id: String, r: Rect2, colors: Dic
 	var fl := Rect2(Vector2(r.position.x, r.end.y - 18), Vector2(r.size.x, 18))
 	ci.draw_rect(fl, floor_c)
 	ci.draw_line(fl.position, fl.position + Vector2(r.size.x, 0), floor_c.lightened(0.25), 3.0)
-	var base := Vector2(r.position.x, r.end.y - 18)
+	_interior_props(ci, type_id, r, base, accent, t)
+
+
+static func _interior_props(ci: CanvasItem, type_id: String, r: Rect2, base: Vector2, accent: Color, t: float) -> void:
 	match type_id:
 		"throne": _throne(ci, r, base, accent, t)
 		"kitchen": _kitchen(ci, r, base, accent, t)
 		"mint": _mint(ci, r, base, accent, t)
 		"storage": _storage(ci, r, base, accent)
+		"bedroom": _bedroom(ci, r, base, accent)
+		"farm": _farm(ci, r, base, accent, t)
+		"mine": _mine(ci, r, base, accent, t)
+		"prison": _prison(ci, r, base, accent)
+		"alchemy": _alchemy(ci, r, base, accent, t)
+
+
+static func _bedroom(ci: CanvasItem, r: Rect2, base: Vector2, accent: Color) -> void:
+	# Две кровати и окно
+	for i in 2:
+		var bx := r.position.x + 20 + i * 150
+		ci.draw_rect(Rect2(Vector2(bx, base.y - 44), Vector2(110, 30)), Color("#7a4a24"))
+		ci.draw_rect(Rect2(Vector2(bx + 4, base.y - 56), Vector2(102, 16)), accent)
+		ci.draw_rect(Rect2(Vector2(bx + 4, base.y - 60), Vector2(30, 14)), Color.WHITE)
+		ci.draw_rect(Rect2(Vector2(bx, base.y - 70), Vector2(8, 70)), Color("#5c3b1e"))
+		ci.draw_rect(Rect2(Vector2(bx + 102, base.y - 50), Vector2(8, 50)), Color("#5c3b1e"))
+	var w := Rect2(Vector2(r.get_center().x - 26, r.position.y + 40), Vector2(52, 60))
+	ci.draw_rect(w, Color("#3b2a20"))
+	ci.draw_rect(w.grow(-5), Color("#9fd0ff"))
+	ci.draw_line(Vector2(w.get_center().x, w.position.y), Vector2(w.get_center().x, w.end.y), Color("#3b2a20"), 4)
+
+
+static func _farm(ci: CanvasItem, r: Rect2, base: Vector2, accent: Color, t: float) -> void:
+	# Грядки светящихся грибов
+	ci.draw_rect(Rect2(Vector2(r.position.x + 10, base.y - 16), Vector2(r.size.x - 20, 16)), Color("#3b2a1e"))
+	for i in 7:
+		var x := r.position.x + 30 + i * 38
+		var h := 26.0 + (i % 3) * 12.0
+		var glow := 0.5 + sin(t * 2.0 + i) * 0.2
+		ci.draw_circle(Vector2(x, base.y - h), 22, Color(accent, 0.15 * glow))
+		ci.draw_rect(Rect2(Vector2(x - 4, base.y - h), Vector2(8, h - 6)), Color("#e8e0c8"))
+		ci.draw_colored_polygon(PackedVector2Array([Vector2(x - 16, base.y - h + 2), Vector2(x, base.y - h - 16),
+			Vector2(x + 16, base.y - h + 2)]), accent.darkened(0.1 * (i % 2)))
+		ci.draw_circle(Vector2(x - 4, base.y - h - 4), 2.5, Color.WHITE)
+
+
+static func _mine(ci: CanvasItem, r: Rect2, base: Vector2, accent: Color, t: float) -> void:
+	# Рельсы, вагонетка с рудой, крепь
+	ci.draw_line(Vector2(r.position.x, base.y - 4), Vector2(r.end.x, base.y - 4), Color("#5a5a60"), 4)
+	var wood := Color("#7a5230")
+	for x in [r.position.x + 20, r.end.x - 28]:
+		ci.draw_rect(Rect2(Vector2(x, r.position.y + 30), Vector2(10, base.y - r.position.y - 30)), wood)
+	ci.draw_rect(Rect2(Vector2(r.position.x + 14, r.position.y + 30), Vector2(r.size.x - 28, 10)), wood)
+	var cx := r.get_center().x + sin(t * 0.6) * 40
+	ci.draw_rect(Rect2(Vector2(cx - 40, base.y - 46), Vector2(80, 36)), Color("#4a4a52"))
+	ci.draw_rect(Rect2(Vector2(cx - 40, base.y - 46), Vector2(80, 36)), OUTLINE, false, 3)
+	for i in 4:
+		ci.draw_circle(Vector2(cx - 26 + i * 17, base.y - 50), 10, accent.darkened(0.15 * (i % 2)))
+	ci.draw_circle(Vector2(cx - 24, base.y - 8), 8, OUTLINE)
+	ci.draw_circle(Vector2(cx + 24, base.y - 8), 8, OUTLINE)
+
+
+static func _prison(ci: CanvasItem, r: Rect2, base: Vector2, accent: Color) -> void:
+	# Решётка камеры
+	var cell := Rect2(Vector2(r.position.x + 120, r.position.y + 40), Vector2(r.size.x - 140, base.y - r.position.y - 40))
+	ci.draw_rect(cell, Color(0, 0, 0, 0.45))
+	var x := cell.position.x + 10
+	while x < cell.end.x:
+		ci.draw_line(Vector2(x, cell.position.y), Vector2(x, cell.end.y), accent.darkened(0.3), 6)
+		x += 22
+	ci.draw_rect(Rect2(cell.position, Vector2(cell.size.x, 8)), accent.darkened(0.4))
+	# Стол стражника и ключи
+	ci.draw_rect(Rect2(Vector2(r.position.x + 20, base.y - 40), Vector2(80, 10)), Color("#6e4a2a"))
+	ci.draw_circle(Vector2(r.position.x + 50, r.position.y + 70), 10, Color("#d9b77a"))
+
+
+static func _alchemy(ci: CanvasItem, r: Rect2, base: Vector2, accent: Color, t: float) -> void:
+	# Котёл с бурлящей эссенцией и полки с колбами
+	var cx := r.position.x + 90
+	ci.draw_circle(Vector2(cx, base.y - 34), 38, Color("#26262c"))
+	ci.draw_rect(Rect2(Vector2(cx - 40, base.y - 80), Vector2(80, 30)), Color("#26262c"))
+	ci.draw_rect(Rect2(Vector2(cx - 34, base.y - 76), Vector2(68, 10)), accent)
+	for i in 3:
+		var ph := fmod(t * 0.8 + i * 0.33, 1.0)
+		ci.draw_circle(Vector2(cx - 16 + i * 16, base.y - 80 - ph * 50), 5 + ph * 5, Color(accent, 0.6 * (1.0 - ph)))
+	for i in 4:
+		var px := r.end.x - 140 + i * 34
+		ci.draw_rect(Rect2(Vector2(r.end.x - 150, r.position.y + 70), Vector2(140, 6)), Color("#5c3b1e"))
+		var c: Color = [accent, Color("#b061e8"), Color("#ff6b6b"), Color("#ffd23f")][i]
+		ci.draw_circle(Vector2(px, r.position.y + 56), 11, c)
+		ci.draw_rect(Rect2(Vector2(px - 3, r.position.y + 38), Vector2(6, 10)), Color("#d8c8e8"))
 
 
 static func _throne(ci: CanvasItem, r: Rect2, base: Vector2, accent: Color, _t: float) -> void:

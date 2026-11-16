@@ -23,6 +23,7 @@ func _ready() -> void:
 	castle.room_tapped.connect(hud.open_room)
 	castle.empty_tapped.connect(hud.open_build)
 	castle.resident_tapped.connect(hud.open_resident)
+	castle.dungeon_tapped.connect(hud.open_dungeon)
 	if not loaded:
 		hud.show_dialog(tr("WELCOME_TITLE"), tr("WELCOME_BODY"))
 

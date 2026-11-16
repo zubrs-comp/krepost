@@ -1,0 +1,104 @@
+{
+ "_comment": "Параметры подземелья. Обычные ярусы генерируются по seed, ярусы из handcrafted заданы вручную.",
+ "width": 5,
+ "stair_col": 2,
+ "dig_rate_per_min": 12.0,
+ "max_diggers": 2,
+ "dig_base": 50.0,
+ "dig_per_tier": 0.3,
+ "stair_mult": 1.5,
+ "stone_base": 12,
+ "stone_per_tier": 4,
+ "chance": {
+  "chest": 0.15,
+  "vein": 0.15,
+  "lair": 0.13
+ },
+ "chest_gold": [
+  30,
+  12
+ ],
+ "chest_stone": [
+  10,
+  5
+ ],
+ "vein_ore": [
+  8,
+  3
+ ],
+ "lair_size": [
+  1,
+  3
+ ],
+ "lair_gold": [
+  25,
+  10
+ ],
+ "capture_chance": 0.6,
+ "boss_reward": {
+  "gold": 600,
+  "stone": 300,
+  "ore": 80,
+  "essence": 30
+ },
+ "lore_tiers": {
+  "2": "order",
+  "4": "miner",
+  "6": "ledger",
+  "8": "seal"
+ },
+ "handcrafted": {
+  "5": {
+   "cells": [
+    {
+     "s": "rock",
+     "content": "chest"
+    },
+    {
+     "s": "rock",
+     "content": "lair",
+     "enemies": [
+      "troll",
+      "slime"
+     ]
+    },
+    {
+     "s": "rock"
+    },
+    {
+     "s": "open"
+    },
+    {
+     "s": "rock",
+     "content": "vein"
+    }
+   ]
+  },
+  "10": {
+   "cells": [
+    {
+     "s": "rock",
+     "content": "chest"
+    },
+    {
+     "s": "open"
+    },
+    {
+     "s": "boss",
+     "enemies": [
+      "gryzen",
+      "slime",
+      "slime"
+     ]
+    },
+    {
+     "s": "open"
+    },
+    {
+     "s": "rock",
+     "content": "vein"
+    }
+   ]
+  }
+ }
+}

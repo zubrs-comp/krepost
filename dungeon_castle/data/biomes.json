@@ -1,0 +1,125 @@
+{
+ "_comment": "Биомы подземелья: по 10 ярусов. enemies — обычные враги, boss — босс 10-го яруса биома.",
+ "list": [
+  {
+   "id": "roots",
+   "name": "BIOME_ROOTS",
+   "from": 1,
+   "to": 10,
+   "enemies": [
+    "slime",
+    "spiky_slime",
+    "troll"
+   ],
+   "boss": "gryzen",
+   "colors": {
+    "rock": "#6b5240",
+    "rock_dark": "#3f2f24",
+    "cave": "#2f241d",
+    "floor": "#4a3a2c",
+    "accent": "#c9a36b",
+    "light": "#ffb35c"
+   }
+  },
+  {
+   "id": "flooded",
+   "name": "BIOME_FLOODED",
+   "from": 11,
+   "to": 20,
+   "enemies": [
+    "slime",
+    "spiky_slime",
+    "troll"
+   ],
+   "boss": "gryzen",
+   "colors": {
+    "rock": "#3d5a5e",
+    "rock_dark": "#22383b",
+    "cave": "#1a2a2e",
+    "floor": "#2d4448",
+    "accent": "#7fc8c8",
+    "light": "#9fe0ff"
+   }
+  },
+  {
+   "id": "mycelium",
+   "name": "BIOME_MYCELIUM",
+   "from": 21,
+   "to": 30,
+   "enemies": [
+    "slime",
+    "spiky_slime",
+    "troll"
+   ],
+   "boss": "gryzen",
+   "colors": {
+    "rock": "#4f3f5e",
+    "rock_dark": "#2e2438",
+    "cave": "#221a2a",
+    "floor": "#3a2e48",
+    "accent": "#c99be3",
+    "light": "#c8ff9a"
+   }
+  },
+  {
+   "id": "lava",
+   "name": "BIOME_LAVA",
+   "from": 31,
+   "to": 40,
+   "enemies": [
+    "slime",
+    "spiky_slime",
+    "troll"
+   ],
+   "boss": "gryzen",
+   "colors": {
+    "rock": "#5a2e24",
+    "rock_dark": "#341812",
+    "cave": "#2a120c",
+    "floor": "#4a2018",
+    "accent": "#ff7b2e",
+    "light": "#ff6a2a"
+   }
+  },
+  {
+   "id": "ancient",
+   "name": "BIOME_ANCIENT",
+   "from": 41,
+   "to": 50,
+   "enemies": [
+    "slime",
+    "spiky_slime",
+    "troll"
+   ],
+   "boss": "gryzen",
+   "colors": {
+    "rock": "#5e5a4e",
+    "rock_dark": "#38352c",
+    "cave": "#24221c",
+    "floor": "#4a463a",
+    "accent": "#e8d48a",
+    "light": "#ffe9a8"
+   }
+  },
+  {
+   "id": "nether",
+   "name": "BIOME_NETHER",
+   "from": 51,
+   "to": 100000,
+   "enemies": [
+    "slime",
+    "spiky_slime",
+    "troll"
+   ],
+   "boss": "gryzen",
+   "colors": {
+    "rock": "#3a2e4a",
+    "rock_dark": "#1e1628",
+    "cave": "#140e1c",
+    "floor": "#2a2036",
+    "accent": "#ff5ad0",
+    "light": "#d08aff"
+   }
+  }
+ ]
+}
